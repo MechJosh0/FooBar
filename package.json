@@ -12,6 +12,7 @@
   "dependencies": {
     "nuls-js": "^1.1.0",
     "vue": "^2.6.6",
+    "vue-i18n": "^8.0.0",
     "vue-router": "^3.0.1",
     "vuetify": "^1.5.5",
     "vuex": "^3.0.1"
@@ -28,6 +29,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "vue-cli-plugin-browser-extension": "^0.15.0",
+    "vue-cli-plugin-i18n": "^0.5.2",
     "vue-cli-plugin-vuetify": "^0.5.0",
     "vue-template-compiler": "^2.5.21",
     "vuetify-loader": "^1.0.5"

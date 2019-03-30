@@ -16,18 +16,22 @@
 		</v-toolbar>
 
 		<v-content>
-			<p>standalone {{ defaultText }}</p>
+			<p>standalone</p>
+			<p>
+				{{ $t('message.hello') }}
+				{{ $t('message.goodbye') }}
+			</p>
 			<v-btn color="success" @click="createAccount()">
-				Success
+				Create Account
 			</v-btn>
-			<v-btn color="error">
-				Error
+			<v-btn color="error" @click="deleteAccount()">
+				Delete Account
 			</v-btn>
-			<v-btn color="warning">
-				Warning
+			<v-btn color="warning" @click="changeLocale('en')">
+				Translate English
 			</v-btn>
-			<v-btn color="info">
-				Info
+			<v-btn color="info" @click="changeLocale('fr')">
+				Translate French
 			</v-btn>
 		</v-content>
 		<div v-if="account">
@@ -38,19 +42,16 @@
 
 <script>
 	import { Account } from 'nuls-js';
+	import { setI18nLanguage } from '../../../i18n';
 
 	export default {
 		data()
 		{
+			console.log(chrome.i18n.getUILanguage());
+
 			return {
 				account: null
 			};
-		},
-		computed: {
-			defaultText()
-			{
-				return chrome.i18n.getMessage('extName');
-			}
 		},
 		mounted()
 		{
@@ -62,6 +63,14 @@
 				const account = new Account();
 
 				this.account = account.create();
+			},
+			deleteAccount()
+			{
+				this.account = null;
+			},
+			changeLocale(locale)
+			{
+				setI18nLanguage(locale);
 			}
 		}
 	};
