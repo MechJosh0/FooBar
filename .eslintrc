@@ -1,0 +1,343 @@
+{
+	"parserOptions": {
+		"parser": "babel-eslint",
+		"ecmaVersion": 2017,
+		"sourceType": "module"
+	},
+	"plugins": [
+		"vue",
+		"import"
+	],
+	"env": {
+		"jest": true,
+		"node": true
+	},
+	"globals": {
+		"chrome": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:import/errors",
+		"plugin:import/warnings",
+		"airbnb-base",
+		"plugin:vue/recommended",
+		"plugin:vue/base",
+		"plugin:vue/essential",
+		"@vue/standard"
+	],
+	"overrides": [
+		{
+			"files": [
+				"*.vue"
+			],
+			"rules": {
+				"indent": [
+					"off"
+				]
+			}
+		},
+		{
+			"files": [
+				"*.js"
+			],
+			"rules": {
+				"vue/script-indent": [
+					"off"
+				]
+			}
+		}
+	],
+	"rules": {
+		"semi": [
+			"error",
+			"always"
+		],
+		"space-before-function-paren": [
+			"error",
+			{
+				"anonymous": "always",
+				"named": "never",
+				"asyncArrow": "always"
+			}
+		],
+		"no-console": [
+			"off"
+		],
+		"vue/no-unused-components": [
+			"error",
+			{
+				"ignoreWhenBindingPresent": true
+			}
+		],
+		"arrow-body-style": [
+			"off"
+		],
+		"arrow-parens": [
+			"error",
+			"always"
+		],
+		"brace-style": [
+			"error",
+			"allman"
+		],
+		"class-methods-use-this": [
+			"off"
+		],
+		"comma-dangle": [
+			"error",
+			"never"
+		],
+		"global-require": [
+			"off"
+		],
+		"import/prefer-default-export": ["off"],
+		"import/extensions": [
+			"off"
+		],
+		"import/no-unresolved": "off",
+		"import/newline-after-import": [
+			"off"
+		],
+		"import/no-dynamic-require": [
+			"off"
+		],
+		"import/no-unassigned-import": [
+			"error",
+			{
+				"allow": [
+					"**/*.css"
+				]
+			}
+		],
+		"import/no-extraneous-dependencies": [
+			"error"
+		],
+		"indent": [
+			"error",
+			"tab",
+			{
+				"SwitchCase": 1
+			}
+		],
+		"keyword-spacing": [
+			"error",
+			{
+				"after": false,
+				"before": true,
+				"overrides": {
+					"case": {
+						"after": true
+					},
+					"const": {
+						"after": true
+					},
+					"export": {
+						"after": true
+					},
+					"from": {
+						"after": true,
+						"before": true
+					},
+					"import": {
+						"after": true
+					},
+					"let": {
+						"after": true
+					},
+					"return": {
+						"after": true
+					},
+					"default": {
+						"after": true
+					}
+				}
+			}
+		],
+		"linebreak-style": [
+			"off"
+		],
+		"lines-around-comment": [
+			"off"
+		],
+		"max-len": [
+			"error",
+			300,
+			4,
+			{
+				"ignoreComments": true,
+				"ignorePattern": "^import\\s.+\\sfrom\\s.+;$",
+				"ignoreUrls": true
+			}
+		],
+		"no-inline-comments": [
+			"off"
+		],
+		"no-param-reassign": [
+			"off"
+		],
+		"no-shadow": [
+			"off"
+		],
+		"no-tabs": [
+			"off"
+		],
+		"no-underscore-dangle": [
+			"off"
+		],
+		"object-curly-newline": [
+			"error",
+			{
+				"consistent": true
+			}
+		],
+		"one-var": [
+			"error",
+			{
+				"const": "never",
+				"let": "always",
+				"var": "always"
+			}
+		],
+		"padding-line-between-statements": [
+			"error",
+			{
+				"blankLine": "always",
+				"next": "*",
+				"prev": [
+					"block",
+					"block-like",
+					"break",
+					"case",
+					"cjs-export",
+					"cjs-import",
+					"class",
+					"const",
+					"continue",
+					"debugger",
+					"default",
+					"directive",
+					"do",
+					"empty",
+					"export",
+					"for",
+					"function",
+					"if",
+					"import",
+					"let",
+					"multiline-block-like",
+					"multiline-expression",
+					"return",
+					"switch",
+					"throw",
+					"try",
+					"var",
+					"while",
+					"with"
+				]
+			},
+			{
+				"blankLine": "always",
+				"next": "return",
+				"prev": "expression"
+			},
+			{
+				"blankLine": "any",
+				"next": "const",
+				"prev": "const"
+			},
+			{
+				"blankLine": "never",
+				"next": "*",
+				"prev": "case"
+			},
+			{
+				"blankLine": "never",
+				"next": "import",
+				"prev": "import"
+			},
+			{
+				"blankLine": "never",
+				"next": "let",
+				"prev": "const"
+			}
+		],
+		"prefer-destructuring": [
+			"error",
+			{
+				"AssignmentExpression": {
+					"array": false,
+					"object": false
+				},
+				"VariableDeclarator": {
+					"array": true,
+					"object": true
+				}
+			},
+			{
+				"enforceForRenamedProperties": false
+			}
+		],
+		"import/no-cycle": [
+			"off"
+		],
+		"unicorn/filename-case": [
+			"off",
+			{
+				"case": "camelCase"
+			}
+		],
+		"vue/html-indent": [
+			"error",
+			"tab"
+		],
+		"vue/script-indent": [
+			"error",
+			"tab",
+			{
+				"baseIndent": 1,
+				"switchCase": 1
+			}
+		],
+		"vue/html-closing-bracket-newline": [
+			"error",
+			{
+				"singleline": "never",
+				"multiline": "always"
+			}
+		],
+		"vue/prop-name-casing": [
+			"error",
+			"camelCase"
+		],
+		"vue/attribute-hyphenation": [
+			"error",
+			"never"
+		],
+		"vue/max-attributes-per-line": [
+			"error",
+			{
+				"singleline": 2
+			}
+		],
+		"no-multiple-empty-lines": [
+			"error",
+			{
+				"max": 1
+			}
+		],
+		"implicit-arrow-linebreak": [
+			"off"
+		],
+		"operator-linebreak": [
+			"error",
+			"after"
+		],
+		"no-else-return": [
+			"error",
+			{
+				"allowElseIf": true
+			}
+		]
+	},
+	"root": true
+}
