@@ -17,7 +17,7 @@
 
 		<v-content>
 			<p>standalone {{ defaultText }}</p>
-			<v-btn color="success">
+			<v-btn color="success" @click="createAccount()">
 				Success
 			</v-btn>
 			<v-btn color="error">
@@ -30,15 +30,21 @@
 				Info
 			</v-btn>
 		</v-content>
+		<div v-if="account">
+			{{ account }}
+		</div>
 	</div>
 </template>
 
 <script>
+	import { Account } from 'nuls-js';
 
 	export default {
 		data()
 		{
-			return {};
+			return {
+				account: null
+			};
 		},
 		computed: {
 			defaultText()
@@ -49,6 +55,14 @@
 		mounted()
 		{
 			chrome.runtime.sendMessage({});
+		},
+		methods: {
+			createAccount()
+			{
+				const account = new Account();
+
+				this.account = account.create();
+			}
 		}
 	};
 </script>
