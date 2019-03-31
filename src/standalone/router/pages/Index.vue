@@ -41,15 +41,14 @@
 </template>
 
 <script>
-	import { Account } from 'nuls-js';
 	import { setI18nLanguage } from '../../../i18n';
 
 	export default {
-		data()
-		{
-			return {
-				account: null
-			};
+		computed: {
+			account()
+			{
+				return this.$store.getters['account/getAccount'];
+			}
 		},
 		mounted()
 		{
@@ -58,13 +57,11 @@
 		methods: {
 			createAccount()
 			{
-				const account = new Account();
-
-				this.account = account.create();
+				this.$store.dispatch('account/createNewAccount');
 			},
 			deleteAccount()
 			{
-				this.account = null;
+				this.$store.dispatch('account/logOut');
 			},
 			changeLocale(locale)
 			{
