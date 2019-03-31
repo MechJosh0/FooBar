@@ -47,8 +47,6 @@
 	export default {
 		data()
 		{
-			console.log(chrome.i18n.getUILanguage());
-
 			return {
 				account: null
 			};
