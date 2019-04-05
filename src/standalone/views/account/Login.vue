@@ -10,21 +10,6 @@
 					<v-card class="elevation-12">
 						<v-toolbar dark color="primary">
 							<v-toolbar-title>Login form</v-toolbar-title>
-							<v-spacer />
-							<v-tooltip bottom>
-								<v-btn
-									slot="activator"
-									icon
-									large
-									:href="source"
-									target="_blank"
-								>
-									<v-icon large>
-										code
-									</v-icon>
-								</v-btn>
-								<span>Source</span>
-							</v-tooltip>
 						</v-toolbar>
 						<v-card-text>
 							<v-form>
@@ -45,6 +30,9 @@
 						</v-card-text>
 						<v-card-actions>
 							<v-spacer />
+							<v-btn color="info">
+								Register
+							</v-btn>
 							<v-btn color="primary">
 								Login
 							</v-btn>

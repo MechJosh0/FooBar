@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import app from './app';
 import account from './account';
 
 const modules = {
+	app,
 	account
 };
 

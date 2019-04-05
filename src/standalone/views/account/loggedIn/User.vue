@@ -15,6 +15,8 @@
 			</v-btn>
 		</v-toolbar>
 
+		<Login />
+
 		<v-content>
 			<p>standalone</p>
 			<p>
@@ -33,17 +35,21 @@
 			<v-btn color="info" @click="changeLocale('fr')">
 				Translate French
 			</v-btn>
+			<div v-if="account">
+				<p>{{ account }}</p>
+			</div>
 		</v-content>
-		<div v-if="account">
-			{{ account }}
-		</div>
 	</div>
 </template>
 
 <script>
-	import { setI18nLanguage } from '../../../i18n';
+	import { setI18nLanguage } from '../../../../i18n';
+	import Login from '../Login';
 
 	export default {
+		components: {
+			Login
+		},
 		computed: {
 			account()
 			{

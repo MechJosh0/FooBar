@@ -5,6 +5,8 @@ import store from '../store';
 import i18n from '../i18n';
 import router from './router';
 
+store.dispatch('app/load');
+
 /* eslint-disable no-new */
 new Vue({
 	el: '#app',
