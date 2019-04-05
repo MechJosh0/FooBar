@@ -1,15 +1,15 @@
 module.exports = {
 	pages: {
 		'popup/popup': {
-			entry: 'src/popup/popup.js',
+			entry: 'src/popup/main.js',
 			title: 'Popup'
 		},
 		'options/options': {
-			entry: 'src/options/options.js',
+			entry: 'src/options/main.js',
 			title: 'Options'
 		},
 		'standalone/standalone': {
-			entry: 'src/standalone/standalone.js',
+			entry: 'src/standalone/main.js',
 			filename: 'index.html',
 			title: 'chrome-test'
 		}
@@ -43,6 +43,12 @@ module.exports = {
 			fallbackLocale: 'en',
 			localeDir: 'locales',
 			enableInSFC: false
+		},
+		quasar: {
+			treeShake: true
 		}
-	}
+	},
+	transpileDependencies: [
+		/[\\\/]node_modules[\\\/]quasar[\\\/]/
+	]
 };

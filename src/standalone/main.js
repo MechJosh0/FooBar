@@ -1,9 +1,11 @@
 import Vue from 'vue';
-import '../plugins/vuetify';
 import App from './App';
 import store from '../store';
-import i18n from '../i18n';
 import router from './router';
+import i18n from '../plugins/i18n';
+import '../plugins/quasar';
+
+store.dispatch('app/load');
 
 /* eslint-disable no-new */
 new Vue({

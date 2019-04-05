@@ -106,6 +106,8 @@
 			{
 				"allow": [
 					"**/*.css",
+					"**/*.styl",
+					"**/*.polyfills",
 					"**/plugins/*"
 				]
 			}

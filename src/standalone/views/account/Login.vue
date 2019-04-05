@@ -1,5 +1,5 @@
 <template>
-	<v-content>
+	<!-- <v-content>
 		<v-container fluid fillHeight>
 			<v-layout alignCenter justifyCenter>
 				<v-flex
@@ -41,5 +41,8 @@
 				</v-flex>
 			</v-layout>
 		</v-container>
-	</v-content>
+	</v-content> -->
+	<div>
+		Login page!
+	</div>
 </template>

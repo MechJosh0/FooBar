@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<!-- <div>
 		<v-toolbar app>
 			<v-toolbar-title class="headline text-uppercase">
 				<span>Vuetify</span>
@@ -39,11 +39,13 @@
 				<p>{{ account }}</p>
 			</div>
 		</v-content>
+	</div> -->
+	<div>
+		User page
 	</div>
 </template>
 
 <script>
-	import { setI18nLanguage } from '../../../../i18n';
 	import Login from '../Login';
 
 	export default {
@@ -71,7 +73,7 @@
 			},
 			changeLocale(locale)
 			{
-				setI18nLanguage(locale);
+				this.$store.dispatch('i18n/setLocale', locale);
 			}
 		}
 	};

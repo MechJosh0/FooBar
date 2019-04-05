@@ -1,5 +1,5 @@
 <template>
-	<v-app>
+	<!-- <v-app>
 		<p>options {{ defaultText }}</p>
 		<v-btn color="success">
 			Success
@@ -13,7 +13,10 @@
 		<v-btn color="info">
 			Info
 		</v-btn>
-	</v-app>
+	</v-app> -->
+	<div>
+		<p>options {{ defaultText }}</p>
+	</div>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-navigation-drawer
+		<!-- <v-navigation-drawer
 			v-model="drawer"
 			fixed
 			:clipped="$vuetify.breakpoint.mdAndUp"
@@ -197,7 +197,11 @@
 					</v-btn>
 				</v-card-actions>
 			</v-card>
-		</v-dialog>
+		</v-dialog> -->
+		<h1>Accounts area!</h1>
+		<div>
+			<router-view />
+		</div>
 	</div>
 </template>
 
