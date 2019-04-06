@@ -4,9 +4,10 @@ export default {
 		navigation: {
 			account: 'Account',
 			transactions: 'Transactions',
-			backup: 'Backup',
-			newAccount: 'New Account',
-			import: 'Import'
+			backup: 'Back Up',
+			export: 'Export',
+			import: 'Import',
+			newAccount: 'New Account'
 		}
 	},
 	views: {

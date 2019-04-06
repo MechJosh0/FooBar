@@ -47,6 +47,11 @@ const routeConfig = [
 		component: loadComponent('/account/Create')
 	},
 	{
+		path: '/import',
+		name: 'account.import',
+		component: loadComponent('/account/Import')
+	},
+	{
 		path: '/account/:account',
 		name: 'account',
 		beforeEnter: logInCheck(true),
@@ -64,6 +69,16 @@ const routeConfig = [
 				name: 'account.transactions',
 				path: 'transactions',
 				component: loadComponent('/account/loggedIn/Transactions')
+			},
+			{
+				name: 'account.backup',
+				path: 'backup',
+				component: loadComponent('/account/loggedIn/Backup')
+			},
+			{
+				name: 'account.export',
+				path: 'export',
+				component: loadComponent('/account/loggedIn/Export')
 			}
 		]
 	}

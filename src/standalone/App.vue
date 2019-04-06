@@ -61,7 +61,22 @@
 						:label="$t('header.navigation.transactions')"
 						to="account.transactions"
 					/>
+					<Item
+						icon="fas fa-file-export"
+						:label="$t('header.navigation.backup')"
+						to="account.backup"
+					/>
+					<Item
+						icon="fas fa-print"
+						:label="$t('header.navigation.export')"
+						to="account.export"
+					/>
 					<div class="listBottom">
+						<Item
+							icon="fas fa-upload"
+							:label="$t('header.navigation.import')"
+							to="account.import"
+						/>
 						<Item
 							icon="fas fa-user-plus"
 							:label="$t('header.navigation.newAccount')"
