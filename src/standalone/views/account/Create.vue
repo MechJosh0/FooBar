@@ -7,20 +7,26 @@
 			<q-input
 				v-model="name"
 				filled
-				:label="$t('views.login.form.fields.name.label')"
-				:hint="$t('views.login.form.fields.name.hint')"
+				:label="$t('views.create.form.fields.name.label')"
 				lazyRules
 				:rules="validation.name"
 			/>
+			<q-input
+				v-model="password"
+				filled
+				:label="$t('views.import.form.fields.password.label')"
+				lazyRules
+				:rules="validation.password"
+			/>
 			<div class="float-right">
 				<q-btn
-					:label="$t('views.login.form.buttons.import')"
+					:label="$t('views.create.form.buttons.import')"
 					:to="{ name: 'account.import' }"
 					type="submit"
 					color="secondary"
 				/>
 				<q-btn
-					:label="$t('views.login.form.buttons.submit')"
+					:label="$t('views.create.form.buttons.submit')"
 					type="submit"
 					color="primary"
 				/>
@@ -46,16 +52,25 @@
 						{
 							if(val && val.length > 0) return true;
 
-							return this.$t('views.login.form.fields.name.errors.required');
+							return this.$t('views.create.form.fields.name.errors.required');
 						},
 						(val) =>
 						{
 							if(!this.$store.getters['account/getAccountBy']('name', val)) return true;
 
-							return this.$t('views.login.form.fields.name.errors.exists');
+							return this.$t('views.create.form.fields.name.errors.exists');
+						}
+					],
+					password: [
+						(val) =>
+						{
+							if(val && val.length > 0) return true;
+
+							return this.$t('views.create.form.fields.password.errors.required');
 						}
 					]
 				},
+				password: '',
 				name: ''
 			};
 		},
@@ -82,12 +97,12 @@
 				{
 					console.log(res);
 
-					error(this.$t('views.login.form.submit.somethingWentWrong'));
+					error(this.$t('views.create.form.submit.somethingWentWrong'));
 
 					return;
 				}
 
-				success(this.$t('views.login.form.submit.success'));
+				success(this.$t('views.create.form.submit.success'));
 				this.$router.push({ name: 'account.user', params: { account: this.name } });
 			}
 		}

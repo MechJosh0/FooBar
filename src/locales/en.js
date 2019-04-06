@@ -12,7 +12,34 @@ export default {
 		}
 	},
 	views: {
-		login: {
+		import: {
+			form: {
+				fields: {
+					upload: {
+						label: 'Import Account'
+					},
+					password: {
+						label: 'Password',
+						errors: {
+							required: 'A password is required',
+							incorrect: 'Incorrect password'
+						}
+					},
+					name: {
+						label: 'Account Name',
+						errors: {
+							required: 'Please enter a readable name for your account',
+							exists: 'You already have an account under this name'
+						}
+					}
+				},
+				buttons: {
+					create: 'Create',
+					import: 'Import'
+				}
+			}
+		},
+		create: {
 			form: {
 				buttons: {
 					submit: 'Create',
@@ -24,6 +51,12 @@ export default {
 					success: 'NULS account created.'
 				},
 				fields: {
+					password: {
+						label: 'Password',
+						errors: {
+							required: 'A password is required'
+						}
+					},
 					name: {
 						hint: 'A readable name to assign your account',
 						label: 'Account Name',
