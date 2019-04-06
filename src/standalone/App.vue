@@ -18,7 +18,7 @@
 					<q-avatar>
 						<img src="https://cdn.quasar-framework.org/logo/svg/quasar-logo.svg">
 					</q-avatar>
-					Title
+					{{ $t('header.title') }}
 				</q-toolbar-title>
 				<q-space />
 
@@ -53,18 +53,18 @@
 				>
 					<Item
 						icon="fas fa-user"
-						label="Account"
+						:label="$t('header.navigation.account')"
 						to="account.user"
 					/>
 					<Item
 						icon="fas fa-receipt"
-						label="Transactions"
+						:label="$t('header.navigation.transactions')"
 						to="account.transactions"
 					/>
 					<div class="listBottom">
 						<Item
 							icon="fas fa-user-plus"
-							label="New Account"
+							:label="$t('header.navigation.newAccount')"
 							to="account.create"
 						/>
 					</div>

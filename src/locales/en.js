@@ -1,7 +1,13 @@
 export default {
-	message: {
-		hello: 'Hello',
-		goodbye: 'Goodbye'
+	header: {
+		title: 'FooBar',
+		navigation: {
+			account: 'Account',
+			transactions: 'Transactions',
+			backup: 'Backup',
+			newAccount: 'New Account',
+			import: 'Import'
+		}
 	},
 	views: {
 		login: {
