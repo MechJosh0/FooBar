@@ -15,7 +15,8 @@ export default {
 		login: {
 			form: {
 				buttons: {
-					createAccount: 'Create'
+					submit: 'Create',
+					import: 'Import'
 				},
 				submit: {
 					somethingWentWrong: 'Something went wrong, please try again.',
@@ -24,7 +25,7 @@ export default {
 				fields: {
 					name: {
 						hint: 'A readable name to assign your account',
-						label: 'Name',
+						label: 'Account Name',
 						errors: {
 							required: 'Please enter a readable name for your account',
 							exists: 'You already have an account under this name'
