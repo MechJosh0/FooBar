@@ -114,7 +114,7 @@
 			</q-scroll-area>
 		</q-drawer>
 
-		<q-page-container>
+		<q-page-container class="container">
 			<q-page padding>
 				<router-view />
 			</q-page>
@@ -170,5 +170,9 @@
 		width: 100%;
 		position: absolute;
 		bottom: 0;
+	}
+
+	.container {
+		background: #f7f7f7;
 	}
 </style>

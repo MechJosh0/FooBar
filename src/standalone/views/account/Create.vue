@@ -3,32 +3,36 @@
 		<div class="q-pa-md doc-container">
 			<div class="row justify-center">
 				<div class="col-xs-12 col-sm-6 col-md-5">
-					<q-form
-						@submit="onSubmit"
-						@reset="onReset"
-					>
-						<q-input
-							v-model="name"
-							filled
-							:label="$t('views.login.form.fields.name.label')"
-							:hint="$t('views.login.form.fields.name.hint')"
-							lazyRules
-							:rules="validation.name"
-						/>
-						<div class="float-right">
-							<q-btn
-								:label="$t('views.login.form.buttons.import')"
-								:to="{ name: 'account.import' }"
-								type="submit"
-								color="secondary"
-							/>
-							<q-btn
-								:label="$t('views.login.form.buttons.submit')"
-								type="submit"
-								color="primary"
-							/>
-						</div>
-					</q-form>
+					<q-card class="my-card">
+						<q-card-section>
+							<q-form
+								@submit="onSubmit"
+								@reset="onReset"
+							>
+								<q-input
+									v-model="name"
+									filled
+									:label="$t('views.login.form.fields.name.label')"
+									:hint="$t('views.login.form.fields.name.hint')"
+									lazyRules
+									:rules="validation.name"
+								/>
+								<div class="float-right">
+									<q-btn
+										:label="$t('views.login.form.buttons.import')"
+										:to="{ name: 'account.import' }"
+										type="submit"
+										color="secondary"
+									/>
+									<q-btn
+										:label="$t('views.login.form.buttons.submit')"
+										type="submit"
+										color="primary"
+									/>
+								</div>
+							</q-form>
+						</q-card-section>
+					</q-card>
 				</div>
 			</div>
 		</div>

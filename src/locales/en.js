@@ -16,7 +16,8 @@ export default {
 			form: {
 				buttons: {
 					submit: 'Create',
-					import: 'Import'
+					import: 'Import',
+					help: 'Help'
 				},
 				submit: {
 					somethingWentWrong: 'Something went wrong, please try again.',
