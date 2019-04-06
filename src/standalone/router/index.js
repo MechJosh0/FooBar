@@ -4,19 +4,14 @@ import store from '@/store';
 
 Vue.use(Router);
 
-// const routeConfig = [
-// 	{
-// 		path: '/',
-// 		component: PageIndex
-// 	}
-// ];
+const loadComponent = (path) => () => import(`@/standalone/views${path}`);
 
 // Guard to check if the user is an admin before accessing a page.
 const logInCheck = (accountArea) => (to, from, next) =>
 {
 	if(accountArea)
 	{
-		if(!store.getters['account/getAccount'])
+		if(!store.getters['account/getActiveAccount'])
 		{
 			// User is trying to access an account area while logged out
 			return next({
@@ -28,7 +23,7 @@ const logInCheck = (accountArea) => (to, from, next) =>
 		return next();
 	}
 
-	if(store.getters['account/getAccount'])
+	if(store.getters['account/getActiveAccount'])
 	{
 		// Guest is trying to access Login page
 		return next({
@@ -43,28 +38,32 @@ const logInCheck = (accountArea) => (to, from, next) =>
 const routeConfig = [
 	{
 		path: '/',
-		name: 'login',
-		beforeEnter: logInCheck(false),
-		component: () => import('../views/account/Login')
+		name: 'index',
+		component: loadComponent('/account/Create')
 	},
 	{
-		path: '/account',
+		path: '/create',
+		name: 'account.create',
+		component: loadComponent('/account/Create')
+	},
+	{
+		path: '/account/:account',
 		name: 'account',
 		beforeEnter: logInCheck(true),
 		redirect: {
 			name: 'account.user'
 		},
-		component: () => import('../views/account/loggedIn/Index'),
+		component: loadComponent('/account/loggedIn/Index'),
 		children: [
 			{
 				name: 'account.user',
 				path: 'user',
-				component: () => import('../views/account/loggedIn/User')
+				component: loadComponent('/account/loggedIn/User')
 			},
 			{
 				name: 'account.transactions',
 				path: 'transactions',
-				component: () => import('../views/account/loggedIn/Transactions')
+				component: loadComponent('/account/loggedIn/Transactions')
 			}
 		]
 	}
@@ -77,7 +76,22 @@ const router = new Router({
 
 router.beforeEach(async (to, from, next) =>
 {
-	next();
+	if(to.params.account)
+	{
+		// Set this as activeAccount
+		const account = store.getters['account/getAccountBy']('name', to.params.account);
+
+		if(!account) // Account (URL path) not found
+		{
+			return next({
+				path: '/'
+			});
+		}
+
+		store.dispatch('account/logIn', account.address);
+	}
+
+	return next();
 });
 
 export default router;

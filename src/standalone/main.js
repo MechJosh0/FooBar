@@ -1,9 +1,9 @@
 import Vue from 'vue';
-import App from './App';
-import store from '../store';
-import router from './router';
-import i18n from '../plugins/i18n';
-import '../plugins/quasar';
+import App from '@/standalone/App';
+import store from '@/store';
+import router from '@/standalone/router';
+import i18n from '@/plugins/i18n';
+import '@/plugins/quasar';
 
 store.dispatch('app/load');
 

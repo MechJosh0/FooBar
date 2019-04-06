@@ -1,53 +1,88 @@
 import { Account } from 'nuls-js';
 
 const state = {
-	account: null
+	accounts: {},
+	activeAccount: null
 };
 
 const mutations = {
-	SET_ACCOUNT(state, account)
+	CREATE_ACTIVE_ACCOUNT(state, { name, account })
 	{
-		state.account = account;
+		state.accounts[account.address] = { name, ...account };
+		state.activeAccount = account.address;
 
-		localStorage.setItem('account', JSON.stringify(account));
+		localStorage.setItem('accounts', JSON.stringify(state.accounts));
+		localStorage.setItem('activeAccount', JSON.stringify(state.activeAccount));
 	},
-	CLEAR_ACCOUNT(state)
+	SET_ACCOUNTS(state, accounts)
 	{
-		state.account = null;
+		state.accounts = accounts;
+	},
+	SET_ACTIVE_ACCOUNT(state, account)
+	{
+		state.activeAccount = account;
+	},
+	CLEAR_ACTIVE_ACCOUNT(state)
+	{
+		state.activeAccount = null;
 
-		localStorage.removeItem('account');
+		localStorage.removeItem('activeAccount');
 	}
 };
 
 const actions = {
-	createNewAccount({ commit })
+	createNewAccount({ state, commit }, name)
 	{
+		if(Object.keys(state.accounts).find((address) => state.accounts[address].name === name))
+		{
+			return 'nameExists';
+		}
+
 		const account = new Account();
 
-		commit('SET_ACCOUNT', account.create());
+		commit('CREATE_ACTIVE_ACCOUNT', { name, account: account.create() });
+
+		return true;
 	},
 	logIn({ commit }, account)
 	{
-		commit('SET_ACCOUNT', account);
+		commit('SET_ACTIVE_ACCOUNT', account);
 	},
-	loginLocalStorage({ dispatch })
+	loginLocalStorage({ commit, dispatch })
 	{
-		if(!localStorage.getItem('account')) return;
+		if(!localStorage.getItem('accounts')) return;
 
-		const account = JSON.parse(localStorage.getItem('account'));
+		commit('SET_ACCOUNTS', JSON.parse(localStorage.getItem('accounts')));
+
+		if(!localStorage.getItem('activeAccount'))
+		{
+			return;
+		}
+
+		const account = JSON.parse(localStorage.getItem('activeAccount'));
 
 		dispatch('logIn', account);
 	},
 	logOut({ commit })
 	{
-		commit('CLEAR_ACCOUNT');
+		commit('CLEAR_ACTIVE_ACCOUNT');
 	}
 };
 
 const getters = {
-	getAccount(state)
+	getActiveAccount: (state) =>
 	{
-		return state.account;
+		return state.accounts[state.activeAccount];
+	},
+	getAccounts: (state) =>
+	{
+		return state.accounts;
+	},
+	getAccountBy: (state) => (key, val) =>
+	{
+		const address = Object.keys(state.accounts).find((address) => state.accounts[address][key] === val);
+
+		return state.accounts[address];
 	}
 };
 

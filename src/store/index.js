@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import app from './app';
-import account from './account';
-import i18n from './i18n';
+import app from '@/store/app';
+import account from '@/store/account';
+import i18n from '@/store/i18n';
 
 const modules = {
 	app,

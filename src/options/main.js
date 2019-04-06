@@ -1,7 +1,7 @@
 import Vue from 'vue';
-import '../plugins/quasar';
+import '@/plugins/quasar';
 // import i18n from '../i18n';
-import App from './App';
+import App from '@/options/App';
 
 /* eslint-disable no-new */
 new Vue({

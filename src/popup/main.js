@@ -1,9 +1,9 @@
 import Vue from 'vue';
-import App from './App';
-import store from '../store';
-import router from './router';
+import App from '@/popup/App';
+import store from '@/store';
+import router from '@/popup/router';
 // import i18n from '../i18n';
-import '../plugins/quasar';
+import '@/plugins/quasar';
 
 /* eslint-disable no-new */
 new Vue({

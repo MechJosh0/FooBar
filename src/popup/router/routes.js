@@ -1,4 +1,4 @@
-import PageIndex from './pages/Index';
+import PageIndex from '@/popup/router/pages/Index';
 
 export default [
 	{

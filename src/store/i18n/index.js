@@ -1,4 +1,4 @@
-import { setI18nLanguage } from '../../plugins/i18n';
+import { setI18nLanguage } from '@/plugins/i18n';
 
 const state = {
 	locale: null
@@ -38,7 +38,7 @@ const actions = {
 };
 
 const getters = {
-	getLocale(state)
+	getLocale: (state) =>
 	{
 		return state.locale;
 	}

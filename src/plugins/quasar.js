@@ -4,15 +4,58 @@ import 'quasar/dist/quasar.ie.polyfills';
 import {
 	Quasar,
 	Ripple,
-	QBtn
+	QBtn,
+	QLayout,
+	QHeader,
+	QToolbar,
+	QToolbarTitle,
+	QAvatar,
+	QDrawer,
+	QPageContainer,
+	QPage,
+	QItemSection,
+	QItem,
+	QIcon,
+	QList,
+	QScrollArea,
+	QForm,
+	QTabs,
+	QTab,
+	QRouteTab,
+	QSpace,
+	QToggle,
+	QInput,
+	Notify
 } from 'quasar';
 
 Vue.use(Quasar, {
-	config: {},
 	components: {
-		QBtn
+		QBtn,
+		QLayout,
+		QHeader,
+		QToolbar,
+		QToolbarTitle,
+		QAvatar,
+		QDrawer,
+		QPageContainer,
+		QPage,
+		QItemSection,
+		QItem,
+		QIcon,
+		QList,
+		QScrollArea,
+		QForm,
+		QTabs,
+		QTab,
+		QRouteTab,
+		QSpace,
+		QToggle,
+		QInput
 	},
 	directives: {
 		Ripple
+	},
+	plugins: {
+		Notify
 	}
 });
