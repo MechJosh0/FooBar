@@ -45,23 +45,29 @@
 			side="left"
 			bordered
 		>
-			<q-scroll-area class="fit">
-				<q-list v-if="account.address" padding>
+			<q-scroll-area class="fit" :contentStyle="{ height: '100%' }">
+				<q-list
+					v-if="account.address"
+					padding
+					style="height: 100%"
+				>
 					<Item
-						icon="inbox"
+						icon="fas fa-user"
 						label="Account"
 						to="account.user"
 					/>
 					<Item
-						icon="star"
+						icon="fas fa-receipt"
 						label="Transactions"
 						to="account.transactions"
 					/>
-					<Item
-						icon="star"
-						label="New Account"
-						to="account.create"
-					/>
+					<div class="listBottom">
+						<Item
+							icon="fas fa-user-plus"
+							label="New Account"
+							to="account.create"
+						/>
+					</div>
 				</q-list>
 				<q-list v-else padding>
 					<q-item
@@ -138,3 +144,11 @@
 		}
 	};
 </script>
+
+<style scoped>
+	.listBottom {
+		width: 100%;
+		position: absolute;
+		bottom: 0;
+	}
+</style>
