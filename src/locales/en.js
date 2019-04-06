@@ -15,8 +15,12 @@ export default {
 		import: {
 			form: {
 				fields: {
-					upload: {
-						label: 'Import Account'
+					file: {
+						label: 'Import Account',
+						errors: {
+							required: 'You must provide a keystore to import',
+							fileType: 'The file must be a .keystore or .txt file type'
+						}
 					},
 					password: {
 						label: 'Password',

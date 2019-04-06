@@ -4,11 +4,14 @@
 			@submit="onSubmit"
 			@reset="onReset"
 		>
-			<q-uploader
-				url="http://localhost:4444/upload"
-				:label="$t('views.import.form.fields.upload.label')"
-				noThumbnails
-				class="full-width"
+			<q-input
+				v-model="file"
+				type="file"
+				filled
+				stackLabel
+				:label="$t('views.import.form.fields.file.label')"
+				lazyRules
+				:rules="validation.file"
 			/>
 			<q-input
 				v-model="name"
@@ -53,18 +56,34 @@
 		{
 			return {
 				validation: {
+					file: [
+						(val) =>
+						{
+							if(val && val.length > 0) return true;
+
+							return this.$t('views.import.form.fields.file.errors.required');
+						},
+						(val) =>
+						{
+							const path = val.split('.');
+
+							if(['keystore', 'txt'].includes(path[path.length - 1])) return true;
+
+							return this.$t('views.import.form.fields.file.errors.fileType');
+						}
+					],
 					name: [
 						(val) =>
 						{
 							if(val && val.length > 0) return true;
 
-							return this.$t('views.create.form.fields.name.errors.required');
+							return this.$t('views.import.form.fields.name.errors.required');
 						},
 						(val) =>
 						{
 							if(!this.$store.getters['account/getAccountBy']('name', val)) return true;
 
-							return this.$t('views.create.form.fields.name.errors.exists');
+							return this.$t('views.import.form.fields.name.errors.exists');
 						}
 					],
 					password: [
@@ -72,10 +91,11 @@
 						{
 							if(val && val.length > 0) return true;
 
-							return this.$t('views.create.form.fields.password.errors.required');
+							return this.$t('views.import.form.fields.password.errors.required');
 						}
 					]
 				},
+				file: '',
 				password: '',
 				name: ''
 			};
