@@ -62,6 +62,11 @@
 						to="account.transactions"
 					/>
 					<Item
+						icon="fas fa-coins"
+						:label="$t('header.navigation.transfer')"
+						to="account.transfer"
+					/>
+					<Item
 						icon="fas fa-file-export"
 						:label="$t('header.navigation.backup')"
 						to="account.backup"

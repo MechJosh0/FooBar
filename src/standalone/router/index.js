@@ -71,6 +71,11 @@ const routeConfig = [
 				component: loadComponent('/account/loggedIn/Transactions')
 			},
 			{
+				name: 'account.transfer',
+				path: 'transfer',
+				component: loadComponent('/account/loggedIn/Transfer')
+			},
+			{
 				name: 'account.backup',
 				path: 'backup',
 				component: loadComponent('/account/loggedIn/Backup')

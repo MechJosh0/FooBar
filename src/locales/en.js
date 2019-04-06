@@ -4,6 +4,7 @@ export default {
 		navigation: {
 			account: 'Account',
 			transactions: 'Transactions',
+			transfer: 'Transfer',
 			backup: 'Back Up',
 			export: 'Export',
 			import: 'Import',
