@@ -1,5 +1,45 @@
 <template>
-	<div>
-		homepage...
+	<div class="q-pa-md">
+		<q-table
+			:title="$t('views.index.table.label')"
+			:data="accounts"
+			:columns="columns"
+			rowKey="address"
+		/>
 	</div>
 </template>
+
+<script>
+	export default {
+		data()
+		{
+			return {
+				columns: [
+					{
+						name: 'address',
+						label: this.$t('views.index.table.columns.address'),
+						required: true,
+						align: 'left',
+						field: (row) => row.address,
+						format: (val) => `${val}`,
+						sortable: true,
+						to: (row) => ({ name: 'account', params: { account: row.address } })
+					}
+				]
+			};
+		},
+		computed: {
+			accounts()
+			{
+				const accounts = this.$store.getters['account/getAccounts'];
+
+				return Object.keys(accounts).map((address) =>
+				{
+					return {
+						address
+					};
+				});
+			}
+		}
+	};
+</script>

@@ -12,6 +12,14 @@ export default {
 		}
 	},
 	views: {
+		index: {
+			table: {
+				label: 'Accounts',
+				columns: {
+					address: 'Address'
+				}
+			}
+		},
 		import: {
 			form: {
 				fields: {
