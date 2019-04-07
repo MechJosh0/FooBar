@@ -73,17 +73,16 @@ const actions = {
 		console.log('Import account:', name, password, accountData);
 
 		const account = new Account();
-		let foo;
 
 		if(accountData.prikey)
 		{
-			foo = account.import(accountData.prikey);
+			account.import(accountData.prikey);
 		}
 		else
 		{
 			try
 			{
-				foo = account.import(accountData.encryptedPrivateKey, password);
+				account.import(accountData.encryptedPrivateKey, password);
 			}
 			catch(e)
 			{
