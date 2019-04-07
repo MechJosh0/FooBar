@@ -31,7 +31,8 @@ import {
 	Notify,
 	QCard,
 	QCardSection,
-	QTable
+	QTable,
+	QFooter
 } from 'quasar';
 
 Vue.use(Quasar, {
@@ -60,7 +61,8 @@ Vue.use(Quasar, {
 		QInput,
 		QCard,
 		QCardSection,
-		QTable
+		QTable,
+		QFooter
 	},
 	directives: {
 		Ripple

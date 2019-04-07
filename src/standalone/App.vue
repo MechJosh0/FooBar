@@ -1,5 +1,5 @@
 <template>
-	<q-layout view="hHh lpR fFf">
+	<q-layout view="hHh lpR lFf">
 		<q-header
 			reveal
 			bordered
@@ -49,31 +49,40 @@
 		>
 			<q-scroll-area class="fit" :contentStyle="{ height: '100%' }">
 				<q-list
-					v-if="account.address"
 					padding
 					style="height: 100%"
 				>
 					<Item
+						icon="fas fa-home"
+						:label="$t('header.navigation.home')"
+						to="index"
+					/>
+					<Item
+						v-if="account.address"
 						icon="fas fa-user"
 						:label="$t('header.navigation.account')"
 						to="account.user"
 					/>
 					<Item
+						v-if="account.address"
 						icon="fas fa-receipt"
 						:label="$t('header.navigation.transactions')"
 						to="account.transactions"
 					/>
 					<Item
+						v-if="account.address"
 						icon="fas fa-coins"
 						:label="$t('header.navigation.transfer')"
 						to="account.transfer"
 					/>
 					<Item
+						v-if="account.address"
 						icon="fas fa-file-export"
 						:label="$t('header.navigation.backup')"
 						to="account.backup"
 					/>
 					<Item
+						v-if="account.address"
 						icon="fas fa-print"
 						:label="$t('header.navigation.export')"
 						to="account.export"
@@ -91,28 +100,6 @@
 						/>
 					</div>
 				</q-list>
-				<q-list v-else padding>
-					<q-item
-						v-ripple
-						active
-						clickable
-					>
-						<q-item-section avatar>
-							<q-icon name="inbox" />
-						</q-item-section>
-						<q-item-section>
-							Login
-						</q-item-section>
-					</q-item>
-					<q-item v-ripple clickable>
-						<q-item-section avatar>
-							<q-icon name="star" />
-						</q-item-section>
-						<q-item-section>
-							Register
-						</q-item-section>
-					</q-item>
-				</q-list>
 			</q-scroll-area>
 		</q-drawer>
 
@@ -121,6 +108,14 @@
 				<router-view />
 			</q-page>
 		</q-page-container>
+
+		<q-footer class="container">
+			<q-toolbar>
+				<q-toolbar-title>
+					<!-- Footer if I need it -->
+				</q-toolbar-title>
+			</q-toolbar>
+		</q-footer>
 	</q-layout>
 </template>
 

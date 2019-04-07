@@ -2,6 +2,7 @@ export default {
 	header: {
 		title: 'FooBar',
 		navigation: {
+			home: 'Home',
 			account: 'Account',
 			transactions: 'Transactions',
 			transfer: 'Transfer',
