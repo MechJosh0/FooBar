@@ -12,7 +12,7 @@ const mutations = {
 		state.accounts[account.address] = { name, ...account };
 		state.activeAccount = account.address;
 
-		storage.setItem('accounts', JSON.stringify(state.accounts));
+		storage.set('accounts', JSON.stringify(state.accounts));
 		storage.set('activeAccount', JSON.stringify(state.activeAccount));
 	},
 	SET_ACCOUNTS(state, accounts)
