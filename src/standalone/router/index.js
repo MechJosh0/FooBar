@@ -15,7 +15,7 @@ const logInCheck = (accountArea) => (to, from, next) =>
 		{
 			// User is trying to access an account area while logged out
 			return next({
-				path: '/'
+				name: 'index'
 			});
 		}
 
@@ -27,7 +27,7 @@ const logInCheck = (accountArea) => (to, from, next) =>
 	{
 		// Guest is trying to access Login page
 		return next({
-			path: '/account'
+			name: 'account'
 		});
 	}
 
@@ -39,7 +39,7 @@ const routeConfig = [
 	{
 		path: '/',
 		name: 'index',
-		component: loadComponent('/account/Create')
+		component: loadComponent('/Index')
 	},
 	{
 		path: '/create',
@@ -104,7 +104,7 @@ router.beforeEach(async (to, from, next) =>
 		if(!account) // Account (URL path) not found
 		{
 			return next({
-				path: '/'
+				name: 'index'
 			});
 		}
 
