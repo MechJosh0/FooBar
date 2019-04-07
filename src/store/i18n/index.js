@@ -1,4 +1,5 @@
 import { setI18nLanguage } from '@/plugins/i18n';
+import storage from '@/utils/storage';
 
 const state = {
 	locale: null
@@ -11,7 +12,7 @@ const mutations = {
 
 		setI18nLanguage(locale);
 
-		localStorage.setItem('locale', locale);
+		storage.set('locale', locale);
 	}
 };
 
@@ -20,13 +21,16 @@ const actions = {
 	{
 		commit('SET_LOCALE', locale);
 	},
-	setLocaleFromMemory({ dispatch })
+	setLocaleFromStorage({ dispatch })
 	{
 		let locale = process.env.VUE_APP_I18N_LOCALE;
 
-		if(localStorage.getItem('locale') !== 'en')
+		console.log(storage);
+		console.log(storage.get);
+
+		if(storage.get('locale') !== 'en')
 		{
-			locale = localStorage.getItem('locale');
+			locale = storage.get('locale');
 		}
 		else if(chrome.i18n.getUILanguage() !== 'en')
 		{

@@ -1,4 +1,5 @@
 import { Account } from 'nuls-js';
+import storage from '@/utils/storage';
 
 const state = {
 	accounts: {},
@@ -11,8 +12,8 @@ const mutations = {
 		state.accounts[account.address] = { name, ...account };
 		state.activeAccount = account.address;
 
-		localStorage.setItem('accounts', JSON.stringify(state.accounts));
-		localStorage.setItem('activeAccount', JSON.stringify(state.activeAccount));
+		storage.setItem('accounts', JSON.stringify(state.accounts));
+		storage.set('activeAccount', JSON.stringify(state.activeAccount));
 	},
 	SET_ACCOUNTS(state, accounts)
 	{
@@ -26,7 +27,7 @@ const mutations = {
 	{
 		state.activeAccount = null;
 
-		localStorage.removeItem('activeAccount');
+		storage.remove('activeAccount');
 	}
 };
 
@@ -48,18 +49,18 @@ const actions = {
 	{
 		commit('SET_ACTIVE_ACCOUNT', account);
 	},
-	loginLocalStorage({ commit, dispatch })
+	loginFromStorage({ commit, dispatch })
 	{
-		if(!localStorage.getItem('accounts')) return;
+		if(!storage.get('accounts')) return;
 
-		commit('SET_ACCOUNTS', JSON.parse(localStorage.getItem('accounts')));
+		commit('SET_ACCOUNTS', JSON.parse(storage.get('accounts')));
 
-		if(!localStorage.getItem('activeAccount'))
+		if(!storage.get('activeAccount'))
 		{
 			return;
 		}
 
-		const account = JSON.parse(localStorage.getItem('activeAccount'));
+		const account = JSON.parse(storage.get('activeAccount'));
 
 		dispatch('logIn', account);
 	},
