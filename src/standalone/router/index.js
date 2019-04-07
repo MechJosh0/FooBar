@@ -42,6 +42,11 @@ const routeConfig = [
 		component: loadComponent('/Index')
 	},
 	{
+		path: '/settings',
+		name: 'settings',
+		component: loadComponent('/Settings')
+	},
+	{
 		path: '/create',
 		name: 'account.create',
 		component: loadComponent('/account/Create')

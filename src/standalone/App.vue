@@ -98,6 +98,11 @@
 							:label="$t('header.navigation.newAccount')"
 							to="account.create"
 						/>
+						<Item
+							icon="fas fa-cog"
+							:label="$t('header.navigation.settings')"
+							to="settings"
+						/>
 					</div>
 				</q-list>
 			</q-scroll-area>
