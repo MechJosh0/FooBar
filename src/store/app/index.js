@@ -41,7 +41,7 @@ const actions = {
 	setServerFromStorage({ dispatch })
 	{
 		dispatch('setMainNet', storage.get('mainNet'));
-		dispatch('setServer', JSON.parse(storage.get('server'));
+		dispatch('setServer', JSON.parse(storage.get('server')));
 	}
 };
 
