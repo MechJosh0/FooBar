@@ -14,6 +14,36 @@ export default {
 		}
 	},
 	views: {
+		settings: {
+			form: {
+				serverOptions: {
+					label: 'API Network',
+					options: {
+						nulsWorld: {
+							label: 'Nuls World',
+							url: 'https://nuls.world/'
+						},
+						other: {
+							label: 'More coming soon...',
+							url: 'https://google.com/'
+						}
+					}
+				},
+				releaseOptions: {
+					label: 'Release Version',
+					options: {
+						mainNet: {
+							label: 'Main Network (recommended)',
+							caption: 'The live main network where real transactions occurr and real money is involved.'
+						},
+						testNet: {
+							label: 'Test Network (developers only)',
+							caption: 'The test network to play with fake internet money.'
+						}
+					}
+				}
+			}
+		},
 		index: {
 			table: {
 				label: 'Accounts',

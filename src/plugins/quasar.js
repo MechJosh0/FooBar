@@ -32,7 +32,11 @@ import {
 	QCard,
 	QCardSection,
 	QTable,
-	QFooter
+	QFooter,
+	QItemLabel,
+	QRadio,
+	QField,
+	QSelect
 } from 'quasar';
 
 Vue.use(Quasar, {
@@ -62,7 +66,11 @@ Vue.use(Quasar, {
 		QCard,
 		QCardSection,
 		QTable,
-		QFooter
+		QFooter,
+		QItemLabel,
+		QRadio,
+		QField,
+		QSelect
 	},
 	directives: {
 		Ripple
