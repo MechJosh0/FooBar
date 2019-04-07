@@ -40,7 +40,7 @@ const mutations = {
 };
 
 const actions = {
-	createNewAccount({ state, commit, rootGetters }, name)
+	createNewAccount({ state, commit, rootGetters }, { name, password })
 	{
 		const release = rootGetters['app/getRelease'];
 
@@ -51,7 +51,7 @@ const actions = {
 
 		const account = new Account();
 
-		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: account.create() });
+		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: account.create(password) });
 
 		return true;
 	},

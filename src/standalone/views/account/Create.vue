@@ -91,7 +91,7 @@
 			},
 			onSubmit()
 			{
-				const res = this.$store.dispatch('account/createNewAccount', this.name);
+				const res = this.$store.dispatch('account/createNewAccount', { name: this.name, password: this.password });
 
 				if(!res)
 				{
