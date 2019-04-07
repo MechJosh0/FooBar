@@ -22,10 +22,6 @@ export default {
 						nulsWorld: {
 							label: 'Nuls World',
 							url: 'https://nuls.world/'
-						},
-						other: {
-							label: 'More coming soon...',
-							url: 'https://google.com/'
 						}
 					}
 				},

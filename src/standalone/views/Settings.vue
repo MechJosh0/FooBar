@@ -66,11 +66,6 @@
 					value: 'nulsWorld',
 					url: 'https://nuls.world/',
 					label: this.$t('views.settings.form.serverOptions.options.nulsWorld.label')
-				},
-				{
-					value: 'other',
-					url: 'https://google.com/',
-					label: this.$t('views.settings.form.serverOptions.options.other.label')
 				}
 			];
 
