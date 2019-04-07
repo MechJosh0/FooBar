@@ -1,16 +1,23 @@
+import Vue from 'vue';
 import { Account } from 'nuls-js';
 import storage from '@/utils/storage';
 
 const state = {
-	accounts: {},
-	activeAccount: null
+	accounts: {
+		mainNet: {},
+		testNet: {}
+	},
+	activeAccount: {
+		mainNet: null,
+		testNet: null
+	}
 };
 
 const mutations = {
-	CREATE_ACTIVE_ACCOUNT(state, { name, account })
+	CREATE_ACTIVE_ACCOUNT(state, { name, release, account })
 	{
-		state.accounts[account.address] = { name, ...account };
-		state.activeAccount = account.address;
+		state.accounts[release][account.address] = { name, ...account };
+		state.activeAccount[release] = account.address;
 
 		storage.set('accounts', JSON.stringify(state.accounts));
 		storage.set('activeAccount', JSON.stringify(state.activeAccount));
@@ -23,33 +30,32 @@ const mutations = {
 	{
 		state.activeAccount = account;
 	},
-	CLEAR_ACTIVE_ACCOUNT(state)
+	CLEAR_ACTIVE_ACCOUNT(state, release)
 	{
-		state.activeAccount = null;
+		Vue.delete(state.accounts[release], state.activeAccount[release]);
+		state.activeAccount[release] = null;
 
-		storage.remove('activeAccount');
+		storage.set('activeAccount', JSON.stringify(state.activeAccount));
 	}
 };
 
 const actions = {
-	createNewAccount({ state, commit }, name)
+	createNewAccount({ state, commit, rootGetters }, name)
 	{
-		if(Object.keys(state.accounts).find((address) => state.accounts[address].name === name))
+		const release = rootGetters['app/getRelease'];
+
+		if(Object.keys(state.accounts[release]).find((address) => state.accounts[release][address].name === name))
 		{
 			return 'nameExists';
 		}
 
 		const account = new Account();
 
-		commit('CREATE_ACTIVE_ACCOUNT', { name, account: account.create() });
+		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: account.create() });
 
 		return true;
 	},
-	logIn({ commit }, account)
-	{
-		commit('SET_ACTIVE_ACCOUNT', account);
-	},
-	loginFromStorage({ commit, dispatch })
+	loginFromStorage({ commit })
 	{
 		if(!storage.get('accounts')) return;
 
@@ -62,16 +68,26 @@ const actions = {
 
 		const account = JSON.parse(storage.get('activeAccount'));
 
-		dispatch('logIn', account);
+		commit('SET_ACTIVE_ACCOUNT', account);
 	},
-	logOut({ commit })
+	logIn({ commit, state, rootGetters }, account)
 	{
-		commit('CLEAR_ACTIVE_ACCOUNT');
-	},
-	async importAccount({ commit }, { name, password, accountData })
-	{
-		console.log('Import account:', name, password, accountData);
+		const release = rootGetters['app/getRelease'];
 
+		commit('SET_ACTIVE_ACCOUNT', {
+			...state.activeAccount,
+			[release]: account
+		});
+	},
+	logOut({ commit, rootGetters })
+	{
+		const release = rootGetters['app/getRelease'];
+
+		commit('CLEAR_ACTIVE_ACCOUNT', release);
+	},
+	async importAccount({ commit, rootGetters }, { name, password, accountData })
+	{
+		const release = rootGetters['app/getRelease'];
 		const account = new Account();
 
 		if(accountData.prikey)
@@ -98,7 +114,7 @@ const actions = {
 			}
 		}
 
-		commit('CREATE_ACTIVE_ACCOUNT', { name, account: account.getAccount() });
+		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: account.getAccount() });
 
 		return {
 			success: true,
@@ -108,19 +124,24 @@ const actions = {
 };
 
 const getters = {
-	getActiveAccount: (state) =>
+	getActiveAccount: (state, getters, rootState, rootGetters) =>
 	{
-		return state.accounts[state.activeAccount];
-	},
-	getAccounts: (state) =>
-	{
-		return state.accounts;
-	},
-	getAccountBy: (state) => (key, val) =>
-	{
-		const address = Object.keys(state.accounts).find((address) => state.accounts[address][key] === val);
+		const release = rootGetters['app/getRelease'];
 
-		return state.accounts[address];
+		return state.accounts[release][state.activeAccount[release]];
+	},
+	getAccounts: (state, getters, rootState, rootGetters) =>
+	{
+		const release = rootGetters['app/getRelease'];
+
+		return state.accounts[release];
+	},
+	getAccountBy: (state, getters, rootState, rootGetters) => (key, val) =>
+	{
+		const release = rootGetters['app/getRelease'];
+		const address = Object.keys(state.accounts[release]).find((address) => state.accounts[release][address][key] === val);
+
+		return state.accounts[release][address];
 	}
 };
 

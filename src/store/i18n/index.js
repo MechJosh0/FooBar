@@ -25,9 +25,6 @@ const actions = {
 	{
 		let locale = process.env.VUE_APP_I18N_LOCALE;
 
-		console.log(storage);
-		console.log(storage.get);
-
 		if(storage.get('locale') !== 'en')
 		{
 			locale = storage.get('locale');

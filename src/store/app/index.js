@@ -1,7 +1,7 @@
 import storage from '@/utils/storage';
 
 const state = {
-	mainNet: true,
+	release: 'mainNet',
 	server: {
 		name: 'nulsWorld',
 		url: 'https://nuls.world/'
@@ -9,11 +9,11 @@ const state = {
 };
 
 const mutations = {
-	SET_MAIN_NET(state, payload)
+	SET_RELEASE(state, payload)
 	{
-		state.mainNet = payload;
+		state.release = payload;
 
-		storage.set('mainNet', payload);
+		storage.set('release', payload);
 	},
 	SET_SERVER(state, payload)
 	{
@@ -30,9 +30,9 @@ const actions = {
 		dispatch('i18n/setLocaleFromStorage', null, { root: true });
 		dispatch('account/loginFromStorage', null, { root: true });
 	},
-	setMainNet({ commit }, payload)
+	setRelease({ commit }, payload)
 	{
-		commit('SET_MAIN_NET', payload);
+		commit('SET_RELEASE', payload);
 	},
 	setServer({ commit }, payload)
 	{
@@ -40,15 +40,26 @@ const actions = {
 	},
 	setServerFromStorage({ dispatch })
 	{
-		dispatch('setMainNet', storage.get('mainNet'));
-		dispatch('setServer', JSON.parse(storage.get('server')));
+		if(storage.get('release'))
+		{
+			dispatch('setRelease', storage.get('release'));
+		}
+
+		if(storage.get('server'))
+		{
+			dispatch('setServer', JSON.parse(storage.get('server')));
+		}
 	}
 };
 
 const getters = {
 	isMainNet: (state) =>
 	{
-		return state.mainNet === true;
+		return state.release === true;
+	},
+	getRelease: (state) =>
+	{
+		return state.release;
 	},
 	getServerData: (state) =>
 	{

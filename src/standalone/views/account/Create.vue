@@ -95,8 +95,6 @@
 
 				if(!res)
 				{
-					console.log(res);
-
 					error(this.$t('views.create.form.submit.somethingWentWrong'));
 
 					return;
