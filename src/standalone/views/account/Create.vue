@@ -93,7 +93,7 @@
 			{
 				const res = this.$store.dispatch('account/createNewAccount', { name: this.name, password: this.password });
 
-				if(!res)
+				if(!res.success)
 				{
 					error(this.$t('views.create.form.submit.somethingWentWrong'));
 

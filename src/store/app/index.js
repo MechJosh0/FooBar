@@ -1,4 +1,5 @@
 import storage from '@/utils/storage';
+import { Account } from '@/utils/nuls-js';
 
 const state = {
 	release: 'mainNet',
@@ -12,6 +13,8 @@ const mutations = {
 	SET_RELEASE(state, payload)
 	{
 		state.release = payload;
+
+		Account.switchChain(payload === 'testNet' ? 261 : 8964);
 
 		storage.set('release', payload);
 	},

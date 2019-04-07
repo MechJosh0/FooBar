@@ -1,6 +1,7 @@
 import Vue from 'vue';
-import { Account } from 'nuls-js';
+// import { Account } from 'nuls-js';
 import storage from '@/utils/storage';
+import { Account } from '@/utils/nuls-js';
 
 const state = {
 	accounts: {
@@ -46,14 +47,17 @@ const actions = {
 
 		if(Object.keys(state.accounts[release]).find((address) => state.accounts[release][address].name === name))
 		{
-			return 'nameExists';
+			return {
+				success: false,
+				error: 'nameExists'
+			};
 		}
 
-		const account = new Account();
+		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: Account.create(password) });
 
-		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: account.create(password) });
-
-		return true;
+		return {
+			success: true
+		};
 	},
 	loginFromStorage({ commit })
 	{
@@ -88,17 +92,16 @@ const actions = {
 	async importAccount({ commit, rootGetters }, { name, password, accountData })
 	{
 		const release = rootGetters['app/getRelease'];
-		const account = new Account();
 
 		if(accountData.prikey)
 		{
-			account.import(accountData.prikey);
+			Account.import(accountData.prikey);
 		}
 		else
 		{
 			try
 			{
-				account.import(accountData.encryptedPrivateKey, password);
+				Account.import(accountData.encryptedPrivateKey, password);
 			}
 			catch(e)
 			{
@@ -114,11 +117,11 @@ const actions = {
 			}
 		}
 
-		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: account.getAccount() });
+		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: Account.getAccount() });
 
 		return {
 			success: true,
-			account: account.getAccount()
+			account: Account.getAccount()
 		};
 	}
 };
