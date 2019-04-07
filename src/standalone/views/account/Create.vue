@@ -48,13 +48,13 @@
 			return {
 				validation: {
 					name: [
-						(val) =>
+						(val) => // Required
 						{
 							if(val && val.length > 0) return true;
 
 							return this.$t('views.create.form.fields.name.errors.required');
 						},
-						(val) =>
+						(val) => // Unique
 						{
 							if(!this.$store.getters['account/getAccountBy']('name', val)) return true;
 
@@ -62,7 +62,7 @@
 						}
 					],
 					password: [
-						(val) =>
+						(val) => // Required
 						{
 							if(val && val.length > 0) return true;
 

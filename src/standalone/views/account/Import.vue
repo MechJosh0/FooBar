@@ -5,6 +5,7 @@
 			@reset="onReset"
 		>
 			<q-input
+				ref="file"
 				v-model="file"
 				type="file"
 				filled
@@ -57,29 +58,50 @@
 			return {
 				validation: {
 					file: [
-						(val) =>
+						(val) => // Required
 						{
 							if(val && val.length > 0) return true;
 
 							return this.$t('views.import.form.fields.file.errors.required');
 						},
-						(val) =>
+						() => // File type
 						{
-							const path = val.split('.');
+							const [file] = this.$refs.file.$refs.input.files;
+							const path = file.name.split('.');
 
 							if(['keystore', 'txt'].includes(path[path.length - 1])) return true;
 
 							return this.$t('views.import.form.fields.file.errors.fileType');
+						},
+						() => // File size
+						{
+							const [file] = this.$refs.file.$refs.input.files;
+
+							if(file.size < 1000) return true;
+
+							return this.$t('views.import.form.fields.file.errors.fileSize');
+						},
+						async () => // Valid wallet data
+						{
+							const [file] = this.$refs.file.$refs.input.files;
+							const accountData = await this.readJSONFileContent(file);
+							let valid = true;
+
+							if(!accountData.encryptedPrivateKey && !accountData.prikey) valid = false;
+
+							if(valid) return true;
+
+							return this.$t('views.import.form.fields.file.errors.invalidWalletData');
 						}
 					],
 					name: [
-						(val) =>
+						(val) => // Required
 						{
 							if(val && val.length > 0) return true;
 
 							return this.$t('views.import.form.fields.name.errors.required');
 						},
-						(val) =>
+						(val) => // Unique
 						{
 							if(!this.$store.getters['account/getAccountBy']('name', val)) return true;
 
@@ -87,7 +109,7 @@
 						}
 					],
 					password: [
-						(val) =>
+						(val) => // Required
 						{
 							if(val && val.length > 0) return true;
 
@@ -107,6 +129,24 @@
 			}
 		},
 		methods: {
+			async readJSONFileContent(file)
+			{
+				const reader = new FileReader();
+
+				const fileContents = new Promise((resolve, reject) =>
+				{
+					reader.onload = (event) => resolve(event.target.result);
+					reader.onerror = (error) => reject(error);
+					reader.readAsText(file);
+				});
+
+				const accountData = JSON.parse(await fileContents);
+
+				// Fix type formats
+				accountData.prikey = accountData.prikey === 'null' ? null : accountData.prikey;
+
+				return accountData;
+			},
 			deleteAccount()
 			{
 				this.$store.dispatch('account/logOut');
@@ -115,20 +155,24 @@
 			{
 				this.name = null;
 			},
-			onSubmit()
+			async onSubmit()
 			{
-				const res = this.$store.dispatch('account/createNewAccount', this.name);
+				const [file] = this.$refs.file.$refs.input.files;
+				const accountData = await this.readJSONFileContent(file);
+				const res = await this.$store.dispatch('account/importAccount', {
+					name: this.name,
+					password: this.password,
+					accountData
+				});
 
-				if(!res)
+				if(!res.success)
 				{
-					console.log(res);
-
-					error(this.$t('views.create.form.submit.somethingWentWrong'));
+					error(this.$t(`views.import.form.submit.${res.errorCode}`));
 
 					return;
 				}
 
-				success(this.$t('views.create.form.submit.success'));
+				success(this.$t('views.import.form.submit.success'));
 				this.$router.push({ name: 'account.user', params: { account: this.name } });
 			}
 		}

@@ -66,6 +66,44 @@ const actions = {
 	logOut({ commit })
 	{
 		commit('CLEAR_ACTIVE_ACCOUNT');
+	},
+	async importAccount({ commit }, { name, password, accountData })
+	{
+		console.log('Import account:', name, password, accountData);
+
+		const account = new Account();
+		let foo;
+
+		if(accountData.prikey)
+		{
+			foo = account.import(accountData.prikey);
+		}
+		else
+		{
+			try
+			{
+				foo = account.import(accountData.encryptedPrivateKey, password);
+			}
+			catch(e)
+			{
+				switch(e.message)
+				{
+					case 'Invalid password or encrypted private key provided.':
+						return { success: false, errorCode: 'invalidPassword' };
+					default:
+						console.log('Unknown error message:', e.message);
+
+						return { success: false, errorCode: 'somethingWentWrong' };
+				}
+			}
+		}
+
+		commit('CREATE_ACTIVE_ACCOUNT', { name, account: account.getAccount() });
+
+		return {
+			success: true,
+			account: account.getAccount()
+		};
 	}
 };
 

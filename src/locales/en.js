@@ -19,7 +19,9 @@ export default {
 						label: 'Import Account',
 						errors: {
 							required: 'You must provide a keystore to import',
-							fileType: 'The file must be a .keystore or .txt file type'
+							fileType: 'The file type must be a .keystore or .txt',
+							fileSize: 'The file size must be smaller than 1kb',
+							invalidWalletData: 'Your wallet data is invalid and doesn\'t contain the expected/required format'
 						}
 					},
 					password: {
@@ -40,6 +42,11 @@ export default {
 				buttons: {
 					create: 'Create',
 					import: 'Import'
+				},
+				submit: {
+					somethingWentWrong: 'Something went wrong, please try again.',
+					invalidPassword: 'Invalid password for the provided encrypted private key.',
+					success: 'NULS account imported.'
 				}
 			}
 		},
