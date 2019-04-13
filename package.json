@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "axios": "^0.18.0",
     "nuls-js": "^1.1.0",
     "quasar": "^1.0.0-beta.1",
     "vue": "^2.6.6",

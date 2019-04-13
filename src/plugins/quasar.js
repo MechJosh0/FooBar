@@ -36,7 +36,13 @@ import {
 	QItemLabel,
 	QRadio,
 	QField,
-	QSelect
+	QSelect,
+	QTd,
+	QTh,
+	QTr,
+	QBadge,
+	QSeparator,
+	QMarkupTable
 } from 'quasar';
 
 Vue.use(Quasar, {
@@ -70,7 +76,13 @@ Vue.use(Quasar, {
 		QItemLabel,
 		QRadio,
 		QField,
-		QSelect
+		QSelect,
+		QTd,
+		QTh,
+		QTr,
+		QBadge,
+		QSeparator,
+		QMarkupTable
 	},
 	directives: {
 		Ripple

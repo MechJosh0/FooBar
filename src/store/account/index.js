@@ -1,5 +1,4 @@
 import Vue from 'vue';
-// import { Account } from 'nuls-js';
 import storage from '@/utils/storage';
 import { Account } from '@/utils/nuls-js';
 

@@ -44,7 +44,40 @@ export default {
 			table: {
 				label: 'Accounts',
 				columns: {
-					address: 'Address'
+					address: 'Address',
+					name: 'Name',
+					balance: 'Balance'
+				}
+			}
+		},
+		transactions: {
+			table: {
+				label: 'Transactions',
+				recordsPerPage: 'Records per page',
+				columns: {
+					inOut: 'In/Out',
+					date: 'Date',
+					address: 'Address',
+					remark: 'Remark',
+					type: {
+						label: 'Type',
+						types: {
+							'2-received': 'Funds Received',
+							'2-sent': 'Funds Sent',
+							5: 'Consensus Staked',
+							101: 'Contract Vote',
+							unknown: 'unknownType[{type}]'
+						}
+					},
+					change: 'Change',
+					balance: 'Balance'
+				},
+				panel: {
+					txHash: 'Transaction Hash',
+					blockHeight: 'Block Height',
+					sent: 'Funds Sent',
+					fee: 'Fee',
+					remark: 'Remark'
 				}
 			}
 		},

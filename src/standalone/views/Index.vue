@@ -15,6 +15,16 @@
 		{
 			return {
 				columns: [
+
+					{
+						name: 'name',
+						label: this.$t('views.index.table.columns.name'),
+						required: true,
+						align: 'left',
+						field: (row) => row.name,
+						format: (val) => `${val}`,
+						sortable: true
+					},
 					{
 						name: 'address',
 						label: this.$t('views.index.table.columns.address'),
@@ -22,8 +32,7 @@
 						align: 'left',
 						field: (row) => row.address,
 						format: (val) => `${val}`,
-						sortable: true,
-						to: (row) => ({ name: 'account', params: { account: row.address } })
+						sortable: true
 					}
 				]
 			};
@@ -36,7 +45,8 @@
 				return Object.keys(accounts).map((address) =>
 				{
 					return {
-						address
+						address,
+						name: accounts[address].name
 					};
 				});
 			}
