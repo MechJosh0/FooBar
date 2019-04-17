@@ -42,7 +42,10 @@ import {
 	QTr,
 	QBadge,
 	QSeparator,
-	QMarkupTable
+	QMarkupTable,
+	QSlider,
+	QSpinner,
+	QBanner
 } from 'quasar';
 
 Vue.use(Quasar, {
@@ -82,7 +85,10 @@ Vue.use(Quasar, {
 		QTr,
 		QBadge,
 		QSeparator,
-		QMarkupTable
+		QMarkupTable,
+		QSlider,
+		QSpinner,
+		QBanner
 	},
 	directives: {
 		Ripple

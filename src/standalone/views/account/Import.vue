@@ -23,6 +23,7 @@
 			/>
 			<q-input
 				v-model="password"
+				type="password"
 				filled
 				:label="$t('views.import.form.fields.password.label')"
 				lazyRules
@@ -154,6 +155,7 @@
 			onReset()
 			{
 				this.name = null;
+				this.password = null;
 			},
 			async onSubmit()
 			{

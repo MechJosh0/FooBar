@@ -52,6 +52,7 @@ const actions = {
 			};
 		}
 
+		// FIXME Do not store the privateKey
 		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: Account.create(password) });
 
 		return {
@@ -116,6 +117,7 @@ const actions = {
 			}
 		}
 
+		// FIXME Do not store the privateKey
 		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: Account.getAccount() });
 
 		return {

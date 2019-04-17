@@ -20,7 +20,7 @@ export default {
 					label: 'API Network',
 					options: {
 						nulsWorld: {
-							label: 'Nuls World',
+							label: 'NULS World',
 							url: 'https://nuls.world/'
 						}
 					}
@@ -143,6 +143,59 @@ export default {
 						errors: {
 							required: 'Please enter a readable name for your account',
 							exists: 'You already have an account under this name'
+						}
+					}
+				}
+			}
+		},
+		transfer: {
+			form: {
+				buttons: {
+					submit: 'Send'
+				},
+				submit: {
+					somethingWentWrong: 'Something went wrong, please try again.',
+					success: 'Your transaction was successful',
+					viewTransaction: 'View Transaction'
+				},
+				fields: {
+					autoFee: {
+						label: 'Auto Calculate Fee'
+					},
+					advanced: {
+						label: 'Advanced'
+					},
+					fee: {
+						label: 'Fee {amount}'
+					},
+					password: {
+						label: 'Password',
+						errors: {
+							required: 'A password is required'
+						}
+					},
+					recipients: {
+						hint: 'The recipient of the transfer',
+						label: 'Recipient Address',
+						errors: {
+							required: 'Please enter a recipient address',
+							length: 'This isn\'t a valid NULS address',
+							testNet: 'This isn\'t a valid testNet NULS address',
+							mainNet: 'This isn\'t a valid NULS address',
+							unknownRelease: 'The release server you\'re on is known'
+						}
+					},
+					remark: {
+						label: 'Remark',
+						hint: 'Add a public note this transaction'
+					},
+					amount: {
+						label: 'Amount',
+						hint: 'The amount of NULS to send',
+						errors: {
+							required: 'An amount to send is required',
+							minimum: 'The lowest amount you can send is 0.01',
+							number: 'You must enter a valid number'
 						}
 					}
 				}

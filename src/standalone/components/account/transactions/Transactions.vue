@@ -1,5 +1,9 @@
 <template>
 	<div class="q-pa-md">
+		<div v-for="({ transaction }, hash) in confirmingTransactions" :key="hash">
+			<div>hash: {{ hash }}</div>
+			<div>{{ transaction }}</div>
+		</div>
 		<q-table
 			:title="$t('views.transactions.table.label')"
 			:rowsPerPageLabel="$t('views.transactions.table.recordsPerPage')"
@@ -9,6 +13,7 @@
 			:filter="filter"
 			:grid="$q.screen.lt.sm"
 			:hideHeader="$q.screen.lt.sm"
+			:loading="loading"
 			rowKey="blockHeight"
 		>
 			<template v-slot:top>
@@ -58,6 +63,7 @@
 		data()
 		{
 			return {
+				loading: true,
 				filter: '',
 				res: [],
 				pagination: {
@@ -156,6 +162,10 @@
 
 				return columns;
 			},
+			confirmingTransactions()
+			{
+				return this.$store.getters['transactions/write/getConfirming'];
+			},
 			transactions()
 			{
 				return this.res;
@@ -168,7 +178,9 @@
 		methods: {
 			async getTransactions()
 			{
-				this.res = await this.$store.dispatch('transactions/getAddressTransactions', this.account.address);
+				this.res = await this.$store.dispatch('transactions/read/getAddressTransactions', this.account.address);
+
+				this.loading = false;
 			}
 		}
 	};
