@@ -161,20 +161,14 @@
 			},
 			confirmingTransactions()
 			{
-				console.log('changes');
-
 				return this.$store.getters['transactions/write/getConfirming'];
-			},
-			confirmingTransactionsAttempts()
-			{
-				return this.$store.getters['transactions/write/getConfirmingAttempts'];
 			},
 			transactions()
 			{
 				return [
 					...Object.keys(this.confirmingTransactions).map((hash) =>
 					{
-						const { tx, transaction, attempt, state } = this.confirmingTransactions[hash];
+						const { tx, transaction, attempt, type, time } = this.confirmingTransactions[hash];
 
 						return {
 							hash,
@@ -184,21 +178,13 @@
 							value: -Math.abs(nulsToNa(transaction.amount) + tx._fee_price),
 							source: this.account.address,
 							target: transaction.recipients.join(', '),
-							type: '2-verifying',
-							time: tx._time,
-							// attempt,
-							attempt: this.confirmingTransactionsAttempts[hash],
-							state
+							type,
+							time,
+							attempt
 						};
-					}),
+					}).reverse(),
 					...this.res
 				];
-			}
-		},
-		watch: {
-			confirmingTransactions()
-			{
-				this.getTransactions();
 			}
 		},
 		mounted()

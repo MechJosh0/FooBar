@@ -7,9 +7,9 @@ export default {
 				return this.$t(`views.transactions.table.columns.type.types.2-${displayType === 'OUT' ? 'sent' : 'received'}`);
 			}
 
-			if(type === '2-verifying')
+			if(type.substr(0, 1) === '2')
 			{
-				return this.$t(`views.transactions.table.columns.type.types.2-verifying`, { num: attempt });
+				return this.$t(`views.transactions.table.columns.type.types.${type}`, { num: attempt });
 			}
 
 			if(this.$te(`views.transactions.table.columns.type.types.${type}`))

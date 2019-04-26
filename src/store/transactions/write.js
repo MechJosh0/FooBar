@@ -3,7 +3,7 @@ import i18n from '@/plugins/i18n';
 import { success, error } from '@/utils/notifications';
 
 const test = {
-	state: 'verifiyng',
+	state: 'verifying',
 	attempt: 1,
 	transaction: {
 		recipients: ['TTavS9d34z6byDS8KKxwmf1LprkdjB9G'],
@@ -21,36 +21,32 @@ const test = {
 };
 
 const state = {
-	confirming: {},
-	confirmingAttempts: {}
+	confirming: {}
 };
 
 const mutations = {
 	CREATE_CONFIRMING(state, { hash, payload })
 	{
-		state.confirmingAttempts[hash] = 1;
-		state.confirming[hash] = {
-			state: 'verifiyng',
+		Vue.set(state.confirming, hash, {
+			type: '2-verifying',
 			attempt: 1,
+			time: new Date().getTime(),
 			...payload
-		};
+		});
 	},
-	UPDATE_ATTEMPT(state, { hash, attempt })
+	UPDATE_ATTEMPT(state, hash)
 	{
-		console.log(1, hash, attempt);
-		// Vue.set(state.confirming[hash], 'attempt', attempt);
-		Vue.set(state.confirmingAttempts, hash, attempt);
-		// state.confirming[hash].attempt += 1;
+		Vue.set(state.confirming[hash], 'attempt', state.confirming[hash].attempt + 1);
 	},
-	SET_STATE(state, { hash, status })
+	SET_TYPE(state, { hash, type })
 	{
-		Vue.set(state.confirming[hash], 'state', status);
+		Vue.set(state.confirming[hash], 'type', type);
 	},
 	REMOVE_COMPLETED(state)
 	{
 		Object.keys(state.confirming).forEach((hash) =>
 		{
-			if(['success'].includes(state.confirming[hash].state))
+			if(['2-success'].includes(state.confirming[hash].type))
 			{
 				Vue.delete(state.confirming, hash);
 			}
@@ -65,32 +61,25 @@ const actions = {
 	},
 	async sendTransaction({ commit }, payload)
 	{
-		payload = test;
 		const hash = payload.tx.getHash();
-		let attempt = 1;
+		const attemptsCounter = setInterval(() => commit('UPDATE_ATTEMPT', hash), 10000);
 
 		commit('CREATE_CONFIRMING', { hash, payload });
 
-		const attemptsCounter = setInterval(() =>
-		{
-			attempt += 1;
-			commit('UPDATE_ATTEMPT', { hash, attempt });
-		}, 1000);
-
 		try
 		{
-			// const txReceipt = await payload.tx.send();
+			const txReceipt = await payload.tx.send();
 
-			// clearInterval(attemptsCounter);
-			commit('SET_STATE', { hash, status: 'success' });
+			clearInterval(attemptsCounter);
+			commit('SET_TYPE', { hash, type: '2-success' });
 			success(i18n.t('views.transfer.form.submit.success'));
 
-			// return txReceipt;
+			return txReceipt;
 		}
 		catch(e)
 		{
 			console.error(e.message);
-			commit('SET_STATE', { hash, status: 'error' });
+			commit('SET_TYPE', { hash, type: '2-error' });
 			error(i18n.t('views.transfer.form.submit.somethingWentWrong'));
 			clearInterval(attemptsCounter);
 
@@ -100,8 +89,7 @@ const actions = {
 };
 
 const getters = {
-	getConfirming: () => state.confirming,
-	getConfirmingAttempts: () => state.confirmingAttempts
+	getConfirming: () => state.confirming
 };
 
 export default {

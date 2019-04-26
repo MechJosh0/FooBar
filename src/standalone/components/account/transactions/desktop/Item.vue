@@ -16,7 +16,7 @@
 			key="inOut"
 		>
 			<q-spinner
-				v-if="row.state === 'verifiyng'"
+				v-if="row.type === '2-verifying'"
 				color="primary"
 			/>
 			<q-icon

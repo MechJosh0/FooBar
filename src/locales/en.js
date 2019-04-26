@@ -73,9 +73,11 @@ export default {
 						types: {
 							'2-received': 'Funds Received',
 							'2-sent': 'Funds Sent',
+							'2-verifying': 'Verifying [{num}/15]',
+							'2-error': 'Error',
+							'2-success': 'Funds Sent',
 							5: 'Consensus Staked',
 							101: 'Contract Vote',
-							'2-verifying': 'Verifying [{num}/15]',
 							unknown: 'unknownType[{type}]'
 						}
 					},
