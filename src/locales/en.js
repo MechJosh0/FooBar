@@ -13,6 +13,15 @@ export default {
 			settings: 'Settings'
 		}
 	},
+	dates: {
+		duration: {
+			yesterday: 'Yesterday',
+			today: 'Today',
+			hoursAgo: '{hours} hour ago | {hours} hours ago',
+			minutesAgo: '{minutes} minute ago | {minutes} minutes ago',
+			secondsAgo: '{seconds} second ago | {seconds} seconds ago'
+		}
+	},
 	views: {
 		settings: {
 			form: {
@@ -66,6 +75,7 @@ export default {
 							'2-sent': 'Funds Sent',
 							5: 'Consensus Staked',
 							101: 'Contract Vote',
+							'2-verifying': 'Verifying [{num}/15]',
 							unknown: 'unknownType[{type}]'
 						}
 					},

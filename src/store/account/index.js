@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import storage from '@/utils/storage';
-import { Account } from '@/utils/nuls-js';
+import Account from '@/utils/nuls-js/account';
 
 const state = {
 	accounts: {

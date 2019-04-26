@@ -1,5 +1,5 @@
 import storage from '@/utils/storage';
-import { Account } from '@/utils/nuls-js';
+import Account from '@/utils/nuls-js/account';
 import { ChainIdType } from 'nuls-js';
 
 const state = {
@@ -33,6 +33,7 @@ const actions = {
 		dispatch('setServerFromStorage');
 		dispatch('i18n/setLocaleFromStorage', null, { root: true });
 		dispatch('account/loginFromStorage', null, { root: true });
+		dispatch('blocks/init', null, { root: true });
 	},
 	setRelease({ commit }, payload)
 	{

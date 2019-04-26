@@ -2,7 +2,6 @@
 	<CenteredCard>
 		<div>TTavS9d34z6byDS8KKxwmf1LprkdjB9G</div>
 		<q-form
-			v-if="!sending"
 			@submit="onSubmit"
 			@reset="onReset"
 		>
@@ -91,31 +90,11 @@
 				/>
 			</div>
 		</q-form>
-		<div v-else>
-			<q-spinner
-				v-if="!txReceipt"
-				color="primary"
-				size="3em"
-			/>
-			<q-banner v-else class="bg-grey-3">
-				<template v-slot:avatar>
-					<q-icon name="fas fa-check" color="positive" />
-				</template>
-				{{ $t('views.transfer.form.submit.success') }}
-				<template v-slot:action>
-					<q-btn
-						flat
-						:label="$t('views.transfer.form.submit.viewTransaction')"
-					/>
-				</template>
-			</q-banner>
-		</div>
 	</CenteredCard>
 </template>
 
 <script>
 	import { TransferTransaction, nulsToNa, Utxo } from 'nuls-js';
-	import { error } from '@/utils/notifications';
 	import CenteredCard from '@/standalone/components/pageContainers/CenteredCard';
 
 	// 32 character limit on addresses (maybe check for first characters - testnet/mainnet differences!)
@@ -129,7 +108,6 @@
 			const release = this.$store.getters['app/getRelease'];
 
 			return {
-				sending: false,
 				release,
 				validation: {
 					amount: [
@@ -179,7 +157,6 @@
 						}
 					]
 				},
-				txReceipt: null,
 				utxos: null,
 				tx: null,
 				transactionHash: null,
@@ -276,19 +253,9 @@
 			},
 			async broadcast()
 			{
-				try
-				{
-					this.tx.sign(this.account.prikey);
-
-					this.sending = true;
-					this.transactionHash = this.tx.getHash();
-					this.txReceipt = await this.$store.dispatch('transactions/write/sendTransaction', { transaction: this.transaction, tx: this.tx });
-				}
-				catch(e)
-				{
-					console.error(e.message);
-					error(this.$t('views.transfer.form.submit.somethingWentWrong'));
-				}
+				this.tx.sign(this.account.prikey);
+				this.$store.dispatch('transactions/write/sendTransaction', { transaction: this.transaction, tx: this.tx });
+				this.$router.push({ name: 'account.transactions', params: { account: this.account.name } });
 			}
 		}
 	};

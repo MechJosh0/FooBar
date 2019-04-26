@@ -1,3 +1,3 @@
 import { Account as NAccount } from 'nuls-js';
 
-export const Account = new NAccount();
+export default new NAccount();

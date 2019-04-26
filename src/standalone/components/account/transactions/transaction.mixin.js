@@ -1,13 +1,15 @@
-
-import { date } from 'quasar';
-
 export default {
 	methods: {
-		translateTransactionType(type, displayType)
+		translateTransactionType({ type, display_type: displayType, attempt })
 		{
 			if(type === 2)
 			{
 				return this.$t(`views.transactions.table.columns.type.types.2-${displayType === 'OUT' ? 'sent' : 'received'}`);
+			}
+
+			if(type === '2-verifying')
+			{
+				return this.$t(`views.transactions.table.columns.type.types.2-verifying`, { num: attempt });
 			}
 
 			if(this.$te(`views.transactions.table.columns.type.types.${type}`))
@@ -23,13 +25,9 @@ export default {
 		{
 			return `${(val / 100000000).toLocaleString()} NULS`;
 		},
-		translateDateFormat(timestamp)
+		translateRelatedAddress({ target, source, display_type: displayType })
 		{
-			return date.formatDate(timestamp, 'DD MMM YYYY');
-		},
-		translateRelatedAddress({ target, source, displayType })
-		{
-			const address = displayType === 'OUT' ? target : source;
+			const address = displayType === 'OUT' ? target || source : source || target;
 			const truncated = this.truncateString(address);
 
 			return { truncated, address };

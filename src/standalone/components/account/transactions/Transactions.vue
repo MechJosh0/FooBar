@@ -1,9 +1,5 @@
 <template>
 	<div class="q-pa-md">
-		<div v-for="({ transaction }, hash) in confirmingTransactions" :key="hash">
-			<div>hash: {{ hash }}</div>
-			<div>{{ transaction }}</div>
-		</div>
 		<q-table
 			:title="$t('views.transactions.table.label')"
 			:rowsPerPageLabel="$t('views.transactions.table.recordsPerPage')"
@@ -45,6 +41,7 @@
 </template>
 
 <script>
+	import { nulsToNa } from 'nuls-js';
 	import transactionMixin from '@/standalone/components/account/transactions/transaction.mixin';
 
 	export default {
@@ -121,7 +118,7 @@
 					name: 'type',
 					label: this.$t('views.transactions.table.columns.type.label'),
 					align: 'right',
-					field: (row) => this.translateTransactionType(row.type, row.displayType),
+					field: (row) => this.translateTransactionType(row),
 					sortable: true,
 					sort: (a, b, rowA, rowB) =>
 					{
@@ -164,16 +161,53 @@
 			},
 			confirmingTransactions()
 			{
+				console.log('changes');
+
 				return this.$store.getters['transactions/write/getConfirming'];
+			},
+			confirmingTransactionsAttempts()
+			{
+				return this.$store.getters['transactions/write/getConfirmingAttempts'];
 			},
 			transactions()
 			{
-				return this.res;
+				return [
+					...Object.keys(this.confirmingTransactions).map((hash) =>
+					{
+						const { tx, transaction, attempt, state } = this.confirmingTransactions[hash];
+
+						return {
+							hash,
+							display_type: 'OUT',
+							fee: tx._fee_price,
+							remark: transaction.remark,
+							value: -Math.abs(nulsToNa(transaction.amount) + tx._fee_price),
+							source: this.account.address,
+							target: transaction.recipients.join(', '),
+							type: '2-verifying',
+							time: tx._time,
+							// attempt,
+							attempt: this.confirmingTransactionsAttempts[hash],
+							state
+						};
+					}),
+					...this.res
+				];
+			}
+		},
+		watch: {
+			confirmingTransactions()
+			{
+				this.getTransactions();
 			}
 		},
 		mounted()
 		{
 			this.getTransactions();
+		},
+		destroyed()
+		{
+			this.$store.dispatch('transactions/write/removeCompleted');
 		},
 		methods: {
 			async getTransactions()

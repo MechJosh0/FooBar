@@ -1,4 +1,6 @@
-
+import Duration from 'luxon/src/duration';
+import DateTime from 'luxon/src/datetime';
+import { date } from 'quasar';
 import transactionMixin from '@/standalone/components/account/transactions/transaction.mixin';
 
 export default {
@@ -8,6 +10,24 @@ export default {
 			type: Object,
 			required: true
 		}
+	},
+	data()
+	{
+		return {
+			currentTime: new Date().getTime(),
+			intervalinterval: null
+		};
+	},
+	mounted()
+	{
+		this.interval = setInterval(() =>
+		{
+			this.currentTime = new Date().getTime();
+		}, 1000);
+	},
+	beforeDestroy()
+	{
+		clearInterval(this.interval);
 	},
 	computed: {
 		expand()
@@ -42,10 +62,15 @@ export default {
 		},
 		type()
 		{
-			return this.translateTransactionType(this.row.type, this.row.display_type);
+			return this.translateTransactionType(this.row);
 		},
 		blockHeight()
 		{
+			if(!this.row.blockHeight)
+			{
+				return null;
+			}
+
 			return this.row.blockHeight.toLocaleString();
 		},
 		address()
@@ -76,7 +101,34 @@ export default {
 		},
 		date()
 		{
-			return this.translateDateFormat(this.row.time);
+			const today = DateTime.local().startOf('day').toMillis();
+			const yesterday = DateTime.local().minus({ days: 1 }).startOf('day').toMillis();
+			const duration = Duration.fromMillis(this.currentTime - this.row.time).shiftTo('hours', 'minutes', 'seconds').toObject();
+
+			if(this.row.time - today > 0)
+			{
+				if(duration.hours !== 0)
+				{
+					return this.$tc('dates.duration.hoursAgo', duration.hours, { hours: duration.hours });
+				}
+
+				if(duration.minutes !== 0)
+				{
+					return this.$tc('dates.duration.minutesAgo', duration.minutes, { minutes: duration.minutes });
+				}
+
+				if(duration.seconds !== 0)
+				{
+					return this.$tc('dates.duration.secondsAgo', duration.seconds, { seconds: Math.floor(duration.seconds) });
+				}
+			}
+
+			if(this.row.time - yesterday > 0)
+			{
+				return this.$t('dates.duration.yesterday');
+			}
+
+			return date.formatDate(this.row.time, 'DD MMM YYYY');
 		}
 	}
 };

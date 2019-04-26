@@ -16,3 +16,8 @@ export const getAddressTransactions = async (release, address) =>
 		throw Error(e.message);
 	}
 };
+
+export const getLatestHeight = async () =>
+{
+	// TODO
+};

@@ -1,7 +1,12 @@
 <template>
 	<q-tr
 		class="cursor-pointer"
-		:class="{ extended: expand }"
+		:class="{
+			extended: expand,
+			'bg-info': row.type === '2-verifying',
+			'bg-positive': row.type === '2-success',
+			'bg-negative': row.type === '2-error'
+		}"
 	>
 		<q-td key="date">
 			{{ date }}
@@ -10,14 +15,18 @@
 			v-if="!$q.screen.lt.lg"
 			key="inOut"
 		>
+			<q-spinner
+				v-if="row.state === 'verifiyng'"
+				color="primary"
+			/>
 			<q-icon
-				v-if="row.display_type === 'OUT'"
-				class="rotate-315 text-negative"
+				v-else-if="row.display_type === 'IN'"
+				class="rotate-135 text-positive"
 				name="fas fa-arrow-right"
 			/>
 			<q-icon
 				v-else
-				class="rotate-135 text-positive"
+				class="rotate-315 text-negative"
 				name="fas fa-arrow-right"
 			/>
 		</q-td>
