@@ -11,7 +11,8 @@
   "permissions": [
     "activeTab",
     "<all_urls>",
-    "*://*/*"
+	"*://*/*",
+	"storage"
   ],
   "background": {
       "scripts": [

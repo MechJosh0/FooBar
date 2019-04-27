@@ -1,6 +1,10 @@
-import storage from '@/utils/storage';
-import Account from '@/utils/nuls-js/account';
 import { ChainIdType } from 'nuls-js';
+import Account from '@/utils/nuls-js/account';
+import storage from '@/store/app/storage';
+
+const modules = {
+	storage
+};
 
 const state = {
 	release: 'mainNet',
@@ -17,23 +21,31 @@ const mutations = {
 
 		Account.switchChain(ChainIdType[Object.keys(ChainIdType).find((key) => key.toLowerCase() === payload.toLowerCase())]);
 
-		storage.set('release', payload);
+		localStorage.setItem('release', payload);
 	},
 	SET_SERVER(state, payload)
 	{
 		state.server = payload;
 
-		storage.set('server', JSON.stringify(payload));
+		localStorage.setItem('server', JSON.stringify(payload));
 	}
 };
 
 const actions = {
-	load({ dispatch }, account)
+	async load({ dispatch }, account)
 	{
 		dispatch('setServerFromStorage');
 		dispatch('i18n/setLocaleFromStorage', null, { root: true });
-		dispatch('account/loginFromStorage', null, { root: true });
+		await dispatch('account/loginFromStorage', null, { root: true });
 		dispatch('blocks/init', null, { root: true });
+	},
+	setStorageSolution({ commit }, solution)
+	{
+		if(!['chromeLocal', 'chromSync'].includes(solution)) return false;
+
+		commit('SET_RELEASE', solution);
+
+		return true;
 	},
 	setRelease({ commit }, payload)
 	{
@@ -45,36 +57,27 @@ const actions = {
 	},
 	setServerFromStorage({ dispatch })
 	{
-		if(storage.get('release'))
+		if(localStorage.getItem('release'))
 		{
-			dispatch('setRelease', storage.get('release'));
+			dispatch('setRelease', localStorage.getItem('release'));
 		}
 
-		if(storage.get('server'))
+		if(localStorage.getItem('server'))
 		{
-			dispatch('setServer', JSON.parse(storage.get('server')));
+			dispatch('setServer', JSON.parse(localStorage.getItem('server')));
 		}
 	}
 };
 
 const getters = {
-	isMainNet: (state) =>
-	{
-		return state.release === true;
-	},
-	getRelease: (state) =>
-	{
-		return state.release;
-	},
-	getServerData: (state) =>
-	{
-		return state.server;
-	}
+	isMainNet: (state) => state.release === true,
+	getRelease: (state) => state.release,
+	getServerData: (state) => state.server
 };
 
 export default {
 	namespaced: true,
-	modules: {},
+	modules,
 	state,
 	mutations,
 	actions,

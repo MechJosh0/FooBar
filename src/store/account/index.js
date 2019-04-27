@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import storage from '@/utils/storage';
 import Account from '@/utils/nuls-js/account';
+import { CONSENSUS_LOCK_TIME } from 'nuls-js';
 
 const state = {
 	accounts: {
@@ -19,28 +19,28 @@ const mutations = {
 		state.accounts[release][account.address] = { name, ...account };
 		state.activeAccount[release] = account.address;
 
-		storage.set('accounts', JSON.stringify(state.accounts));
-		storage.set('activeAccount', JSON.stringify(state.activeAccount));
+		localStorage.setItem('activeAccount', JSON.stringify(state.activeAccount));
 	},
-	SET_ACCOUNTS(state, accounts)
+	SET_ACCOUNTS(state, { release, accounts })
 	{
 		state.accounts = accounts;
 	},
 	SET_ACTIVE_ACCOUNT(state, account)
 	{
 		state.activeAccount = account;
+		localStorage.setItem('activeAccount', JSON.stringify(state.activeAccount));
 	},
 	CLEAR_ACTIVE_ACCOUNT(state, release)
 	{
 		Vue.delete(state.accounts[release], state.activeAccount[release]);
 		state.activeAccount[release] = null;
 
-		storage.set('activeAccount', JSON.stringify(state.activeAccount));
+		localStorage.setItem('activeAccount', JSON.stringify(state.activeAccount));
 	}
 };
 
 const actions = {
-	createNewAccount({ state, commit, rootGetters }, { name, password })
+	createNewAccount({ state, dispatch, commit, rootGetters }, { name, password })
 	{
 		const release = rootGetters['app/getRelease'];
 
@@ -54,25 +54,32 @@ const actions = {
 
 		// FIXME Do not store the privateKey
 		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: Account.create(password) });
+		dispatch('app/storage/set', { key: 'accounts', value: state.accounts }, { root: true });
 
 		return {
 			success: true
 		};
 	},
-	loginFromStorage({ commit })
+	async loginFromStorage({ commit, rootGetters })
 	{
-		if(!storage.get('accounts')) return;
+		const release = rootGetters['app/getRelease'];
+		const accounts = await rootGetters['app/storage/get']('accounts');
 
-		commit('SET_ACCOUNTS', JSON.parse(storage.get('accounts')));
-
-		if(!storage.get('activeAccount'))
+		if(!accounts)
 		{
 			return;
 		}
 
-		const account = JSON.parse(storage.get('activeAccount'));
+		commit('SET_ACCOUNTS', { release, accounts });
 
-		commit('SET_ACTIVE_ACCOUNT', account);
+		if(!localStorage.getItem('activeAccount'))
+		{
+			return;
+		}
+
+		const activeAcount = JSON.parse(localStorage.getItem('activeAccount'));
+
+		commit('SET_ACTIVE_ACCOUNT', activeAcount);
 	},
 	logIn({ commit, state, rootGetters }, account)
 	{
@@ -89,7 +96,7 @@ const actions = {
 
 		commit('CLEAR_ACTIVE_ACCOUNT', release);
 	},
-	async importAccount({ commit, rootGetters }, { name, password, accountData })
+	async importAccount({ commit, dispatch, rootGetters }, { name, password, accountData })
 	{
 		const release = rootGetters['app/getRelease'];
 
@@ -119,6 +126,7 @@ const actions = {
 
 		// FIXME Do not store the privateKey
 		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: Account.getAccount() });
+		dispatch('app/storage/set', { key: 'accounts', value: state.accounts }, { root: true });
 
 		return {
 			success: true,

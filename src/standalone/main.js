@@ -5,13 +5,18 @@ import router from '@/standalone/router';
 import i18n from '@/plugins/i18n';
 import '@/plugins/quasar';
 
-store.dispatch('app/load');
+const main = async () =>
+{
+	await store.dispatch('app/load');
 
-/* eslint-disable no-new */
-new Vue({
-	el: '#app',
-	store,
-	router,
-	i18n,
-	render: (h) => h(App)
-});
+	/* eslint-disable no-new */
+	new Vue({
+		el: '#app',
+		store,
+		router,
+		i18n,
+		render: (h) => h(App)
+	});
+};
+
+main();

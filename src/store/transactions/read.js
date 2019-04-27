@@ -1,4 +1,3 @@
-import storage from '@/utils/storage';
 import { getAddressTransactions } from '@/utils/api';
 
 const state = {
@@ -13,7 +12,7 @@ const mutations = {
 	{
 		state.transactions[release][address] = data;
 
-		storage.set('transactions', JSON.stringify(state.transactions));
+		localStorage.setItem('transactions', JSON.stringify(state.transactions));
 	}
 };
 
