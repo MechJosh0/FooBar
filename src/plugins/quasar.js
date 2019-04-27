@@ -45,7 +45,9 @@ import {
 	QMarkupTable,
 	QSlider,
 	QSpinner,
-	QBanner
+	QBanner,
+	QSlideTransition,
+	QTooltip
 } from 'quasar';
 
 Vue.use(Quasar, {
@@ -88,7 +90,9 @@ Vue.use(Quasar, {
 		QMarkupTable,
 		QSlider,
 		QSpinner,
-		QBanner
+		QBanner,
+		QSlideTransition,
+		QTooltip
 	},
 	directives: {
 		Ripple

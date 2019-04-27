@@ -23,6 +23,19 @@ export default {
 		}
 	},
 	views: {
+		backup: {
+			privateKey: {
+				title: 'Private Key',
+				information: 'Your private key is your absolute plain text password to your address. This should be only used if you have lost access to your keystore file.',
+				download: 'View private key',
+				copied: 'Copied!'
+			},
+			keystore: {
+				title: 'Keystore File',
+				information: 'Your keystore file contains your private key encrypted with your password and is the preferred method for common usage.',
+				download: 'Download'
+			}
+		},
 		settings: {
 			form: {
 				serverOptions: {

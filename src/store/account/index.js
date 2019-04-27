@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Account from '@/utils/nuls-js/account';
-import { CONSENSUS_LOCK_TIME } from 'nuls-js';
 
 const state = {
 	accounts: {
@@ -21,7 +20,7 @@ const mutations = {
 
 		localStorage.setItem('activeAccount', JSON.stringify(state.activeAccount));
 	},
-	SET_ACCOUNTS(state, { release, accounts })
+	SET_ACCOUNTS(state, accounts)
 	{
 		state.accounts = accounts;
 	},
@@ -62,7 +61,6 @@ const actions = {
 	},
 	async loginFromStorage({ commit, rootGetters })
 	{
-		const release = rootGetters['app/getRelease'];
 		const accounts = await rootGetters['app/storage/get']('accounts');
 
 		if(!accounts)
@@ -70,7 +68,7 @@ const actions = {
 			return;
 		}
 
-		commit('SET_ACCOUNTS', { release, accounts });
+		commit('SET_ACCOUNTS', accounts);
 
 		if(!localStorage.getItem('activeAccount'))
 		{
