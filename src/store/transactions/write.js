@@ -2,23 +2,23 @@ import Vue from 'vue';
 import i18n from '@/plugins/i18n';
 import { success, error } from '@/utils/notifications';
 
-const test = {
-	state: 'verifying',
-	attempt: 1,
-	transaction: {
-		recipients: ['TTavS9d34z6byDS8KKxwmf1LprkdjB9G'],
-		remark: null,
-		amount: 0.01,
-		fee: 0.005,
-		autoFee: true,
-		advanced: false
-	},
-	tx: {
-		getHash: () => '00208e3c19c86571e974a2d5f026e7208288fad5c399840e5eceb56a0908ce2811f7',
-		_time: new Date().getTime(),
-		_fee_price: 100000
-	}
-};
+// const test = {
+// 	state: 'verifying',
+// 	attempt: 1,
+// 	transaction: {
+// 		recipients: ['TTavS9d34z6byDS8KKxwmf1LprkdjB9G'],
+// 		remark: null,
+// 		amount: 0.01,
+// 		fee: 0.005,
+// 		autoFee: true,
+// 		advanced: false
+// 	},
+// 	tx: {
+// 		getHash: () => '00208e3c19c86571e974a2d5f026e7208288fad5c399840e5eceb56a0908ce2811f7',
+// 		_time: new Date().getTime(),
+// 		_fee_price: 100000
+// 	}
+// };
 
 const state = {
 	confirming: {}

@@ -1,6 +1,5 @@
 <template>
 	<CenteredCard>
-		<div>TTavS9d34z6byDS8KKxwmf1LprkdjB9G</div>
 		<q-form
 			@submit="onSubmit"
 			@reset="onReset"
@@ -211,7 +210,7 @@
 			transactionForm(advancedReset = false)
 			{
 				const data = {
-					recipients: [''],
+					recipients: ['TTavS9d34z6byDS8KKxwmf1LprkdjB9G'],
 					remark: null,
 					amount: 0.01,
 					fee: 0.005,
