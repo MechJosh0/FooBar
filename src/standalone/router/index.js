@@ -1,21 +1,31 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from '@/store';
+import appAccount from '@/utils/appAccount';
 
 Vue.use(Router);
 
 const loadComponent = (path) => () => import(`@/standalone/views${path}`);
 
 // Check if the user is logged in
-const logInCheck = (accountArea) => (to, from, next) =>
+const logInCheck = (walletArea) => (to, from, next) =>
 {
-	if(accountArea)
+	console.log(appAccount.isLoggedIn());
+
+	if(!appAccount.isLoggedIn())
+	{
+		return next({
+			name: 'login'
+		});
+	}
+
+	if(walletArea)
 	{
 		if(!store.getters['account/getActiveAccount'])
 		{
 			// User is trying to access an account area while logged out
 			return next({
-				name: 'index'
+				name: 'login'
 			});
 		}
 
@@ -35,60 +45,86 @@ const logInCheck = (accountArea) => (to, from, next) =>
 	return next();
 };
 
+const accountArea = () =>
+{
+	return logInCheck(false);
+};
+
+const walletArea = () =>
+{
+	return logInCheck(true);
+};
+
 const routeConfig = [
 	{
-		path: '/',
 		name: 'index',
+		path: '/',
 		component: loadComponent('/Index')
 	},
 	{
-		path: '/settings',
-		name: 'settings',
-		component: loadComponent('/Settings')
+		name: 'login',
+		path: '/login',
+		component: loadComponent('/Login')
 	},
 	{
-		path: '/create',
-		name: 'account.create',
-		component: loadComponent('/account/Create')
-	},
-	{
-		path: '/import',
-		name: 'account.import',
-		component: loadComponent('/account/Import')
-	},
-	{
-		path: '/account/:account',
 		name: 'account',
-		beforeEnter: logInCheck(true),
+		path: '/account',
+		beforeEnter: accountArea(),
 		redirect: {
-			name: 'account.user'
+			name: 'account.create'
 		},
 		component: loadComponent('/account/loggedIn/Index'),
 		children: [
 			{
-				name: 'account.user',
-				path: 'user',
-				component: loadComponent('/account/loggedIn/User')
+				name: 'settings',
+				path: 'settings',
+				component: loadComponent('/Settings')
 			},
 			{
-				name: 'account.transactions',
-				path: 'transactions',
-				component: loadComponent('/account/loggedIn/Transactions')
+				name: 'account.create',
+				path: 'create',
+				component: loadComponent('/account/Create')
 			},
 			{
-				name: 'account.transfer',
-				path: 'transfer',
-				component: loadComponent('/account/loggedIn/Transfer')
+				name: 'account.import',
+				path: 'import',
+				component: loadComponent('/account/Import')
 			},
 			{
-				name: 'account.backup',
-				path: 'backup',
-				component: loadComponent('/account/loggedIn/Backup')
-			},
-			{
-				name: 'account.export',
-				path: 'export',
-				component: loadComponent('/account/loggedIn/Export')
+				name: 'account.wallet',
+				path: ':account',
+				beforeEnter: walletArea(),
+				redirect: {
+					name: 'account.user'
+				},
+				component: loadComponent('/account/loggedIn/Index'),
+				children: [
+					{
+						name: 'account.wallet.user',
+						path: 'user',
+						component: loadComponent('/account/loggedIn/User')
+					},
+					{
+						name: 'account.wallet.transactions',
+						path: 'transactions',
+						component: loadComponent('/account/loggedIn/Transactions')
+					},
+					{
+						name: 'account.wallet.transfer',
+						path: 'transfer',
+						component: loadComponent('/account/loggedIn/Transfer')
+					},
+					{
+						name: 'account.wallet.backup',
+						path: 'backup',
+						component: loadComponent('/account/loggedIn/Backup')
+					},
+					{
+						name: 'account.wallet.export',
+						path: 'export',
+						component: loadComponent('/account/loggedIn/Export')
+					}
+				]
 			}
 		]
 	}
