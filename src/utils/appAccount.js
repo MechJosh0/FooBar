@@ -14,7 +14,12 @@ class ApplicationAccount
 		return !!this.password;
 	}
 
-	set(newPassword)
+	logOut()
+	{
+		this.password = null;
+	}
+
+	login(newPassword)
 	{
 		if(typeof newPassword !== 'string') throw new Error('Password must be a string');
 
