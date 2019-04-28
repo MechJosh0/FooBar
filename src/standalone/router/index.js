@@ -6,7 +6,7 @@ Vue.use(Router);
 
 const loadComponent = (path) => () => import(`@/standalone/views${path}`);
 
-// Guard to check if the user is an admin before accessing a page.
+// Check if the user is logged in
 const logInCheck = (accountArea) => (to, from, next) =>
 {
 	if(accountArea)
