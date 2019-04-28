@@ -254,7 +254,7 @@
 			{
 				this.tx.sign(this.account.prikey);
 				this.$store.dispatch('transactions/write/sendTransaction', { transaction: this.transaction, tx: this.tx });
-				this.$router.push({ name: 'account.transactions', params: { account: this.account.name } });
+				this.$router.push({ name: 'account.wallet.transactions', params: { account: this.account.name } });
 			}
 		}
 	};

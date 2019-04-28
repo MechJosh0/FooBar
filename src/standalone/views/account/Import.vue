@@ -32,7 +32,7 @@
 			<div class="float-right">
 				<q-btn
 					:label="$t('views.import.form.buttons.create')"
-					:to="{ name: 'account.create' }"
+					:to="{ name: 'account.wallet.create' }"
 					type="submit"
 					color="secondary"
 				/>
@@ -175,7 +175,7 @@
 				}
 
 				success(this.$t('views.import.form.submit.success'));
-				this.$router.push({ name: 'account.user', params: { account: this.name } });
+				this.$router.push({ name: 'account.wallet.user', params: { account: this.name } });
 			}
 		}
 	};

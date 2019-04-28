@@ -61,31 +61,31 @@
 						v-if="account.address"
 						icon="fas fa-user"
 						:label="$t('header.navigation.account')"
-						to="account.user"
+						to="account.wallet.user"
 					/>
 					<Item
 						v-if="account.address"
 						icon="fas fa-receipt"
 						:label="$t('header.navigation.transactions')"
-						to="account.transactions"
+						to="account.wallet.transactions"
 					/>
 					<Item
 						v-if="account.address"
 						icon="fas fa-coins"
 						:label="$t('header.navigation.transfer')"
-						to="account.transfer"
+						to="account.wallet.transfer"
 					/>
 					<Item
 						v-if="account.address"
 						icon="fas fa-file-export"
 						:label="$t('header.navigation.backup')"
-						to="account.backup"
+						to="account.wallet.backup"
 					/>
 					<Item
 						v-if="account.address"
 						icon="fas fa-print"
 						:label="$t('header.navigation.export')"
-						to="account.export"
+						to="account.wallet.export"
 					/>
 					<div class="listBottom">
 						<Item
