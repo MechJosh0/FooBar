@@ -1,13 +1,13 @@
 import { Account } from 'nuls-js';
 
-const ApplicationAccount = class
+class ApplicationAccount
 {
 	password = null;
 
-	constructor(password)
-	{
-		this.set(password);
-	}
+	// constructor(password)
+	// {
+	// 	this.set(password);
+	// }
 
 	isLoggedIn()
 	{
@@ -29,6 +29,6 @@ const ApplicationAccount = class
 
 		return account.privateKey;
 	}
-}();
+}
 
-export default ApplicationAccount;
+export default new ApplicationAccount();
