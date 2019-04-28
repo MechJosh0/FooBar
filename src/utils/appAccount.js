@@ -14,7 +14,7 @@ class ApplicationAccount
 		return !!this.password;
 	}
 
-	logOut()
+	logout()
 	{
 		this.password = null;
 	}
