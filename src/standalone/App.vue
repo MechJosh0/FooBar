@@ -57,52 +57,63 @@
 						:label="$t('header.navigation.home')"
 						to="index"
 					/>
-					<Item
-						v-if="account.address"
-						icon="fas fa-user"
-						:label="$t('header.navigation.account')"
-						to="account.wallet.user"
-					/>
-					<Item
-						v-if="account.address"
-						icon="fas fa-receipt"
-						:label="$t('header.navigation.transactions')"
-						to="account.wallet.transactions"
-					/>
-					<Item
-						v-if="account.address"
-						icon="fas fa-coins"
-						:label="$t('header.navigation.transfer')"
-						to="account.wallet.transfer"
-					/>
-					<Item
-						v-if="account.address"
-						icon="fas fa-file-export"
-						:label="$t('header.navigation.backup')"
-						to="account.wallet.backup"
-					/>
-					<Item
-						v-if="account.address"
-						icon="fas fa-print"
-						:label="$t('header.navigation.export')"
-						to="account.wallet.export"
-					/>
+					<template v-if="account.address">
+						<Item
+							icon="fas fa-user"
+							:label="$t('header.navigation.account')"
+							to="account.wallet.user"
+						/>
+						<Item
+							icon="fas fa-receipt"
+							:label="$t('header.navigation.transactions')"
+							to="account.wallet.transactions"
+						/>
+						<Item
+							icon="fas fa-coins"
+							:label="$t('header.navigation.transfer')"
+							to="account.wallet.transfer"
+						/>
+						<Item
+							icon="fas fa-file-export"
+							:label="$t('header.navigation.backup')"
+							to="account.wallet.backup"
+						/>
+						<Item
+							icon="fas fa-print"
+							:label="$t('header.navigation.export')"
+							to="account.wallet.export"
+						/>
+					</template>
 					<div class="listBottom">
-						<Item
-							icon="fas fa-upload"
-							:label="$t('header.navigation.import')"
-							to="account.import"
-						/>
-						<Item
-							icon="fas fa-user-plus"
-							:label="$t('header.navigation.newAccount')"
-							to="account.create"
-						/>
-						<Item
-							icon="fas fa-cog"
-							:label="$t('header.navigation.settings')"
-							to="settings"
-						/>
+						<template v-if="isLoggedIn">
+							<Item
+								icon="fas fa-upload"
+								:label="$t('header.navigation.import')"
+								to="account.import"
+							/>
+							<Item
+								icon="fas fa-user-plus"
+								:label="$t('header.navigation.newAccount')"
+								to="account.create"
+							/>
+							<Item
+								icon="fas fa-cog"
+								:label="$t('header.navigation.settings')"
+								to="settings"
+							/>
+							<Item
+								icon="fas fa-sign-out-alt"
+								:label="$t('header.navigation.logout')"
+								to="logout"
+							/>
+						</template>
+						<template v-else>
+							<Item
+								icon="fas fa-sign-in-alt"
+								:label="$t('header.navigation.login')"
+								to="login"
+							/>
+						</template>
 					</div>
 				</q-list>
 			</q-scroll-area>
@@ -125,6 +136,7 @@
 </template>
 
 <script>
+	import appAccount from '@/utils/appAccount';
 	import Item from '@/standalone/components/navigation/Item';
 
 	export default {
@@ -139,6 +151,10 @@
 			};
 		},
 		computed: {
+			isLoggedIn()
+			{
+				return appAccount.isLoggedIn();
+			},
 			accounts()
 			{
 				return this.$store.getters['account/getAccounts'];
