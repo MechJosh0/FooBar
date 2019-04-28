@@ -10,7 +10,9 @@ export default {
 			export: 'Export',
 			import: 'Import',
 			newAccount: 'New Account',
-			settings: 'Settings'
+			settings: 'Settings',
+			logout: 'Logout',
+			login: 'Login'
 		}
 	},
 	dates: {
@@ -32,7 +34,7 @@ export default {
 			},
 			keystore: {
 				title: 'Keystore File',
-				information: 'Your keystore file contains your private key encrypted with your password and is the preferred method for common usage.',
+				information: 'Your keystore file contains your private key encrypted with your account password for {appName}. Keystore is the preferred method for common usage for importing and exporting your account.',
 				download: 'Download'
 			}
 		},

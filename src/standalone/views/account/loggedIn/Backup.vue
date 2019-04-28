@@ -28,7 +28,7 @@
 			</div>
 		</q-slide-transition>
 		<h4>{{ $t('views.backup.keystore.title') }}</h4>
-		<p>{{ $t('views.backup.keystore.information') }}</p>
+		<p>{{ $t('views.backup.keystore.information', { appName: $t('header.title') }) }}</p>
 		<q-btn
 			color="primary"
 			:label="$t('views.backup.keystore.download')"
