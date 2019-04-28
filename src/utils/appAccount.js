@@ -9,8 +9,15 @@ const ApplicationAccount = class
 		this.set(password);
 	}
 
+	isLoggedIn()
+	{
+		return !!this.password;
+	}
+
 	set(newPassword)
 	{
+		if(typeof newPassword !== 'string') throw new Error('Password must be a string');
+
 		this.password = newPassword;
 	}
 
