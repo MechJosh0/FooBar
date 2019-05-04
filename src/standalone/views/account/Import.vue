@@ -154,8 +154,9 @@
 			},
 			onReset()
 			{
-				this.name = null;
-				this.password = null;
+				this.name = '';
+				this.password = '';
+				this.file = null;
 			},
 			async onSubmit()
 			{

@@ -1,6 +1,20 @@
-import store from '@/store';
+const state = {
+	applicationPassword: null
+};
 
-chrome.browserAction.onClicked.addListener((tab) =>
+chrome.runtime.onMessage.addListener(({ method, type, data }, sender, response) =>
 {
-	console.log(`Hello ${store.getters.foo}!`);
+	switch(method)
+	{
+		case 'get':
+			response(state[type]);
+			break;
+		case 'set':
+			state[type] = data;
+			response(state[type]);
+			break;
+		default:
+			response(`unknown method: [${method}, ${type}, ${data}]`);
+			break;
+	}
 });

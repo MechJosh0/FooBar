@@ -1,6 +1,7 @@
 <template>
 	<div>
-		<h1>popup {{ defaultText }}</h1>
+		<h3>popup {{ defaultText }}</h3>
+		<p>{{ applicationPassword }}</p>
 		<button @click="open()">
 			Click
 		</button>
@@ -12,7 +13,9 @@
 	export default {
 		data()
 		{
-			return {};
+			return {
+				applicationPassword: null
+			};
 		},
 		computed: {
 			defaultText()
@@ -22,7 +25,10 @@
 		},
 		mounted()
 		{
-			chrome.runtime.sendMessage({});
+			chrome.runtime.sendMessage({ method: 'get', type: 'applicationPassword' }, (res) =>
+			{
+				this.applicationPassword = res;
+			});
 		},
 		methods: {
 			open()

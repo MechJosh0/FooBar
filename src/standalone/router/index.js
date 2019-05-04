@@ -1,27 +1,25 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from '@/store';
-import appAccount from '@/utils/appAccount';
 
 Vue.use(Router);
 
 const loadComponent = (path) => () => import(`@/standalone/views${path}`);
+const loadUI = (path) => () => import(`@/standalone/components${path}`);
 
 // Check if the user is logged in
 const logInCheck = (walletArea) => (to, from, next) =>
 {
-	console.log(appAccount.isLoggedIn());
-
-	if(!appAccount.isLoggedIn())
+	if(!store.getters['app/account/isLoggedIn']) // If the user is not logged into the application
 	{
 		return next({
 			name: 'login'
 		});
 	}
 
-	if(walletArea)
+	if(walletArea) // If we're visting a wallet area page (transfer, transactions etc)
 	{
-		if(!store.getters['account/getActiveAccount'])
+		if(!store.getters['account/getActiveAccount']) // If the user doesn't have an active account
 		{
 			// User is trying to access an account area while logged out
 			return next({
@@ -33,7 +31,7 @@ const logInCheck = (walletArea) => (to, from, next) =>
 		return next();
 	}
 
-	if(store.getters['account/getActiveAccount'])
+	if(!store.getters['account/getActiveAccount']) // If the user doesn't have an active account
 	{
 		// Guest is trying to access Login page
 		return next({
@@ -41,7 +39,7 @@ const logInCheck = (walletArea) => (to, from, next) =>
 		});
 	}
 
-	// Guest is accessing guest area :)
+	// User is accessing general logged in pages (creating and importing addresses etc)
 	return next();
 };
 
@@ -67,13 +65,18 @@ const routeConfig = [
 		component: loadComponent('/Login')
 	},
 	{
+		name: 'logout',
+		path: '/logout',
+		component: loadComponent('/Logout')
+	},
+	{
 		name: 'account',
 		path: '/account',
 		beforeEnter: accountArea(),
+		component: loadUI('/RouterView'),
 		redirect: {
 			name: 'account.create'
 		},
-		component: loadComponent('/account/loggedIn/Index'),
 		children: [
 			{
 				name: 'settings',

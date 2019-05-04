@@ -1,9 +1,11 @@
 import { ChainIdType } from 'nuls-js';
 import Account from '@/utils/nuls-js/account';
 import storage from '@/store/app/storage';
+import account from '@/store/app/account';
 
 const modules = {
-	storage
+	storage,
+	account
 };
 
 const state = {

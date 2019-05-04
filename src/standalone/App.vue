@@ -24,7 +24,11 @@
 				</q-toolbar-title>
 				<q-space />
 
-				<q-tabs v-model="activeAccount" shrink>
+				<q-tabs
+					v-if="isLoggedIn"
+					v-model="activeAccount"
+					shrink
+				>
 					<q-route-tab
 						v-for="a in accounts"
 						:key="a.address"
@@ -57,7 +61,7 @@
 						:label="$t('header.navigation.home')"
 						to="index"
 					/>
-					<template v-if="account.address">
+					<template v-if="isLoggedIn && account.address">
 						<Item
 							icon="fas fa-user"
 							:label="$t('header.navigation.account')"
@@ -136,7 +140,6 @@
 </template>
 
 <script>
-	import appAccount from '@/utils/appAccount';
 	import Item from '@/standalone/components/navigation/Item';
 
 	export default {
@@ -153,7 +156,7 @@
 		computed: {
 			isLoggedIn()
 			{
-				return appAccount.isLoggedIn();
+				return this.$store.getters['app/account/isLoggedIn'];
 			},
 			accounts()
 			{
@@ -173,11 +176,31 @@
 		mounted()
 		{
 			this.activeAccount = this.account.address;
+
+			chrome.runtime.sendMessage({ method: 'get', type: 'applicationPassword' }, (res) =>
+			{
+				this.setApplicationPassword(res);
+			});
+
+			chrome.runtime.onMessage.addListener(({ method, type, data }, sender, response) =>
+			{
+				if(method === 'set' && type === 'applicationPassword')
+				{
+					this.setApplicationPassword(data);
+				}
+			});
 		},
 		methods: {
-			link(name)
+			setApplicationPassword(password)
 			{
+				if(!password)
+				{
+					this.$store.dispatch('app/account/logout');
 
+					return;
+				}
+
+				this.$store.dispatch('app/account/login', password);
 			}
 		}
 	};

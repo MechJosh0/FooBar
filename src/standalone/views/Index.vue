@@ -6,6 +6,12 @@
 			:columns="columns"
 			rowKey="address"
 		/>
+		<button @click="foo">
+			My Button
+		</button>
+		{{ isLoggedIn }}
+		--
+		{{ appPassword }}
 	</div>
 </template>
 
@@ -38,6 +44,14 @@
 			};
 		},
 		computed: {
+			isLoggedIn()
+			{
+				return this.$store.getters['app/account/isLoggedIn'];
+			},
+			appPassword()
+			{
+				return this.$store.getters['app/account/password'];
+			},
 			accounts()
 			{
 				const accounts = this.$store.getters['account/getAccounts'];
@@ -49,6 +63,14 @@
 						name: accounts[address].name
 					};
 				});
+			}
+		},
+		methods: {
+			foo()
+			{
+				const name = prompt('Enter your name');
+
+				this.$store.dispatch('app/account/login', name);
 			}
 		}
 	};

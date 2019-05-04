@@ -11,14 +11,14 @@
 				lazyRules
 				:rules="validation.name"
 			/>
-			<q-input
+			<!-- <q-input
 				v-model="password"
 				type="password"
 				filled
 				:label="$t('views.import.form.fields.password.label')"
 				lazyRules
 				:rules="validation.password"
-			/>
+			/> -->
 			<div class="float-right">
 				<q-btn
 					:label="$t('views.create.form.buttons.import')"
@@ -61,38 +61,45 @@
 
 							return this.$t('views.create.form.fields.name.errors.exists');
 						}
-					],
-					password: [
-						(val) => // Required
-						{
-							if(val && val.length > 0) return true;
-
-							return this.$t('views.create.form.fields.password.errors.required');
-						}
 					]
+					// password: [
+					// 	(val) => // Required
+					// 	{
+					// 		if(val && val.length > 0) return true;
+
+					// 		return this.$t('views.create.form.fields.password.errors.required');
+					// 	},
+					// 	(val) => // Incorrect Password
+					// 	{
+					// 		if(val === this.appPassword) return true;
+
+					// 		return this.$t('views.create.form.fields.password.errors.incorrect', { appName: this.$t('header.title') });
+					// 	}
+					// ]
 				},
-				password: '',
+				// password: '',
 				name: ''
 			};
 		},
 		computed: {
+			appPassword()
+			{
+				return this.$store.getters['app/account/password'];
+			},
 			account()
 			{
 				return this.$store.getters['account/getActiveAccount'];
 			}
 		},
 		methods: {
-			deleteAccount()
-			{
-				this.$store.dispatch('account/logOut');
-			},
 			onReset()
 			{
-				this.name = null;
+				this.name = '';
+				// this.password = '';
 			},
 			onSubmit()
 			{
-				const res = this.$store.dispatch('account/createNewAccount', { name: this.name, password: this.password });
+				const res = this.$store.dispatch('account/createNewAccount', this.name);
 
 				if(!res.success)
 				{

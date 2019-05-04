@@ -39,9 +39,10 @@ const mutations = {
 };
 
 const actions = {
-	createNewAccount({ state, dispatch, commit, rootGetters }, { name, password })
+	createNewAccount({ state, dispatch, commit, rootGetters }, name)
 	{
 		const release = rootGetters['app/getRelease'];
+		const password = rootGetters['app/account/password'];
 
 		if(Object.keys(state.accounts[release]).find((address) => state.accounts[release][address].name === name))
 		{
@@ -94,9 +95,10 @@ const actions = {
 
 		commit('CLEAR_ACTIVE_ACCOUNT', release);
 	},
-	async importAccount({ commit, dispatch, rootGetters }, { name, password, accountData })
+	async importAccount({ commit, dispatch, rootGetters }, { name, walletPassword, accountData })
 	{
 		const release = rootGetters['app/getRelease'];
+		const password = rootGetters['app/account/password'];
 
 		if(accountData.prikey)
 		{
@@ -106,7 +108,7 @@ const actions = {
 		{
 			try
 			{
-				Account.import(accountData.encryptedPrivateKey, password);
+				Account.import(accountData.encryptedPrivateKey, walletPassword);
 			}
 			catch(e)
 			{
@@ -121,6 +123,9 @@ const actions = {
 				}
 			}
 		}
+
+		// Recreate the imported account with our app password
+		Account.import(Account.getAccount().prikey, password);
 
 		// FIXME Do not store the privateKey
 		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: Account.getAccount() });

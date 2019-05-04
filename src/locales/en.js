@@ -25,6 +25,31 @@ export default {
 		}
 	},
 	views: {
+		login: {
+			form: {
+				fields: {
+					password: {
+						label: 'Password',
+						errors: {
+							required: 'You must enter a password'
+						}
+					},
+					passwordVerify: {
+						label: 'Confirm Password',
+						errors: {
+							required: 'You must confirm your password',
+							noMatch: 'Passwords do not match'
+						}
+					}
+				},
+				buttons: {
+					submit: 'Submit'
+				},
+				submit: {
+					success: 'You have successfully registered!'
+				}
+			}
+		},
 		backup: {
 			privateKey: {
 				title: 'Private Key',
@@ -161,7 +186,8 @@ export default {
 					password: {
 						label: 'Password',
 						errors: {
-							required: 'A password is required'
+							required: 'A password is required',
+							incorrect: 'Incorrect password, you must enter your {appName} password'
 						}
 					},
 					name: {
@@ -194,12 +220,6 @@ export default {
 					},
 					fee: {
 						label: 'Fee {amount}'
-					},
-					password: {
-						label: 'Password',
-						errors: {
-							required: 'A password is required'
-						}
 					},
 					recipients: {
 						hint: 'The recipient of the transfer',
