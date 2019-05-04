@@ -24,7 +24,7 @@
 </template>
 
 <script>
-	import { success } from '@/utils/notifications';
+	import { success, error } from '@/utils/notifications';
 	import CenteredCard from '@/standalone/components/pageContainers/CenteredCard';
 
 	export default {
@@ -58,11 +58,11 @@
 			{
 				this.password = '';
 			},
-			onSubmit()
+			async onSubmit()
 			{
 				try
 				{
-					this.$store.dispatch('app/account/login', this.password);
+					await this.$store.dispatch('app/account/login', this.password);
 					success(this.$t('views.login.form.submit.success'));
 					this.$router.push({ name: 'account.create' });
 				}
@@ -70,7 +70,7 @@
 				{
 					console.error(e.message);
 
-					success(this.$t('views.login.form.submit.error'));
+					error(this.$t('views.login.form.submit.error'));
 				}
 			}
 		}
