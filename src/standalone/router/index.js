@@ -60,6 +60,11 @@ const routeConfig = [
 		component: loadComponent('/Index')
 	},
 	{
+		name: 'register',
+		path: '/register',
+		component: loadComponent('/Register')
+	},
+	{
 		name: 'login',
 		path: '/login',
 		component: loadComponent('/Login')

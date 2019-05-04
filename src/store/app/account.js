@@ -1,3 +1,5 @@
+import { Account } from 'nuls-js';
+
 const state = {
 	password: null
 };
@@ -17,8 +19,26 @@ const actions = {
 	{
 		commit('SET_APP_PASSWORD', null);
 	},
-	login({ commit, state }, password)
+	async login({ commit, rootGetters }, password)
 	{
+		try
+		{
+			const extensionWallet = await rootGetters['app/storage/get']('_extensionWallet');
+
+			(new Account()).import(extensionWallet.encryptedPrivateKey, password);
+			commit('SET_APP_PASSWORD', password);
+
+			return true;
+		}
+		catch(e)
+		{
+			throw new Error(e.message);
+		}
+	},
+	register({ commit, dispatch }, password)
+	{
+		dispatch('app/storage/set', { key: '_extensionWallet', value: (new Account()).create(password) }, { root: true });
+
 		commit('SET_APP_PASSWORD', password);
 	}
 };

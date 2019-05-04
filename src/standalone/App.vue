@@ -114,6 +114,11 @@
 						<template v-else>
 							<Item
 								icon="fas fa-sign-in-alt"
+								:label="$t('header.navigation.register')"
+								to="register"
+							/>
+							<Item
+								icon="fas fa-sign-in-alt"
 								:label="$t('header.navigation.login')"
 								to="login"
 							/>
