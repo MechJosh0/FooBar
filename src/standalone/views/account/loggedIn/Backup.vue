@@ -12,7 +12,7 @@
 				<div class="q-pa-md">
 					<q-input
 						ref="textarea"
-						v-model="account.prikey"
+						v-model="privateKey"
 						filled
 						type="textarea"
 						readonly
@@ -42,11 +42,15 @@
 		data()
 		{
 			return {
-				viewPrivateKey: true,
+				viewPrivateKey: false,
 				copiedPrivateKey: false
 			};
 		},
 		computed: {
+			privateKey()
+			{
+				return this.$store.getters['account/decryptedActiveAccountPrivateKey'];
+			},
 			account()
 			{
 				return this.$store.getters['account/getActiveAccount'];
