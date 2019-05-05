@@ -85,12 +85,6 @@
 		components: {
 			Item
 		},
-		data()
-		{
-			return {
-				extensionWalletExists: null
-			};
-		},
 		computed: {
 			isLoggedIn()
 			{
@@ -99,13 +93,11 @@
 			account()
 			{
 				return this.$store.getters['account/getActiveAccount'] || {};
+			},
+			extensionWalletExists()
+			{
+				return this.$store.getters['app/account/accountExists'];
 			}
-		},
-		async mounted()
-		{
-			const extensionWallet = await this.$store.getters['app/storage/get']('_extensionWallet');
-
-			this.extensionWalletExists = !!extensionWallet;
 		}
 	};
 </script>

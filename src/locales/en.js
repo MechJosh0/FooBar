@@ -57,7 +57,8 @@ export default {
 					password: {
 						label: 'Password',
 						errors: {
-							required: 'You must enter a password'
+							required: 'You must enter a password',
+							incorrect: 'The password is incorrect'
 						}
 					}
 				},

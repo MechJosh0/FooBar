@@ -41,17 +41,17 @@
 							if(val && val.length > 0) return true;
 
 							return this.$t('views.login.form.fields.password.errors.required');
+						},
+						(val) => // Validate
+						{
+							if(this.$store.getters['app/account/isValidPassword'](val)) return true;
+
+							return this.$t('views.login.form.fields.password.errors.incorrect');
 						}
 					]
 				},
 				password: ''
 			};
-		},
-		computed: {
-			appPassword()
-			{
-				return this.$store.getters['app/account/password'];
-			}
 		},
 		methods: {
 			onReset()
@@ -60,16 +60,15 @@
 			},
 			async onSubmit()
 			{
-				try
+				const res = this.$store.dispatch('app/account/login', this.password);
+
+				if(res)
 				{
-					await this.$store.dispatch('app/account/login', this.password);
 					success(this.$t('views.login.form.submit.success'));
 					this.$router.push({ name: 'account.create' });
 				}
-				catch(e)
+				else
 				{
-					console.error(e.message);
-
 					error(this.$t('views.login.form.submit.error'));
 				}
 			}
