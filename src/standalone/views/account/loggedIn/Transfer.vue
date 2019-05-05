@@ -252,7 +252,7 @@
 			},
 			async broadcast()
 			{
-				this.tx.sign(this.account.prikey);
+				this.tx.sign(this.$store.getters['account/decryptedActiveAccountPrivateKey']);
 				this.$store.dispatch('transactions/write/sendTransaction', { transaction: this.transaction, tx: this.tx });
 				this.$router.push({ name: 'account.wallet.transactions', params: { account: this.account.name } });
 			}
