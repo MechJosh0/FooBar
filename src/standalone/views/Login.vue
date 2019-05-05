@@ -53,6 +53,12 @@
 				password: ''
 			};
 		},
+		computed: {
+			accounts()
+			{
+				return this.$store.getters['account/getAccounts'];
+			}
+		},
 		methods: {
 			onReset()
 			{
@@ -65,6 +71,14 @@
 				if(res)
 				{
 					success(this.$t('views.login.form.submit.success'));
+
+					if(Object.keys(this.accounts).length)
+					{
+						this.$router.push({ name: 'index' });
+
+						return;
+					}
+
 					this.$router.push({ name: 'account.create' });
 				}
 				else
