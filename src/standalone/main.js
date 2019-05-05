@@ -5,10 +5,8 @@ import router from '@/standalone/router';
 import i18n from '@/plugins/i18n';
 import '@/plugins/quasar';
 
-const main = async () =>
+const main = () =>
 {
-	await store.dispatch('app/load');
-
 	/* eslint-disable no-new */
 	new Vue({
 		el: '#app',
@@ -19,4 +17,36 @@ const main = async () =>
 	});
 };
 
-main();
+const setApplicationPassword = (password) =>
+{
+	if(!password)
+	{
+		store.dispatch('app/account/logout');
+
+		return;
+	}
+
+	store.dispatch('app/account/login', password);
+};
+
+// Listen for when the user logs in and out using the chrome onMessage, we trigger the store to run the login/logout function
+chrome.runtime.onMessage.addListener(({ method, type, data }, sender, response) =>
+{
+	if(method === 'set' && type === 'applicationPassword')
+	{
+		setApplicationPassword(data);
+	}
+});
+
+// This will get the applicationPassword from the users extension memory straight away
+chrome.runtime.sendMessage({ method: 'get', type: 'applicationPassword' }, async (res) =>
+{
+	// We have the applicationPassword, but first we need to load the application account (from chrome storage) into the store
+	await store.dispatch('app/load');
+
+	// Now we log the user into the account using the password
+	setApplicationPassword(res);
+
+	// And finally, we can load the actual application
+	main();
+});

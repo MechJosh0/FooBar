@@ -65,34 +65,6 @@
 			return {
 				sidebarIsOpen: true
 			};
-		},
-		mounted()
-		{
-			chrome.runtime.sendMessage({ method: 'get', type: 'applicationPassword' }, (res) =>
-			{
-				this.setApplicationPassword(res);
-			});
-
-			chrome.runtime.onMessage.addListener(({ method, type, data }, sender, response) =>
-			{
-				if(method === 'set' && type === 'applicationPassword')
-				{
-					this.setApplicationPassword(data);
-				}
-			});
-		},
-		methods: {
-			setApplicationPassword(password)
-			{
-				if(!password)
-				{
-					this.$store.dispatch('app/account/logout');
-
-					return;
-				}
-
-				this.$store.dispatch('app/account/login', password);
-			}
 		}
 	};
 </script>
