@@ -59,16 +59,20 @@
 				/>
 			</template>
 			<template v-else>
-				<Item
-					icon="fas fa-sign-in-alt"
-					:label="$t('header.navigation.register')"
-					to="register"
-				/>
-				<Item
-					icon="fas fa-sign-in-alt"
-					:label="$t('header.navigation.login')"
-					to="login"
-				/>
+				<template v-if="extensionWalletExists !== null">
+					<Item
+						v-if="!extensionWalletExists"
+						icon="fas fa-sign-in-alt"
+						:label="$t('header.navigation.register')"
+						to="register"
+					/>
+					<Item
+						v-if="extensionWalletExists"
+						icon="fas fa-sign-in-alt"
+						:label="$t('header.navigation.login')"
+						to="login"
+					/>
+				</template>
 			</template>
 		</div>
 	</q-list>
@@ -81,6 +85,12 @@
 		components: {
 			Item
 		},
+		data()
+		{
+			return {
+				extensionWalletExists: null
+			};
+		},
 		computed: {
 			isLoggedIn()
 			{
@@ -90,6 +100,12 @@
 			{
 				return this.$store.getters['account/getActiveAccount'] || {};
 			}
+		},
+		async mounted()
+		{
+			const extensionWallet = await this.$store.getters['app/storage/get']('_extensionWallet');
+
+			this.extensionWalletExists = !!extensionWallet;
 		}
 	};
 </script>

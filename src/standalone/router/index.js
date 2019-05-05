@@ -7,6 +7,28 @@ Vue.use(Router);
 const loadComponent = (path) => () => import(`@/standalone/views${path}`);
 const loadUI = (path) => () => import(`@/standalone/components${path}`);
 
+// Check if the wallet extension exists (used for displaying either login or register pages)
+const extensionWalletExists = (mustExist) => async (to, from, next) =>
+{
+	const extensionWallet = await store.getters['app/storage/get']('_extensionWallet');
+
+	if(mustExist && !extensionWallet)
+	{
+		return next({
+			name: 'register'
+		});
+	}
+
+	if(!mustExist && extensionWallet)
+	{
+		return next({
+			name: 'login'
+		});
+	}
+
+	return next();
+};
+
 // Check if the user is logged in
 const logInCheck = (walletArea) => (to, from, next) =>
 {
@@ -62,11 +84,13 @@ const routeConfig = [
 	{
 		name: 'register',
 		path: '/register',
+		beforeEnter: extensionWalletExists(false),
 		component: loadComponent('/Register')
 	},
 	{
 		name: 'login',
 		path: '/login',
+		beforeEnter: extensionWalletExists(true),
 		component: loadComponent('/Login')
 	},
 	{
