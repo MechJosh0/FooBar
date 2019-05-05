@@ -12,7 +12,8 @@ export default {
 			newAccount: 'New Account',
 			settings: 'Settings',
 			logout: 'Logout',
-			login: 'Login'
+			login: 'Login',
+			register: 'Register'
 		}
 	},
 	dates: {
@@ -25,7 +26,7 @@ export default {
 		}
 	},
 	views: {
-		login: {
+		register: {
 			form: {
 				fields: {
 					password: {
@@ -47,6 +48,25 @@ export default {
 				},
 				submit: {
 					success: 'You have successfully registered!'
+				}
+			}
+		},
+		login: {
+			form: {
+				fields: {
+					password: {
+						label: 'Password',
+						errors: {
+							required: 'You must enter a password'
+						}
+					}
+				},
+				buttons: {
+					submit: 'Submit'
+				},
+				submit: {
+					success: 'You have successfully registered!',
+					error: 'The password is incorrect'
 				}
 			}
 		},
