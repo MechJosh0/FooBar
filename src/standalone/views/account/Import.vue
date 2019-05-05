@@ -47,6 +47,7 @@
 </template>
 
 <script>
+	import Account from '@/utils/nuls-js/account';
 	import { success, error } from '@/utils/notifications';
 	import CenteredCard from '@/standalone/components/pageContainers/CenteredCard';
 
@@ -115,6 +116,27 @@
 							if(val && val.length > 0) return true;
 
 							return this.$t('views.import.form.fields.password.errors.required');
+						},
+						async (val) => // Validate
+						{
+							const [file] = this.$refs.file.$refs.input.files;
+							const accountData = await this.readJSONFileContent(file);
+
+							if(accountData.prikey)
+							{
+								return true;
+							}
+
+							try
+							{
+								Account.import(accountData.encryptedPrivateKey, val);
+
+								return true;
+							}
+							catch(e)
+							{
+								return this.$t('views.import.form.fields.password.errors.incorrect');
+							}
 						}
 					]
 				},
@@ -132,6 +154,8 @@
 		methods: {
 			async readJSONFileContent(file)
 			{
+				if(!file) return {};
+
 				const reader = new FileReader();
 
 				const fileContents = new Promise((resolve, reject) =>
@@ -164,13 +188,14 @@
 				const accountData = await this.readJSONFileContent(file);
 				const res = await this.$store.dispatch('account/importAccount', {
 					name: this.name,
-					password: this.password,
+					walletPassword: this.password,
 					accountData
 				});
 
 				if(!res.success)
 				{
 					error(this.$t(`views.import.form.submit.${res.errorCode}`));
+					this.passwordIsValid = false;
 
 					return;
 				}
