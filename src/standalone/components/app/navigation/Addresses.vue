@@ -10,7 +10,7 @@
 			:name="a.address"
 			:label="a.name"
 			:to="{
-				name: 'account',
+				name: 'account.wallet.user',
 				params: {
 					account: a.name
 				}
