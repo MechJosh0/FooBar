@@ -66,7 +66,7 @@ export default {
 					submit: 'Submit'
 				},
 				submit: {
-					success: 'You have successfully registered!',
+					success: 'You have successfully logged in!',
 					error: 'The password is incorrect'
 				}
 			}
