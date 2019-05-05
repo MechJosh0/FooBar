@@ -36,10 +36,10 @@ const mutations = {
 const actions = {
 	async load({ dispatch }, account)
 	{
+		await dispatch('app/account/setAccount', null, { root: true });
 		await dispatch('account/loginFromStorage', null, { root: true });
 		dispatch('setServerFromStorage');
 		dispatch('i18n/setLocaleFromStorage', null, { root: true });
-		dispatch('app/account/setAccount', null, { root: true });
 		// dispatch('blocks/init', null, { root: true });
 	},
 	setStorageSolution({ commit }, solution)
