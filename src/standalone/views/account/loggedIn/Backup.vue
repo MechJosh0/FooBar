@@ -73,10 +73,7 @@
 			},
 			triggerDownload()
 			{
-				this.download(`${this.account.address}.keystore`, {
-					...this.account,
-					prikey: null
-				});
+				this.download(`${this.account.address}.keystore`, this.account);
 			},
 			togglePrivateKeyView()
 			{
