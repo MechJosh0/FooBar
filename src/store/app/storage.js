@@ -25,15 +25,9 @@ const actions = {
 			switch(state.solution)
 			{
 				case 'chromeLocal':
-					return chrome.storage.local.set({ [key]: value }, (results) =>
-					{
-						resolve(results[key]);
-					});
+					return chrome.storage.local.set({ [key]: value }, () => resolve(value));
 				case 'chromSync':
-					return chrome.storage.sync.set({ [key]: value }, (results) =>
-					{
-						resolve(results[key]);
-					});
+					return chrome.storage.sync.set({ [key]: value }, () => resolve(value));
 				default:
 					throw new Error('Unknown storage solution');
 				// resolve(localStorage.setItem(key));
@@ -47,15 +41,9 @@ const actions = {
 			switch(state.solution)
 			{
 				case 'chromeLocal':
-					return chrome.storage.local.remove(key, (results) =>
-					{
-						resolve(results[key]);
-					});
+					return chrome.storage.local.remove(key, (results) => resolve(results[key]));
 				case 'chromSync':
-					return chrome.storage.sync.remove(key, (results) =>
-					{
-						resolve(results[key]);
-					});
+					return chrome.storage.sync.remove(key, (results) => resolve(results[key]));
 				default:
 					throw new Error('Unknown storage solution');
 				// resolve(localStorage.removeItem(key));
@@ -73,15 +61,9 @@ const getters = {
 			switch(state.solution)
 			{
 				case 'chromeLocal':
-					return chrome.storage.local.get(key, (results) =>
-					{
-						resolve(results[key]);
-					});
+					return chrome.storage.local.get(key, (results) => resolve(results[key]));
 				case 'chromSync':
-					return chrome.storage.sync.get(key, (results) =>
-					{
-						resolve(results[key]);
-					});
+					return chrome.storage.sync.get(key, (results) => resolve(results[key]));
 				default:
 					throw new Error('Unknown storage solution');
 				// resolve(localStorage.getItem(key));
