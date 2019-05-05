@@ -73,9 +73,9 @@
 			{
 				this.name = '';
 			},
-			onSubmit()
+			async onSubmit()
 			{
-				const res = this.$store.dispatch('account/createNewAccount', this.name);
+				const res = await this.$store.dispatch('account/createNewAccount', this.name);
 
 				if(!res.success)
 				{
