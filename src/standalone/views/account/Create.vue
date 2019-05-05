@@ -11,18 +11,10 @@
 				lazyRules
 				:rules="validation.name"
 			/>
-			<!-- <q-input
-				v-model="password"
-				type="password"
-				filled
-				:label="$t('views.import.form.fields.password.label')"
-				lazyRules
-				:rules="validation.password"
-			/> -->
 			<div class="float-right">
 				<q-btn
 					:label="$t('views.create.form.buttons.import')"
-					:to="{ name: 'account.wallet.import' }"
+					:to="{ name: 'account.import' }"
 					type="submit"
 					color="secondary"
 				/>
@@ -62,22 +54,7 @@
 							return this.$t('views.create.form.fields.name.errors.exists');
 						}
 					]
-					// password: [
-					// 	(val) => // Required
-					// 	{
-					// 		if(val && val.length > 0) return true;
-
-					// 		return this.$t('views.create.form.fields.password.errors.required');
-					// 	},
-					// 	(val) => // Incorrect Password
-					// 	{
-					// 		if(val === this.appPassword) return true;
-
-					// 		return this.$t('views.create.form.fields.password.errors.incorrect', { appName: this.$t('header.title') });
-					// 	}
-					// ]
 				},
-				// password: '',
 				name: ''
 			};
 		},
@@ -95,7 +72,6 @@
 			onReset()
 			{
 				this.name = '';
-				// this.password = '';
 			},
 			onSubmit()
 			{

@@ -32,7 +32,7 @@
 			<div class="float-right">
 				<q-btn
 					:label="$t('views.import.form.buttons.create')"
-					:to="{ name: 'account.wallet.create' }"
+					:to="{ name: 'account.create' }"
 					type="submit"
 					color="secondary"
 				/>
