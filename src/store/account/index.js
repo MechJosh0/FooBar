@@ -15,6 +15,8 @@ const state = {
 const mutations = {
 	CREATE_ACTIVE_ACCOUNT(state, { name, release, account })
 	{
+		delete account.prikey;
+
 		state.accounts[release][account.address] = { name, ...account };
 		state.activeAccount[release] = account.address;
 
@@ -52,7 +54,6 @@ const actions = {
 			};
 		}
 
-		// FIXME Do not store the privateKey
 		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: Account.create(password) });
 		dispatch('app/storage/set', { key: 'accounts', value: state.accounts }, { root: true });
 
@@ -127,7 +128,6 @@ const actions = {
 		// Recreate the imported account with our app password
 		Account.import(Account.getAccount().prikey, password);
 
-		// FIXME Do not store the privateKey
 		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: Account.getAccount() });
 		dispatch('app/storage/set', { key: 'accounts', value: state.accounts }, { root: true });
 
