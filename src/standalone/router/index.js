@@ -53,14 +53,6 @@ const logInCheck = (walletArea) => (to, from, next) =>
 		return next();
 	}
 
-	if(!store.getters['account/getActiveAccount']) // If the user doesn't have an active account
-	{
-		// Guest is trying to access Login page
-		return next({
-			name: 'account'
-		});
-	}
-
 	// User is accessing general logged in pages (creating and importing addresses etc)
 	return next();
 };
