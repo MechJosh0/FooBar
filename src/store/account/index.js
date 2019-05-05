@@ -157,6 +157,12 @@ const getters = {
 		const address = Object.keys(state.accounts[release]).find((address) => state.accounts[release][address][key] === val);
 
 		return state.accounts[release][address];
+	},
+	decryptedActiveAccountPrivateKey: (state, getters, rootState, rootGetters) =>
+	{
+		const account = Account.import(getters.getActiveAccount.encryptedPrivateKey, rootGetters['app/account/password']);
+
+		return account.prikey;
 	}
 };
 
