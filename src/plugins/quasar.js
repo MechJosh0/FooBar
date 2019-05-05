@@ -47,7 +47,10 @@ import {
 	QSpinner,
 	QBanner,
 	QSlideTransition,
-	QTooltip
+	QTooltip,
+	QDialog,
+	ClosePopup,
+	QCardActions
 } from 'quasar';
 
 Vue.use(Quasar, {
@@ -92,10 +95,13 @@ Vue.use(Quasar, {
 		QSpinner,
 		QBanner,
 		QSlideTransition,
-		QTooltip
+		QTooltip,
+		QDialog,
+		QCardActions
 	},
 	directives: {
-		Ripple
+		Ripple,
+		ClosePopup
 	},
 	plugins: {
 		Notify

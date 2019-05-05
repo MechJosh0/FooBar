@@ -76,7 +76,13 @@ export default {
 				title: 'Private Key',
 				information: 'Your private key is your absolute plain text password to your address. This should be only used if you have lost access to your keystore file.',
 				download: 'View private key',
-				copied: 'Copied!'
+				copied: 'Copied!',
+				dialog: {
+					title: 'Confirm your password',
+					input: 'Password',
+					cancel: 'Cancel',
+					submit: 'Submit'
+				}
 			},
 			keystore: {
 				title: 'Keystore File',
