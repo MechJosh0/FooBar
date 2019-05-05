@@ -11,120 +11,25 @@
 					flat
 					round
 					icon="menu"
-					@click="sidebar = !sidebar"
+					@click="sidebarIsOpen = !sidebarIsOpen"
 				/>
 
 				<q-toolbar-title>
-					<q-btn flat :to="{ name: 'index' }">
-						<q-avatar class="on-left">
-							<img src="https://cdn.quasar-framework.org/logo/svg/quasar-logo.svg">
-						</q-avatar>
-						{{ $t('header.title') }}
-					</q-btn>
+					<Logo />
 				</q-toolbar-title>
 				<q-space />
 
-				<q-tabs
-					v-if="isLoggedIn"
-					v-model="activeAccount"
-					shrink
-				>
-					<q-route-tab
-						v-for="a in accounts"
-						:key="a.address"
-						:name="a.address"
-						:label="a.name"
-						:to="{
-							name: 'account',
-							params: {
-								account: a.name
-							}
-						}"
-						active
-					/>
-				</q-tabs>
+				<Addresses />
 			</q-toolbar>
 		</q-header>
 
 		<q-drawer
-			v-model="sidebar"
+			v-model="sidebarIsOpen"
 			side="left"
 			bordered
 		>
 			<q-scroll-area class="fit" :contentStyle="{ height: '100%' }">
-				<q-list
-					padding
-					style="height: 100%"
-				>
-					<Item
-						icon="fas fa-home"
-						:label="$t('header.navigation.home')"
-						to="index"
-					/>
-					<template v-if="isLoggedIn && account.address">
-						<Item
-							icon="fas fa-user"
-							:label="$t('header.navigation.account')"
-							to="account.wallet.user"
-						/>
-						<Item
-							icon="fas fa-receipt"
-							:label="$t('header.navigation.transactions')"
-							to="account.wallet.transactions"
-						/>
-						<Item
-							icon="fas fa-coins"
-							:label="$t('header.navigation.transfer')"
-							to="account.wallet.transfer"
-						/>
-						<Item
-							icon="fas fa-file-export"
-							:label="$t('header.navigation.backup')"
-							to="account.wallet.backup"
-						/>
-						<Item
-							icon="fas fa-print"
-							:label="$t('header.navigation.export')"
-							to="account.wallet.export"
-						/>
-					</template>
-					<div class="listBottom">
-						<template v-if="isLoggedIn">
-							<Item
-								icon="fas fa-upload"
-								:label="$t('header.navigation.import')"
-								to="account.import"
-							/>
-							<Item
-								icon="fas fa-user-plus"
-								:label="$t('header.navigation.newAccount')"
-								to="account.create"
-							/>
-							<Item
-								icon="fas fa-cog"
-								:label="$t('header.navigation.settings')"
-								to="settings"
-							/>
-							<Item
-								icon="fas fa-sign-out-alt"
-								:label="$t('header.navigation.logout')"
-								to="logout"
-							/>
-						</template>
-						<template v-else>
-							<Item
-								icon="fas fa-sign-in-alt"
-								:label="$t('header.navigation.register')"
-								to="register"
-							/>
-							<Item
-								icon="fas fa-sign-in-alt"
-								:label="$t('header.navigation.login')"
-								to="login"
-							/>
-						</template>
-					</div>
-				</q-list>
+				<Sidebar />
 			</q-scroll-area>
 		</q-drawer>
 
@@ -145,43 +50,24 @@
 </template>
 
 <script>
-	import Item from '@/standalone/components/navigation/Item';
+	import Sidebar from '@/standalone/components/app/navigation/Sidebar';
+	import Addresses from '@/standalone/components/app/navigation/Addresses';
+	import Logo from '@/standalone/components/app/Logo';
 
 	export default {
 		components: {
-			Item
+			Sidebar,
+			Addresses,
+			Logo
 		},
 		data()
 		{
 			return {
-				activeAccount: null,
-				sidebar: true
+				sidebarIsOpen: true
 			};
-		},
-		computed: {
-			isLoggedIn()
-			{
-				return this.$store.getters['app/account/isLoggedIn'];
-			},
-			accounts()
-			{
-				return this.$store.getters['account/getAccounts'];
-			},
-			account()
-			{
-				return this.$store.getters['account/getActiveAccount'] || {};
-			}
-		},
-		watch: {
-			account(newVal)
-			{
-				this.activeAccount = this.account.address;
-			}
 		},
 		mounted()
 		{
-			this.activeAccount = this.account.address;
-
 			chrome.runtime.sendMessage({ method: 'get', type: 'applicationPassword' }, (res) =>
 			{
 				this.setApplicationPassword(res);
@@ -212,12 +98,6 @@
 </script>
 
 <style scoped>
-	.listBottom {
-		width: 100%;
-		position: absolute;
-		bottom: 0;
-	}
-
 	.container {
 		background: #f7f7f7;
 	}
