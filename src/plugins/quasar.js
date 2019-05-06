@@ -51,7 +51,8 @@ import {
 	QDialog,
 	ClosePopup,
 	QCardActions,
-	Loading
+	QInnerLoading,
+	QSpinnerGears
 } from 'quasar';
 
 Vue.use(Quasar, {
@@ -98,14 +99,15 @@ Vue.use(Quasar, {
 		QSlideTransition,
 		QTooltip,
 		QDialog,
-		QCardActions
+		QCardActions,
+		QInnerLoading,
+		QSpinnerGears
 	},
 	directives: {
 		Ripple,
 		ClosePopup
 	},
 	plugins: {
-		Notify,
-		Loading
+		Notify
 	}
 });
