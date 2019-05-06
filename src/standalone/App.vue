@@ -1,52 +1,55 @@
 <template>
-	<q-layout view="hHh lpR lFf">
-		<q-header
-			reveal
-			bordered
-			class="bg-primary text-white"
-		>
-			<q-toolbar>
-				<q-btn
-					dense
-					flat
-					round
-					icon="menu"
-					@click="sidebarIsOpen = !sidebarIsOpen"
-				/>
+	<div>
+		<portal-target name="appOverlay" />
+		<q-layout view="hHh lpR lFf">
+			<q-header
+				reveal
+				bordered
+				class="bg-primary text-white"
+			>
+				<q-toolbar>
+					<q-btn
+						dense
+						flat
+						round
+						icon="menu"
+						@click="sidebarIsOpen = !sidebarIsOpen"
+					/>
 
-				<q-toolbar-title>
-					<Logo />
-				</q-toolbar-title>
-				<q-space />
+					<q-toolbar-title>
+						<Logo />
+					</q-toolbar-title>
+					<q-space />
 
-				<Addresses />
-			</q-toolbar>
-		</q-header>
+					<Addresses />
+				</q-toolbar>
+			</q-header>
 
-		<q-drawer
-			v-model="sidebarIsOpen"
-			side="left"
-			bordered
-		>
-			<q-scroll-area class="fit" :contentStyle="{ height: '100%' }">
-				<Sidebar />
-			</q-scroll-area>
-		</q-drawer>
+			<q-drawer
+				v-model="sidebarIsOpen"
+				side="left"
+				bordered
+			>
+				<q-scroll-area class="fit" :contentStyle="{ height: '100%' }">
+					<Sidebar />
+				</q-scroll-area>
+			</q-drawer>
 
-		<q-page-container class="container">
-			<q-page padding>
-				<router-view />
-			</q-page>
-		</q-page-container>
+			<q-page-container class="container">
+				<q-page padding>
+					<router-view />
+				</q-page>
+			</q-page-container>
 
-		<q-footer class="container">
-			<q-toolbar>
-				<q-toolbar-title>
+			<q-footer class="container">
+				<q-toolbar>
+					<q-toolbar-title>
 					<!-- Footer if I need it -->
-				</q-toolbar-title>
-			</q-toolbar>
-		</q-footer>
-	</q-layout>
+					</q-toolbar-title>
+				</q-toolbar>
+			</q-footer>
+		</q-layout>
+	</div>
 </template>
 
 <script>
