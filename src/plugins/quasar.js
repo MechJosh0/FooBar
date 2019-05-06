@@ -50,7 +50,8 @@ import {
 	QTooltip,
 	QDialog,
 	ClosePopup,
-	QCardActions
+	QCardActions,
+	Loading
 } from 'quasar';
 
 Vue.use(Quasar, {
@@ -104,6 +105,7 @@ Vue.use(Quasar, {
 		ClosePopup
 	},
 	plugins: {
-		Notify
+		Notify,
+		Loading
 	}
 });
