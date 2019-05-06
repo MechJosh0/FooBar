@@ -64,7 +64,7 @@
 				downloadPercentage: 0,
 				downloadReady: false,
 				processingExport: false,
-				callSleeper: 1000, // milliseconds
+				callSleeper: 10, // milliseconds
 				pages: null
 			};
 		},
@@ -101,6 +101,8 @@
 
 					res.transactions.forEach((transaction) =>
 					{
+						if(transaction.type !== 1 && transaction.type !== 2) return; // If not reward or transfer types we skip it
+
 						transactions.push([
 							transaction.blockHeight,
 							`="${date.formatDate(transaction.time, 'DD MMM YYYY HH:mm:SS')}"`,
@@ -129,7 +131,7 @@
 					return 0;
 				}
 
-				if(type === 'IN' && transaction.display_type !== 'IN')
+				if(type === 'IN' && (transaction.display_type !== 'IN' && transaction.display_type !== 'Reward'))
 				{
 					return 0;
 				}
