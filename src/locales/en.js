@@ -290,7 +290,9 @@ export default {
 				thousand: 'K'
 			},
 			accountInformation: 'You have around {totalTransactions} transactions, this is expected to take {expectedTime} to run a full export of all transactions.',
-			beginDownload: 'Run Export'
+			beginDownload: 'Run Export',
+			exportingProgress: '{num}%',
+			exportingProgressTooltip: 'Pages {pageX} out of {pageY} proccessed'
 		}
 	}
 };

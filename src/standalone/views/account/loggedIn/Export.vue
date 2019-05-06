@@ -24,10 +24,18 @@
 	<div v-else>
 		<portal to="appOverlay">
 			<q-inner-loading :showing="true" class="loadingPortal">
-				<q-spinner-gears size="150px" color="primary" />
-				<p>
-					Running...
-				</p>
+				<div>
+					<q-spinner-gears size="150px" color="primary" />
+					<h4 class="text-center">
+						{{ $t('views.export.exportingProgress', { num: 2 }) }}
+					</h4>
+					<q-tooltip contentClass="tooltipPortal">
+						{{ $t('views.export.exportingProgressTooltip', {
+							pageX: pages.active.toLocaleString(),
+							pageY: pages.total.toLocaleString()
+						}) }}
+					</q-tooltip>
+				</div>
 			</q-inner-loading>
 		</portal>
 	</div>
@@ -143,5 +151,11 @@
 	.loadingPortal {
 		z-index: 9999;
 		background: rgba(0, 0, 0, 0.5);
+	}
+
+	.tooltipPortal {
+		z-index: 10000;
+		background: purple;
+		font-size: 12px;
 	}
 </style>
