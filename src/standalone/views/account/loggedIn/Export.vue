@@ -43,6 +43,7 @@
 
 <script>
 	import Duration from 'luxon/src/duration';
+	import createCSVFile from '@/utils/createCSVFile';
 
 	export default {
 		data()
@@ -67,6 +68,8 @@
 			startExport()
 			{
 				this.running = true;
+
+				// createCSVFile('helloWorld.csv', [['foo'], ['bar']]);
 			},
 			endExport()
 			{
@@ -83,7 +86,7 @@
 				};
 
 				this.info = {};
-				this.info.totalTransactions = this.pages.total * this.pages.perPage;
+				this.info.totalTransactions = res.pagination_total;
 				this.info.totalTransactionsFormatted = this.makeNumberPretty(this.info.totalTransactions);
 				this.info.expectedTime = this.info.totalTransactions * (this.callSleeper / 1000);
 
@@ -105,9 +108,13 @@
 				{
 					this.info.expectedTimeFormatted = this.$t('dates.duration.timeAndTime', { xTime: hours, yTime: minutes });
 				}
-				else
+				else if(minutes)
 				{
 					this.info.expectedTimeFormatted = minutes;
+				}
+				else
+				{
+					this.info.expectedTimeFormatted = this.$t('dates.duration.lessThanAMinute');
 				}
 			},
 			async getFullTransactions(page)

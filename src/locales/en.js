@@ -26,7 +26,8 @@ export default {
 			hours: '{hours} hour | {hours} hours',
 			minutes: '{minutes} minute | {minutes} minutes',
 			seconds: '{seconds} second | {seconds} seconds',
-			timeAndTime: '{xTime} and {yTime}'
+			timeAndTime: '{xTime} and {yTime}',
+			lessThanAMinute: 'less than a minute'
 		}
 	},
 	views: {
@@ -165,10 +166,20 @@ export default {
 			}
 		},
 		import: {
+			importMethods: {
+				file: 'File',
+				privateKey: 'Private Key'
+			},
 			form: {
 				fields: {
+					privateKey: {
+						label: 'Private Key Plain Text',
+						errors: {
+							required: 'You must provide a private key to import'
+						}
+					},
 					file: {
-						label: 'Import Account',
+						label: 'Account Keystore',
 						errors: {
 							required: 'You must provide a keystore to import',
 							fileType: 'The file type must be a .keystore or .txt',
@@ -289,7 +300,7 @@ export default {
 				million: 'M',
 				thousand: 'K'
 			},
-			accountInformation: 'You have around {totalTransactions} transactions, this is expected to take {expectedTime} to run a full export of all transactions.',
+			accountInformation: 'You have {totalTransactions} transactions, this is expected to take {expectedTime} to run a full export of all transactions.',
 			beginDownload: 'Run Export',
 			exportingProgress: '{num}%',
 			exportingProgressTooltip: 'Pages {pageX} out of {pageY} proccessed'
