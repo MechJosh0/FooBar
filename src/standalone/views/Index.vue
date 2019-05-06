@@ -6,12 +6,6 @@
 			:columns="columns"
 			rowKey="address"
 		/>
-		<button @click="foo">
-			My Button
-		</button>
-		{{ isLoggedIn }}
-		--
-		{{ appPassword }}
 	</div>
 </template>
 
@@ -63,14 +57,6 @@
 						name: accounts[address].name
 					};
 				});
-			}
-		},
-		methods: {
-			foo()
-			{
-				const name = prompt('Enter your name');
-
-				this.$store.dispatch('app/account/login', name);
 			}
 		}
 	};
