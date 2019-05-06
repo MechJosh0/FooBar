@@ -13,7 +13,8 @@ const state = {
 	server: {
 		name: 'nulsWorld',
 		url: 'https://nuls.world/'
-	}
+	},
+	popup: false
 };
 
 const mutations = {
@@ -30,6 +31,10 @@ const mutations = {
 		state.server = payload;
 
 		localStorage.setItem('server', JSON.stringify(payload));
+	},
+	POPUP_TRUE(state)
+	{
+		state.popup = true;
 	}
 };
 
@@ -69,13 +74,18 @@ const actions = {
 		{
 			dispatch('setServer', JSON.parse(localStorage.getItem('server')));
 		}
+	},
+	appIsPopup({ commit })
+	{
+		commit('POPUP_TRUE');
 	}
 };
 
 const getters = {
 	isMainNet: (state) => state.release === true,
 	getRelease: (state) => state.release,
-	getServerData: (state) => state.server
+	getServerData: (state) => state.server,
+	isAppPopup: (state) => state.popup
 };
 
 export default {
