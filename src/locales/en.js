@@ -308,6 +308,15 @@ export default {
 				title: 'Export Ready',
 				information: 'Your exported data should have downloaded automatically, if not please click the download button.',
 				button: 'Download'
+			},
+			headers: {
+				blockHeight: 'Block Height',
+				datetime: 'Datetime',
+				hash: 'Hash',
+				address: 'Address',
+				amountReceived: 'Amount Received',
+				amountSent: 'Amount Sent',
+				remark: 'Remark'
 			}
 		}
 	}

@@ -86,13 +86,13 @@
 
 				const transactions = [];
 				const header = [
-					'Block Height',
-					'Datetime (UTC)',
-					'Hash',
-					'Address',
-					'Amount Received',
-					'Amount Sent',
-					'Remark'
+					this.$t('views.export.headers.blockHeight'),
+					this.$t('views.export.headers.datetime'),
+					this.$t('views.export.headers.hash'),
+					this.$t('views.export.headers.address'),
+					this.$t('views.export.headers.amountReceived'),
+					this.$t('views.export.headers.amountSent'),
+					this.$t('views.export.headers.remark')
 				];
 
 				for(this.pages.active = 1; this.pages.active <= this.pages.total; this.pages.active += 1)
