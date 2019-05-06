@@ -37,7 +37,7 @@
 				<div>
 					<q-spinner-gears size="150px" color="primary" />
 					<h4 class="text-center">
-						{{ $t('views.export.exportingProgress', { num: 2 }) }}
+						{{ $t('views.export.exportingProgress', { num: downloadPercentage }) }}
 					</h4>
 					<q-tooltip contentClass="tooltipPortal">
 						{{ $t('views.export.exportingProgressTooltip', {
@@ -53,6 +53,7 @@
 
 <script>
 	import Duration from 'luxon/src/duration';
+	import { date } from 'quasar';
 	import createCSVFile from '@/utils/createCSVFile';
 	import { sleep } from '@/utils/helpers';
 
@@ -60,6 +61,7 @@
 		data()
 		{
 			return {
+				downloadPercentage: 0,
 				downloadReady: false,
 				processingExport: false,
 				callSleeper: 1000, // milliseconds
@@ -79,6 +81,7 @@
 		methods: {
 			async startExport()
 			{
+				this.downloadPercentage = 0;
 				this.processingExport = true;
 
 				const transactions = [];
@@ -94,22 +97,22 @@
 
 				for(this.pages.active = 1; this.pages.active <= this.pages.total; this.pages.active += 1)
 				{
-					console.log('Page', this.pages.active);
-
 					const res = await this.getFullTransactions(this.pages.active); // eslint-disable-line no-await-in-loop
 
 					res.transactions.forEach((transaction) =>
 					{
 						transactions.push([
 							transaction.blockHeight,
-							transaction.time,
+							`="${date.formatDate(transaction.time, 'DD MMM YYYY HH:mm:SS')}"`,
 							transaction.hash,
-							'abc',
-							transaction.value,
-							transaction.value,
+							transaction.display_type === 'OUT' ? transaction.target || transaction.source : transaction.source,
+							this.calcFee('IN', transaction),
+							this.calcFee('OUT', transaction),
 							transaction.remark
 						]);
 					});
+
+					this.downloadPercentage = Math.floor((this.pages.active / this.pages.total) * 100);
 
 					await sleep(this.callSleeper); // eslint-disable-line no-await-in-loop
 				}
@@ -118,6 +121,27 @@
 				this.downloadReady = true;
 				this.processingExport = false;
 				this.download();
+			},
+			calcFee(type, transaction)
+			{
+				if(type === 'OUT' && transaction.display_type !== 'OUT')
+				{
+					return 0;
+				}
+
+				if(type === 'IN' && transaction.display_type !== 'IN')
+				{
+					return 0;
+				}
+
+				const num = (Math.abs(transaction.value) + transaction.fee) / 100000000;
+
+				if(transaction.display_type === 'OUT')
+				{
+					return num.toString().substring(1);
+				}
+
+				return num;
 			},
 			endExport()
 			{
