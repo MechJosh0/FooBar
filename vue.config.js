@@ -11,7 +11,7 @@ module.exports = {
 		'standalone/standalone': {
 			entry: 'src/standalone/main.js',
 			filename: 'index.html',
-			title: 'chrome-test'
+			title: 'FooBar'
 		}
 	},
 	pluginOptions: {

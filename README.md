@@ -1,4 +1,4 @@
-# chrome-test
+# FooBar
 
 ## Project setup
 ```
