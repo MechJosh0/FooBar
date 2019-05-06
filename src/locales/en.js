@@ -22,7 +22,11 @@ export default {
 			today: 'Today',
 			hoursAgo: '{hours} hour ago | {hours} hours ago',
 			minutesAgo: '{minutes} minute ago | {minutes} minutes ago',
-			secondsAgo: '{seconds} second ago | {seconds} seconds ago'
+			secondsAgo: '{seconds} second ago | {seconds} seconds ago',
+			hours: '{hours} hour | {hours} hours',
+			minutes: '{minutes} minute | {minutes} minutes',
+			seconds: '{seconds} second | {seconds} seconds',
+			timeAndTime: '{xTime} and {yTime}'
 		}
 	},
 	views: {
@@ -274,6 +278,18 @@ export default {
 					}
 				}
 			}
+		},
+		export: {
+			title: 'Export Wallet History',
+			information: `You can export your entire wallet transaction history including stake rewards. The more transactions
+			(+ stake rewards) you have the slower this will take. Please be patient while it does its work, you can leave the
+			window running in the background and it'll download once it's completed.`,
+			numberFormat: {
+				billion: 'B',
+				million: 'M',
+				thousand: 'K'
+			},
+			accountInformation: 'You have around {totalTransactions} transactions, this is expected to take {expectedTime} to run a full export of all transactions.'
 		}
 	}
 };
