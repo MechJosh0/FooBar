@@ -17,6 +17,23 @@ export const getAddressTransactions = async (release, address) =>
 	}
 };
 
+export const getAddressFullTransactions = async (release, address, page) =>
+{
+	try
+	{
+		release = 'mainNet';
+		address = 'Nse93nWppH1FZXwMbMv4bMifvhycyFZb';
+		const domain = release === 'mainNet' ? 'nuls.world' : 'testnet.nuls.world';
+		const { data } = await axios.get(`https://${domain}/addresses/${address}/full-summary/page/${page}.json`);
+
+		return data;
+	}
+	catch(e)
+	{
+		throw Error(e.message);
+	}
+};
+
 export const getLatestHeight = async () =>
 {
 	// TODO

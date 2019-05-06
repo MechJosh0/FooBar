@@ -1,4 +1,4 @@
-import { getAddressTransactions } from '@/utils/api';
+import { getAddressTransactions, getAddressFullTransactions } from '@/utils/api';
 
 const state = {
 	transactions: {
@@ -20,12 +20,18 @@ const actions = {
 	async getAddressTransactions({ state, commit, rootGetters }, address)
 	{
 		const release = rootGetters['app/getRelease'];
+		const res = await getAddressTransactions(release, address);
 
-		const data = await getAddressTransactions(release, address);
+		commit('SET_TRANSACTIONS', { release, address, data: res });
 
-		commit('SET_TRANSACTIONS', { release, address, data });
+		return res.transactions;
+	},
+	async getAddressFullTransactions({ state, commit, rootGetters }, { address, page })
+	{
+		const release = rootGetters['app/getRelease'];
+		const res = await getAddressFullTransactions(release, address, page);
 
-		return data.transactions;
+		return res;
 	}
 };
 
