@@ -52,7 +52,9 @@ import {
 	ClosePopup,
 	QCardActions,
 	QInnerLoading,
-	QSpinnerGears
+	QSpinnerGears,
+	QTabPanels,
+	QTabPanel
 } from 'quasar';
 
 Vue.use(Quasar, {
@@ -101,7 +103,9 @@ Vue.use(Quasar, {
 		QDialog,
 		QCardActions,
 		QInnerLoading,
-		QSpinnerGears
+		QSpinnerGears,
+		QTabPanels,
+		QTabPanel
 	},
 	directives: {
 		Ripple,

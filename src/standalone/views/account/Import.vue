@@ -4,31 +4,66 @@
 			@submit="onSubmit"
 			@reset="onReset"
 		>
-			<q-input
-				ref="file"
-				v-model="file"
-				type="file"
-				filled
-				stackLabel
-				:label="$t('views.import.form.fields.file.label')"
-				lazyRules
-				:rules="validation.file"
-			/>
-			<q-input
-				v-model="name"
-				filled
-				:label="$t('views.import.form.fields.name.label')"
-				lazyRules
-				:rules="validation.name"
-			/>
-			<q-input
-				v-model="password"
-				type="password"
-				filled
-				:label="$t('views.import.form.fields.password.label')"
-				lazyRules
-				:rules="validation.password"
-			/>
+			<q-tabs
+				v-model="importMethod"
+				dense
+				class="bg-grey-3 text-grey-7"
+				activeColor="primary"
+				indicatorColor="primary"
+				align="justify"
+			>
+				<q-tab name="file" :label="$t('views.import.importMethods.file')" />
+				<q-tab name="privateKey" :label="$t('views.import.importMethods.privateKey')" />
+			</q-tabs>
+
+			<q-separator />
+
+			<q-tab-panels v-model="importMethod" animated>
+				<q-tab-panel name="file">
+					<q-input
+						ref="file"
+						v-model="file"
+						type="file"
+						filled
+						stackLabel
+						:label="$t('views.import.form.fields.file.label')"
+						lazyRules
+						:rules="validation.file"
+					/>
+					<q-input
+						v-model="password"
+						type="password"
+						filled
+						:label="$t('views.import.form.fields.password.label')"
+						lazyRules
+						:rules="validation.password"
+					/>
+					<q-input
+						v-model="name"
+						filled
+						:label="$t('views.import.form.fields.name.label')"
+						lazyRules
+						:rules="validation.name"
+					/>
+				</q-tab-panel>
+
+				<q-tab-panel name="privateKey">
+					<q-input
+						v-model="privateKey"
+						filled
+						:label="$t('views.import.form.fields.privateKey.label')"
+						lazyRules
+						:rules="validation.privateKey"
+					/>
+					<q-input
+						v-model="name"
+						filled
+						:label="$t('views.import.form.fields.name.label')"
+						lazyRules
+						:rules="validation.name"
+					/>
+				</q-tab-panel>
+			</q-tab-panels>
 			<div class="float-right">
 				<q-btn
 					:label="$t('views.import.form.buttons.create')"
@@ -59,6 +94,14 @@
 		{
 			return {
 				validation: {
+					privateKey: [
+						(val) => // Required
+						{
+							if(val && val.length > 0) return true;
+
+							return this.$t('views.import.form.fields.privateKey.errors.required');
+						}
+					],
 					file: [
 						(val) => // Required
 						{
@@ -140,9 +183,11 @@
 						}
 					]
 				},
+				privateKey: '',
 				file: '',
 				password: '',
-				name: ''
+				name: '',
+				importMethod: 'file'
 			};
 		},
 		computed: {
@@ -184,8 +229,19 @@
 			},
 			async onSubmit()
 			{
-				const [file] = this.$refs.file.$refs.input.files;
-				const accountData = await this.readJSONFileContent(file);
+				let accountData = {};
+
+				if(this.importMethod === 'file')
+				{
+					const [file] = this.$refs.file.$refs.input.files;
+
+					accountData = await this.readJSONFileContent(file);
+				}
+				else if(this.importMethod === 'privateKey')
+				{
+					accountData = { priKey: this.privateKey };
+				}
+
 				const res = await this.$store.dispatch('account/importAccount', {
 					name: this.name,
 					walletPassword: this.password,
