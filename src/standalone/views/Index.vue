@@ -15,7 +15,6 @@
 		{
 			return {
 				columns: [
-
 					{
 						name: 'name',
 						label: this.$t('views.index.table.columns.name'),
