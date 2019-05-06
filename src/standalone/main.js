@@ -53,3 +53,5 @@ chrome.runtime.sendMessage({ method: 'get', type: 'applicationPassword' }, async
 	// And finally, we can load the actual application
 	main();
 });
+
+export default store;
