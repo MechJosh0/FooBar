@@ -289,7 +289,8 @@ export default {
 				million: 'M',
 				thousand: 'K'
 			},
-			accountInformation: 'You have around {totalTransactions} transactions, this is expected to take {expectedTime} to run a full export of all transactions.'
+			accountInformation: 'You have around {totalTransactions} transactions, this is expected to take {expectedTime} to run a full export of all transactions.',
+			beginDownload: 'Run Export'
 		}
 	}
 };

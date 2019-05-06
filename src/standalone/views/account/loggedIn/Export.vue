@@ -1,17 +1,35 @@
 <template>
-	<div>
+	<div v-if="!running">
 		<h4>{{ $t('views.export.title') }}</h4>
 		<p>{{ $t('views.export.information') }}</p>
 		<div v-if="pages">
-			{{ $t('views.export.accountInformation', {
-				totalTransactions: info.totalTransactionsFormatted,
-				expectedTime: info.expectedTimeFormatted
-			}) }}
+			<p>
+				{{ $t('views.export.accountInformation', {
+					totalTransactions: info.totalTransactionsFormatted,
+					expectedTime: info.expectedTimeFormatted
+				}) }}
+			</p>
+			<q-btn
+				color="primary"
+				icon="fas fa-cloud-download-alt"
+				:label="$t('views.export.beginDownload')"
+				@click="startExport"
+			/>
 		</div>
 		<q-spinner
 			v-else
 			color="primary"
 		/>
+	</div>
+	<div v-else>
+		<portal to="appOverlay">
+			<q-inner-loading :showing="true" class="loadingPortal">
+				<q-spinner-gears size="150px" color="primary" />
+				<p>
+					Running...
+				</p>
+			</q-inner-loading>
+		</portal>
 	</div>
 </template>
 
@@ -23,7 +41,7 @@
 		{
 			return {
 				running: false,
-				callSleeper: 5, // seconds
+				callSleeper: 2500, // milliseconds
 				pages: null
 			};
 		},
@@ -38,6 +56,14 @@
 			this.getInitData();
 		},
 		methods: {
+			startExport()
+			{
+				this.running = true;
+			},
+			endExport()
+			{
+				this.$q.loading.hide();
+			},
 			async getInitData()
 			{
 				const res = await this.getFullTransactions(1);
@@ -51,7 +77,7 @@
 				this.info = {};
 				this.info.totalTransactions = this.pages.total * this.pages.perPage;
 				this.info.totalTransactionsFormatted = this.makeNumberPretty(this.info.totalTransactions);
-				this.info.expectedTime = this.info.totalTransactions * this.callSleeper;
+				this.info.expectedTime = this.info.totalTransactions * (this.callSleeper / 1000);
 
 				const duration = Duration.fromMillis(this.info.expectedTime).shiftTo('hours', 'minutes', 'seconds').toObject();
 				let hours,
@@ -112,3 +138,10 @@
 		}
 	};
 </script>
+
+<style>
+	.loadingPortal {
+		z-index: 9999;
+		background: rgba(0, 0, 0, 0.5);
+	}
+</style>
