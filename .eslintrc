@@ -107,6 +107,7 @@
 			"error",
 			{
 				"allow": [
+					"@/standalone/main",
 					"**/*.css",
 					"**/*.styl",
 					"**/*.polyfills",

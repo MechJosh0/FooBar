@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="body">
 		<portal-target name="appOverlay" />
 		<q-layout view="hHh lpR lFf">
 			<q-header
@@ -73,6 +73,10 @@
 </script>
 
 <style scoped>
+	.body {
+		min-width: 500px;
+	}
+
 	.container {
 		background: #f7f7f7;
 	}
