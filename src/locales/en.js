@@ -300,10 +300,15 @@ export default {
 				million: 'M',
 				thousand: 'K'
 			},
-			accountInformation: 'You have {totalTransactions} transactions, this is expected to take {expectedTime} to run a full export of all transactions.',
+			accountInformation: 'You have {totalTransactions} transactions, this is expected to take less than {expectedTime} to run a full export of all transactions.',
 			beginDownload: 'Run Export',
 			exportingProgress: '{num}%',
-			exportingProgressTooltip: 'Pages {pageX} out of {pageY} proccessed'
+			exportingProgressTooltip: 'Pages {pageX} out of {pageY} proccessed',
+			download: {
+				title: 'Export Ready',
+				information: 'Your exported data should have downloaded automatically, if not please click the download button.',
+				button: 'Download'
+			}
 		}
 	}
 };

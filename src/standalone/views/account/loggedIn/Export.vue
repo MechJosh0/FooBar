@@ -1,5 +1,5 @@
 <template>
-	<div v-if="!running">
+	<div v-if="!processingExport && !downloadReady">
 		<h4>{{ $t('views.export.title') }}</h4>
 		<p>{{ $t('views.export.information') }}</p>
 		<div v-if="pages">
@@ -11,7 +11,7 @@
 			</p>
 			<q-btn
 				color="primary"
-				icon="fas fa-cloud-download-alt"
+				icon="fas fa-cogs"
 				:label="$t('views.export.beginDownload')"
 				@click="startExport"
 			/>
@@ -19,6 +19,16 @@
 		<q-spinner
 			v-else
 			color="primary"
+		/>
+	</div>
+	<div v-else-if="downloadReady">
+		<h4>{{ $t('views.export.download.title') }}</h4>
+		<p>{{ $t('views.export.download.information') }}</p>
+		<q-btn
+			color="primary"
+			icon="fas fa-cloud-download-alt"
+			:label="$t('views.export.download.button')"
+			@click="download"
 		/>
 	</div>
 	<div v-else>
@@ -44,13 +54,15 @@
 <script>
 	import Duration from 'luxon/src/duration';
 	import createCSVFile from '@/utils/createCSVFile';
+	import { sleep } from '@/utils/helpers';
 
 	export default {
 		data()
 		{
 			return {
-				running: false,
-				callSleeper: 2500, // milliseconds
+				downloadReady: false,
+				processingExport: false,
+				callSleeper: 1000, // milliseconds
 				pages: null
 			};
 		},
@@ -65,15 +77,55 @@
 			this.getInitData();
 		},
 		methods: {
-			startExport()
+			async startExport()
 			{
-				this.running = true;
+				this.processingExport = true;
 
-				// createCSVFile('helloWorld.csv', [['foo'], ['bar']]);
+				const transactions = [];
+				const header = [
+					'Block Height',
+					'Datetime (UTC)',
+					'Hash',
+					'Address',
+					'Amount Received',
+					'Amount Sent',
+					'Remark'
+				];
+
+				for(this.pages.active = 1; this.pages.active <= this.pages.total; this.pages.active += 1)
+				{
+					console.log('Page', this.pages.active);
+
+					const res = await this.getFullTransactions(this.pages.active); // eslint-disable-line no-await-in-loop
+
+					res.transactions.forEach((transaction) =>
+					{
+						transactions.push([
+							transaction.blockHeight,
+							transaction.time,
+							transaction.hash,
+							'abc',
+							transaction.value,
+							transaction.value,
+							transaction.remark
+						]);
+					});
+
+					await sleep(this.callSleeper); // eslint-disable-line no-await-in-loop
+				}
+
+				this.fileData = [header, ...transactions];
+				this.downloadReady = true;
+				this.processingExport = false;
+				this.download();
 			},
 			endExport()
 			{
 				this.$q.loading.hide();
+			},
+			download()
+			{
+				createCSVFile(`${this.account.address}.csv`, this.fileData);
 			},
 			async getInitData()
 			{
@@ -81,14 +133,14 @@
 
 				this.pages = {
 					active: 0,
-					total: res.pagination_total,
+					total: Math.ceil(res.pagination_total / res.pagination_per_page),
 					perPage: res.pagination_per_page
 				};
 
 				this.info = {};
 				this.info.totalTransactions = res.pagination_total;
 				this.info.totalTransactionsFormatted = this.makeNumberPretty(this.info.totalTransactions);
-				this.info.expectedTime = this.info.totalTransactions * (this.callSleeper / 1000);
+				this.info.expectedTime = this.pages.total * this.callSleeper;
 
 				const duration = Duration.fromMillis(this.info.expectedTime).shiftTo('hours', 'minutes', 'seconds').toObject();
 				let hours,
@@ -96,12 +148,12 @@
 
 				if(duration.hours !== 0)
 				{
-					hours = this.$tc('dates.duration.hours', duration.hours, { hours: duration.hours });
+					hours = this.$tc('dates.duration.hours', duration.hours, { hours: duration.hours + 1 });
 				}
 
 				if(duration.minutes !== 0)
 				{
-					minutes = this.$tc('dates.duration.minutes', duration.minutes, { minutes: duration.minutes });
+					minutes = this.$tc('dates.duration.minutes', duration.minutes, { minutes: duration.minutes + 1 });
 				}
 
 				if(hours && minutes)
