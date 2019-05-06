@@ -20,17 +20,17 @@
 				to="account.wallet.transactions"
 			/>
 			<Item
-				icon="fas fa-coins"
+				icon="fas fa-exchange-alt"
 				:label="$t('header.navigation.transfer')"
 				to="account.wallet.transfer"
 			/>
 			<Item
-				icon="fas fa-file-export"
+				icon="fas fa-save"
 				:label="$t('header.navigation.backup')"
 				to="account.wallet.backup"
 			/>
 			<Item
-				icon="fas fa-print"
+				icon="fas fa-cloud-download-alt"
 				:label="$t('header.navigation.export')"
 				to="account.wallet.export"
 			/>
