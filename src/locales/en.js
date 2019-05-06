@@ -10,6 +10,7 @@ export default {
 			export: 'Export',
 			import: 'Import',
 			newAccount: 'New Account',
+			fullScreen: 'Full Screen',
 			settings: 'Settings',
 			logout: 'Logout',
 			login: 'Login',

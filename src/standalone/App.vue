@@ -1,7 +1,7 @@
 <template>
 	<div class="body">
 		<portal-target name="appOverlay" />
-		<q-layout view="hHh lpR lFf">
+		<q-layout view="lHr lpR fFf">
 			<q-header
 				reveal
 				bordered
@@ -12,8 +12,8 @@
 						dense
 						flat
 						round
-						icon="menu"
-						@click="sidebarIsOpen = !sidebarIsOpen"
+						icon="fas fa-bars"
+						@click="sidebarLeftIsOpen = !sidebarLeftIsOpen"
 					/>
 
 					<q-toolbar-title>
@@ -22,16 +22,34 @@
 					<q-space />
 
 					<Addresses />
+
+					<q-btn
+						dense
+						flat
+						round
+						icon="fas fa-user-cog"
+						@click="sidebarRightIsOpen = !sidebarRightIsOpen"
+					/>
 				</q-toolbar>
 			</q-header>
 
 			<q-drawer
-				v-model="sidebarIsOpen"
+				v-model="sidebarLeftIsOpen"
 				side="left"
 				bordered
 			>
 				<q-scroll-area class="fit" :contentStyle="{ height: '100%' }">
-					<Sidebar />
+					<SidebarLeft />
+				</q-scroll-area>
+			</q-drawer>
+
+			<q-drawer
+				v-model="sidebarRightIsOpen"
+				side="right"
+				bordered
+			>
+				<q-scroll-area class="fit" :contentStyle="{ height: '100%' }">
+					<SidebarRight />
 				</q-scroll-area>
 			</q-drawer>
 
@@ -53,20 +71,23 @@
 </template>
 
 <script>
-	import Sidebar from '@/standalone/components/app/navigation/Sidebar';
+	import SidebarLeft from '@/standalone/components/app/navigation/SidebarLeft';
+	import SidebarRight from '@/standalone/components/app/navigation/SidebarRight';
 	import Addresses from '@/standalone/components/app/navigation/Addresses';
 	import Logo from '@/standalone/components/app/Logo';
 
 	export default {
 		components: {
-			Sidebar,
+			SidebarLeft,
+			SidebarRight,
 			Addresses,
 			Logo
 		},
 		data()
 		{
 			return {
-				sidebarIsOpen: true
+				sidebarLeftIsOpen: true,
+				sidebarRightIsOpen: false
 			};
 		}
 	};

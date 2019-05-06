@@ -4,9 +4,10 @@
 		:active="active"
 		clickable
 		:to="href"
+		@click="runCallback()"
 	>
 		<q-item-section avatar>
-			<q-icon :name="icon" />
+			<q-icon :class="{ 'rotate-45': rotateIcon }" :name="icon" />
 		</q-item-section>
 		<q-item-section>
 			{{ label }}
@@ -23,20 +24,30 @@
 			},
 			to: {
 				type: String,
-				required: true
+				default: null
 			},
 			icon: {
 				type: String,
 				required: true
 			},
+			rotateIcon: {
+				type: Boolean,
+				default: false
+			},
 			label: {
 				type: String,
 				required: true
+			},
+			callback: {
+				type: Function,
+				default: () => ({})
 			}
 		},
 		computed: {
 			href()
 			{
+				if(!this.to) return null;
+
 				const account = this.$store.getters['account/getActiveAccount'] || {};
 
 				return {
@@ -45,6 +56,13 @@
 						account: account.name
 					}
 				};
+			}
+		},
+		methods: {
+			runCallback()
+			{
+				this.callback();
+				// chrome.tabs.create({ url: 'index.html' });
 			}
 		}
 	};

@@ -35,46 +35,6 @@
 				to="account.wallet.export"
 			/>
 		</template>
-		<div class="bottom">
-			<template v-if="isLoggedIn">
-				<Item
-					icon="fas fa-upload"
-					:label="$t('header.navigation.import')"
-					to="account.import"
-				/>
-				<Item
-					icon="fas fa-user-plus"
-					:label="$t('header.navigation.newAccount')"
-					to="account.create"
-				/>
-				<Item
-					icon="fas fa-cog"
-					:label="$t('header.navigation.settings')"
-					to="settings"
-				/>
-				<Item
-					icon="fas fa-sign-out-alt"
-					:label="$t('header.navigation.logout')"
-					to="logout"
-				/>
-			</template>
-			<template v-else>
-				<template v-if="extensionWalletExists !== null">
-					<Item
-						v-if="!extensionWalletExists"
-						icon="fas fa-sign-in-alt"
-						:label="$t('header.navigation.register')"
-						to="register"
-					/>
-					<Item
-						v-if="extensionWalletExists"
-						icon="fas fa-sign-in-alt"
-						:label="$t('header.navigation.login')"
-						to="login"
-					/>
-				</template>
-			</template>
-		</div>
 	</q-list>
 </template>
 
@@ -93,19 +53,7 @@
 			account()
 			{
 				return this.$store.getters['account/getActiveAccount'] || {};
-			},
-			extensionWalletExists()
-			{
-				return this.$store.getters['app/account/accountExists'];
 			}
 		}
 	};
 </script>
-
-<style scoped>
-	.bottom {
-		width: 100%;
-		position: absolute;
-		bottom: 0;
-	}
-</style>
