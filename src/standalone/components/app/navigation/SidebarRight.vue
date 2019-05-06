@@ -35,6 +35,13 @@
 		<template v-else>
 			<template v-if="extensionWalletExists !== null">
 				<Item
+					v-if="popup"
+					icon="fas fa-arrows-alt-v"
+					:label="$t('header.navigation.fullScreen')"
+					:callback="openFullScreen"
+					rotateIcon
+				/>
+				<Item
 					v-if="!extensionWalletExists"
 					icon="fas fa-sign-in-alt"
 					:label="$t('header.navigation.register')"
