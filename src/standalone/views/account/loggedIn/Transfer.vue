@@ -1,6 +1,7 @@
 <template>
 	<CenteredCard>
 		<q-form
+			v-if="!isMainNet"
 			@submit="onSubmit"
 			@reset="onReset"
 		>
@@ -89,6 +90,9 @@
 				/>
 			</div>
 		</q-form>
+		<div v-else>
+			Sending transactions is currently disabled on main net during testing phase. Please change the app settings to switch to testnet.
+		</div>
 	</CenteredCard>
 </template>
 
@@ -171,6 +175,10 @@
 			account()
 			{
 				return this.$store.getters['account/getActiveAccount'];
+			},
+			isMainNet()
+			{
+				return this.$store.getters['app/isMainNet'];
 			}
 		},
 		watch: {
