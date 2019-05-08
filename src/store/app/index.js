@@ -82,7 +82,7 @@ const actions = {
 };
 
 const getters = {
-	isMainNet: (state) => state.release === true,
+	isMainNet: (state) => state.release === 'mainNet',
 	getRelease: (state) => state.release,
 	getServerData: (state) => state.server,
 	isAppPopup: (state) => state.popup
