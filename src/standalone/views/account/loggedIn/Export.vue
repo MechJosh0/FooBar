@@ -74,6 +74,12 @@
 				return this.$store.getters['account/getActiveAccount'];
 			}
 		},
+		watch: {
+			account()
+			{
+				this.getInitData();
+			}
+		},
 		mounted()
 		{
 			this.getInitData();
@@ -155,6 +161,8 @@
 			},
 			async getInitData()
 			{
+				this.pages = null;
+
 				const res = await this.getFullTransactions(1);
 
 				this.pages = {

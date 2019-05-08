@@ -63,13 +63,7 @@
 				loading: true,
 				filter: '',
 				res: [],
-				pagination: {
-					sortBy: 'date',
-					descending: false,
-					page: 1,
-					rowsPerPage: 20
-					// rowsNumber: xx if getting data from a server
-				}
+				pagination: this.paginationReset()
 			};
 		},
 		computed: {
@@ -187,6 +181,16 @@
 				];
 			}
 		},
+		watch: {
+			account()
+			{
+				this.loading = true;
+				this.pagination = this.paginationReset();
+				this.filter = '';
+				this.res = [];
+				this.getTransactions();
+			}
+		},
 		mounted()
 		{
 			this.getTransactions();
@@ -196,6 +200,16 @@
 			this.$store.dispatch('transactions/write/removeCompleted');
 		},
 		methods: {
+			paginationReset()
+			{
+				return {
+					sortBy: 'date',
+					descending: false,
+					page: 1,
+					rowsPerPage: 20
+					// rowsNumber: xx if getting data from a server
+				};
+			},
 			async getTransactions()
 			{
 				this.res = await this.$store.dispatch('transactions/read/getAddressTransactions', this.account.address);
