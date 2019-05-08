@@ -239,7 +239,7 @@
 				}
 				else if(this.importMethod === 'privateKey')
 				{
-					accountData = { priKey: this.privateKey };
+					accountData = { prikey: this.privateKey };
 				}
 
 				const res = await this.$store.dispatch('account/importAccount', {
