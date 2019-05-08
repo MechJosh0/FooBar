@@ -25,6 +25,8 @@ Extract the release files into a new seperate folder. The directory holding the 
 - BIP39+password (seed) solution
 - API backend for getting blockchain and price data
 - SocketIO for sending live data when needed and FireBase for push notifications (when idle)
+- Interact with webpages (ie request/send fund links)
+- dApps area
 
 ----------------
 
