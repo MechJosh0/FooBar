@@ -1,35 +1,35 @@
 {
-  "manifest_version": 2,
-  "name": "__MSG_extName__",
-  "homepage_url": "http://localhost/",
-  "description": "A Vue Browser Extension",
-  "icons": {
-    "16": "icons/16.png",
-    "48": "icons/48.png",
-    "128": "icons/128.png"
-  },
-  "permissions": [
-    "activeTab",
-    "<all_urls>",
-	"*://*/*",
-	"storage"
-  ],
-  "background": {
-      "scripts": [
-        "background.js"
-      ],
-      "persistent": true
-    },
-  "browser_action": {
-    "default_popup": "popup/popup.html",
-    "default_title": "__MSG_extName__",
-    "default_icon": {
-      "19": "icons/19.png",
-      "38": "icons/38.png"
-    }
-    },
-    "options_ui": {
-      "page": "options/options.html",
-      "chrome_style": true
-  }
+	"manifest_version": 2,
+	"name": "FooBar",
+	"homepage_url": "https://github.com/MechJosh0/FooBar",
+	"description": "Interact with NULS Blockchain from within your browser",
+	"icons": {
+		"16": "icons/16.png",
+		"48": "icons/48.png",
+		"128": "icons/128.png"
+	},
+	"permissions": [
+		"activeTab",
+		"<all_urls>",
+		"*://*/*",
+		"storage"
+	],
+	"background": {
+		"scripts": [
+			"background.js"
+		],
+		"persistent": true
+	},
+	"browser_action": {
+		"default_popup": "popup/popup.html",
+		"default_title": "FooBar",
+		"default_icon": {
+			"19": "icons/19.png",
+			"38": "icons/38.png"
+		}
+	},
+	"options_ui": {
+		"page": "options/options.html",
+		"chrome_style": true
+	}
 }
