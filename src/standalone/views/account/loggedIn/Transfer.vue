@@ -210,7 +210,7 @@
 			transactionForm(advancedReset = false)
 			{
 				const data = {
-					recipients: ['TTavS9d34z6byDS8KKxwmf1LprkdjB9G'],
+					recipients: [''],
 					remark: null,
 					amount: 0.01,
 					fee: 0.005,
