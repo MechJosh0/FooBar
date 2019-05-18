@@ -1,22 +1,24 @@
 <template>
-	<q-tabs
-		v-if="isLoggedIn"
-		v-model="activeAccount"
-		shrink
-	>
-		<q-route-tab
-			v-for="a in accounts"
-			:key="a.address"
-			:name="a.address"
-			:label="a.name"
-			:to="{
-				name: routePath,
-				params: {
-					account: a.name
-				}
-			}"
-		/>
-	</q-tabs>
+	<div class="q-gutter-y-md">
+		<q-tabs
+			v-if="isLoggedIn"
+			v-model="activeAccount"
+			shrink
+		>
+			<q-route-tab
+				v-for="a in accounts"
+				:key="a.address"
+				:name="a.address"
+				:label="a.name"
+				:to="{
+					name: routePath,
+					params: {
+						account: a.name
+					}
+				}"
+			/>
+		</q-tabs>
+	</div>
 </template>
 
 <script>
