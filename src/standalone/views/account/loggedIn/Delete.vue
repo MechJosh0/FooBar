@@ -14,7 +14,7 @@
 			@click="openDialog()"
 		/>
 		<DialogPasswordConfirmation
-			v-model="confirmed"
+			v-model="passwordHasBeenConfirmed"
 			:dialogIsOpen="dialogIsOpen"
 			:persistent="false"
 			@closed="dialogIsOpen = false"
@@ -40,7 +40,7 @@
 		{
 			return {
 				dialogIsOpen: false,
-				confirmed: false
+				passwordHasBeenConfirmed: false
 			};
 		},
 		computed: {
@@ -50,7 +50,7 @@
 			}
 		},
 		watch: {
-			confirmed(newVal)
+			passwordHasBeenConfirmed()
 			{
 				this.deleteWallet();
 			}
@@ -58,7 +58,7 @@
 		methods: {
 			openDialog()
 			{
-				if(!this.confirmed) // I don't know why but enter key is triggering twice when you submit the form via keypress and this avoids trying to open it again :/
+				if(!this.passwordHasBeenConfirmed) // I don't know why but enter key is triggering twice when you submit the form via keypress and this avoids trying to open it again :/
 				{
 					this.dialogIsOpen = true;
 				}
