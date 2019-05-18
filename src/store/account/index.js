@@ -37,6 +37,10 @@ const mutations = {
 		state.activeAccount[release] = null;
 
 		localStorage.setItem('activeAccount', JSON.stringify(state.activeAccount));
+	},
+	REMOVE_ACCOUNT(state, { address, release })
+	{
+		Vue.delete(state.accounts[release], address);
 	}
 };
 
@@ -55,7 +59,7 @@ const actions = {
 		}
 
 		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: Account.create(password) });
-		dispatch('app/storage/set', { key: 'accounts', value: state.accounts }, { root: true });
+		dispatch('updateStorage');
 
 		return {
 			success: true
@@ -129,12 +133,23 @@ const actions = {
 		Account.import(Account.getAccount().prikey, password);
 
 		commit('CREATE_ACTIVE_ACCOUNT', { name, release, account: Account.getAccount() });
-		dispatch('app/storage/set', { key: 'accounts', value: state.accounts }, { root: true });
+		dispatch('updateStorage');
 
 		return {
 			success: true,
 			account: Account.getAccount()
 		};
+	},
+	deleteActive({ commit, dispatch, rootGetters }, address)
+	{
+		const release = rootGetters['app/getRelease'];
+
+		commit('REMOVE_ACCOUNT', { address, release });
+		dispatch('updateStorage');
+	},
+	updateStorage({ dispatch })
+	{
+		dispatch('app/storage/set', { key: 'accounts', value: state.accounts }, { root: true });
 	}
 };
 
