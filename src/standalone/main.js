@@ -10,7 +10,8 @@ import '@/plugins/quasar';
 
 Vue.use(PortalVue);
 
-if(process.env.VUE_APP_SENTRY_API_KEY)
+// We only run Sentry if we're in production mode, or `VUE_APP_SENTRY_DEV` is set to true
+if(process.env.VUE_APP_SENTRY_API_KEY && (process.env.VUE_APP_SENTRY_DEV === 'true' || process.env.NODE_ENV === 'production'))
 {
 	Sentry.init({
 		dsn: process.env.VUE_APP_SENTRY_API_KEY,
