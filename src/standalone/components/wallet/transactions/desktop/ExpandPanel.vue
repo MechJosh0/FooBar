@@ -7,8 +7,8 @@
 </template>
 
 <script>
-	import rowMixin from '@/standalone/components/account/transactions/row.mixin';
-	import ExpandPanelItem from '@/standalone/components/account/transactions/ExpandPanelItem';
+	import rowMixin from '@/standalone/components/wallet/transactions/row.mixin';
+	import ExpandPanelItem from '@/standalone/components/wallet/transactions/ExpandPanelItem';
 
 	export default {
 		components: {

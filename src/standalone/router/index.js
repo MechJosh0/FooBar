@@ -41,15 +41,15 @@ const logInCheck = (walletArea) => (to, from, next) =>
 
 	if(walletArea) // If we're visting a wallet area page (transfer, transactions etc)
 	{
-		if(!store.getters['account/getActiveAccount']) // If the user doesn't have an active account
+		if(!store.getters['wallets/getActiveWallet']) // If the user doesn't have an active wallet
 		{
-			// User is trying to access an account area while logged out
+			// User is trying to access a wallet area while logged out
 			return next({
 				name: 'login'
 			});
 		}
 
-		// User is accessing their logged in account area
+		// User is accessing their logged in wallet area
 		return next();
 	}
 
@@ -70,25 +70,25 @@ const walletArea = () =>
 const routeConfig = [
 	{
 		name: 'index',
-		path: '/:account?',
+		path: '/:wallet?',
 		component: loadComponent('/Index')
 	},
 	{
 		name: 'register',
 		path: '/register',
 		beforeEnter: extensionWalletExists(false),
-		component: loadComponent('/Register')
+		component: loadComponent('/account/Register')
 	},
 	{
 		name: 'login',
 		path: '/login',
 		beforeEnter: extensionWalletExists(true),
-		component: loadComponent('/Login')
+		component: loadComponent('/account/Login')
 	},
 	{
 		name: 'logout',
 		path: '/logout',
-		component: loadComponent('/Logout')
+		component: loadComponent('/account/Logout')
 	},
 	{
 		name: 'account',
@@ -102,56 +102,56 @@ const routeConfig = [
 			{
 				name: 'settings',
 				path: 'settings',
-				component: loadComponent('/Settings')
+				component: loadComponent('/account/Settings')
 			},
 			{
-				name: 'account.create',
-				path: 'create',
-				component: loadComponent('/account/Create')
+				name: 'account.wallet.create',
+				path: 'wallet/create',
+				component: loadComponent('/account/wallet/Create')
 			},
 			{
-				name: 'account.import',
-				path: 'import',
-				component: loadComponent('/account/Import')
+				name: 'account.wallet.import',
+				path: 'wallet/import',
+				component: loadComponent('/account/wallet/Import')
 			},
 			{
 				name: 'account.wallet',
-				path: ':account',
+				path: 'wallet/:wallet',
 				beforeEnter: walletArea(),
 				redirect: {
 					name: 'account.user'
 				},
-				component: loadComponent('/account/loggedIn/Index'),
+				component: loadComponent('/account/wallet/Index'),
 				children: [
 					{
 						name: 'account.wallet.user',
 						path: 'user',
-						component: loadComponent('/account/loggedIn/User')
+						component: loadComponent('/account/wallet/User')
 					},
 					{
 						name: 'account.wallet.transactions',
 						path: 'transactions',
-						component: loadComponent('/account/loggedIn/Transactions')
+						component: loadComponent('/account/wallet/Transactions')
 					},
 					{
 						name: 'account.wallet.transfer',
 						path: 'transfer',
-						component: loadComponent('/account/loggedIn/Transfer')
+						component: loadComponent('/account/wallet/Transfer')
 					},
 					{
 						name: 'account.wallet.backup',
 						path: 'backup',
-						component: loadComponent('/account/loggedIn/Backup')
+						component: loadComponent('/account/wallet/Backup')
 					},
 					{
 						name: 'account.wallet.export',
 						path: 'export',
-						component: loadComponent('/account/loggedIn/Export')
+						component: loadComponent('/account/wallet/Export')
 					},
 					{
 						name: 'account.wallet.delete',
 						path: 'delete',
-						component: loadComponent('/account/loggedIn/Delete')
+						component: loadComponent('/account/wallet/Delete')
 					}
 				]
 			}
@@ -166,19 +166,19 @@ const router = new Router({
 
 router.beforeEach(async (to, from, next) =>
 {
-	if(to.params.account)
+	if(to.params.wallet)
 	{
-		// Set this as activeAccount
-		const account = store.getters['account/getAccountBy']('name', to.params.account);
+		// Set this as activeWallet
+		const wallet = store.getters['wallets/getWalletBy']('name', to.params.wallet);
 
-		if(!account) // Account (URL path) not found
+		if(!wallet) // Wallet (URL path) not found
 		{
 			return next({
 				name: 'index'
 			});
 		}
 
-		store.dispatch('account/logIn', account.address);
+		store.dispatch('wallets/logIn', wallet.address);
 	}
 
 	return next();

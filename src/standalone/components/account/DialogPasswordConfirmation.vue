@@ -87,9 +87,9 @@
 			};
 		},
 		computed: {
-			account()
+			wallet()
 			{
-				return this.$store.getters['account/getActiveAccount'];
+				return this.$store.getters['wallets/getActiveWallet'];
 			}
 		},
 		watch: {

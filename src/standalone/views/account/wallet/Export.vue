@@ -4,7 +4,7 @@
 		<p>{{ $t('views.export.information') }}</p>
 		<div v-if="pages">
 			<p>
-				{{ $t('views.export.accountInformation', {
+				{{ $t('views.export.walletInformation', {
 					totalTransactions: info.totalTransactionsFormatted,
 					expectedTime: info.expectedTimeFormatted
 				}) }}
@@ -69,13 +69,13 @@
 			};
 		},
 		computed: {
-			account()
+			wallet()
 			{
-				return this.$store.getters['account/getActiveAccount'];
+				return this.$store.getters['wallets/getActiveWallet'];
 			}
 		},
 		watch: {
-			account()
+			wallet()
 			{
 				this.getInitData();
 			}
@@ -157,7 +157,7 @@
 			},
 			download()
 			{
-				createCSVFile(`${this.account.address}.csv`, this.fileData);
+				createCSVFile(`${this.wallet.address}.csv`, this.fileData);
 			},
 			async getInitData()
 			{
@@ -205,7 +205,7 @@
 			},
 			async getFullTransactions(page)
 			{
-				const res = await this.$store.dispatch('transactions/read/getAddressFullTransactions', { address: this.account.address, page });
+				const res = await this.$store.dispatch('transactions/read/getAddressFullTransactions', { address: this.wallet.address, page });
 
 				return res;
 			},

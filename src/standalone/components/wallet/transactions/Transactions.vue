@@ -42,17 +42,17 @@
 
 <script>
 	import { nulsToNa } from 'nuls-js';
-	import transactionMixin from '@/standalone/components/account/transactions/transaction.mixin';
+	import transactionMixin from '@/standalone/components/wallet/transactions/transaction.mixin';
 
 	export default {
 		components: {
-			Desktop: () => import('@/standalone/components/account/transactions/desktop/Item'),
-			DesktopExpandPanel: () => import('@/standalone/components/account/transactions/desktop/ExpandPanel'),
-			Mobile: () => import('@/standalone/components/account/transactions/mobile/Item')
+			Desktop: () => import('@/standalone/components/wallet/transactions/desktop/Item'),
+			DesktopExpandPanel: () => import('@/standalone/components/wallet/transactions/desktop/ExpandPanel'),
+			Mobile: () => import('@/standalone/components/wallet/transactions/mobile/Item')
 		},
 		mixins: [transactionMixin],
 		props: {
-			account: {
+			wallet: {
 				type: Object,
 				required: true
 			}
@@ -170,7 +170,7 @@
 							fee: tx._fee_price,
 							remark: transaction.remark,
 							value: -Math.abs(nulsToNa(transaction.amount) + tx._fee_price),
-							source: this.account.address,
+							source: this.wallet.address,
 							target: transaction.recipients.join(', '),
 							type,
 							time,
@@ -182,7 +182,7 @@
 			}
 		},
 		watch: {
-			account()
+			wallet()
 			{
 				this.loading = true;
 				this.pagination = this.paginationReset();
@@ -212,7 +212,7 @@
 			},
 			async getTransactions()
 			{
-				this.res = await this.$store.dispatch('transactions/read/getAddressTransactions', this.account.address);
+				this.res = await this.$store.dispatch('transactions/read/getAddressTransactions', this.wallet.address);
 
 				this.loading = false;
 			}

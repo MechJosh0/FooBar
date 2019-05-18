@@ -7,12 +7,12 @@
 			<Item
 				icon="fas fa-upload"
 				:label="$t('header.navigation.import')"
-				to="account.import"
+				to="account.wallet.import"
 			/>
 			<Item
 				icon="fas fa-user-plus"
-				:label="$t('header.navigation.newAccount')"
-				to="account.create"
+				:label="$t('header.navigation.newWallet')"
+				to="account.wallet.create"
 			/>
 			<Item
 				v-if="popup"

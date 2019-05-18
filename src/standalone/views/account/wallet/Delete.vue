@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h4>{{ $t('views.delete.title') }}</h4>
-		<p v-html="$t('views.delete.request', { address: `<b>${account.address}</b>` })" />
+		<p v-html="$t('views.delete.request', { address: `<b>${wallet.address}</b>` })" />
 		<p v-html="$t('views.delete.backupWarning')" />
 		<q-btn
 			:label="$t('views.delete.cancel')"
@@ -44,9 +44,9 @@
 			};
 		},
 		computed: {
-			account()
+			wallet()
 			{
-				return this.$store.getters['account/getActiveAccount'];
+				return this.$store.getters['wallets/getActiveWallet'] || {};
 			}
 		},
 		watch: {
@@ -65,7 +65,7 @@
 			},
 			deleteWallet()
 			{
-				this.$store.dispatch('account/deleteActive', this.account.address);
+				this.$store.dispatch('wallets/deleteWallet', this.wallet.address);
 				this.$router.push({ name: 'index' });
 			}
 		}

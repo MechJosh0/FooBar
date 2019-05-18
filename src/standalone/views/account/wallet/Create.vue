@@ -14,7 +14,7 @@
 			<div class="float-right">
 				<q-btn
 					:label="$t('views.create.form.buttons.import')"
-					:to="{ name: 'account.import' }"
+					:to="{ name: 'account.wallet.import' }"
 					type="submit"
 					color="secondary"
 				/>
@@ -49,7 +49,7 @@
 						},
 						(val) => // Unique
 						{
-							if(!this.$store.getters['account/getAccountBy']('name', val)) return true;
+							if(!this.$store.getters['wallets/getWalletBy']('name', val)) return true;
 
 							return this.$t('views.create.form.fields.name.errors.exists');
 						}
@@ -63,9 +63,9 @@
 			{
 				return this.$store.getters['app/account/password'];
 			},
-			account()
+			wallet()
 			{
-				return this.$store.getters['account/getActiveAccount'];
+				return this.$store.getters['wallets/getActiveWallet'];
 			}
 		},
 		methods: {
@@ -75,7 +75,7 @@
 			},
 			async onSubmit()
 			{
-				const res = await this.$store.dispatch('account/createNewAccount', this.name);
+				const res = await this.$store.dispatch('wallets/createNewWallet', this.name);
 
 				if(!res.success)
 				{
@@ -85,7 +85,7 @@
 				}
 
 				success(this.$t('views.create.form.submit.success'));
-				this.$router.push({ name: 'account.wallet.user', params: { account: this.name } });
+				this.$router.push({ name: 'account.wallet.user', params: { wallet: this.name } });
 			}
 		}
 	};

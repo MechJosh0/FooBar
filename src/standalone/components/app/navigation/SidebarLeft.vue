@@ -8,10 +8,10 @@
 			:label="$t('header.navigation.home')"
 			to="index"
 		/>
-		<template v-if="isLoggedIn && account.address">
+		<template v-if="isLoggedIn && wallet.address">
 			<Item
 				icon="fas fa-user"
-				:label="$t('header.navigation.account')"
+				:label="$t('header.navigation.wallet')"
 				to="account.wallet.user"
 			/>
 			<Item
@@ -55,9 +55,9 @@
 			{
 				return this.$store.getters['app/account/isLoggedIn'];
 			},
-			account()
+			wallet()
 			{
-				return this.$store.getters['account/getActiveAccount'] || {};
+				return this.$store.getters['wallets/getActiveWallet'] || {};
 			}
 		}
 	};

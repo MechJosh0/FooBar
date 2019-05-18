@@ -67,7 +67,7 @@
 			<div class="float-right">
 				<q-btn
 					:label="$t('views.import.form.buttons.create')"
-					:to="{ name: 'account.create' }"
+					:to="{ name: 'account.wallet.create' }"
 					type="submit"
 					color="secondary"
 				/>
@@ -129,10 +129,10 @@
 						async () => // Valid wallet data
 						{
 							const [file] = this.$refs.file.$refs.input.files;
-							const accountData = await this.readJSONFileContent(file);
+							const wallet = await this.readJSONFileContent(file);
 							let valid = true;
 
-							if(!accountData.encryptedPrivateKey && !accountData.prikey) valid = false;
+							if(!wallet.encryptedPrivateKey && !wallet.prikey) valid = false;
 
 							if(valid) return true;
 
@@ -148,7 +148,7 @@
 						},
 						(val) => // Unique
 						{
-							if(!this.$store.getters['account/getAccountBy']('name', val)) return true;
+							if(!this.$store.getters['wallets/getWalletBy']('name', val)) return true;
 
 							return this.$t('views.import.form.fields.name.errors.exists');
 						}
@@ -159,9 +159,9 @@
 							if(val && val.length > 0) return true;
 
 							const [file] = this.$refs.file.$refs.input.files;
-							const accountData = await this.readJSONFileContent(file);
+							const wallet = await this.readJSONFileContent(file);
 
-							if(accountData.prikey)
+							if(wallet.prikey)
 							{
 								return true;
 							}
@@ -171,16 +171,16 @@
 						async (val) => // Validate
 						{
 							const [file] = this.$refs.file.$refs.input.files;
-							const accountData = await this.readJSONFileContent(file);
+							const wallet = await this.readJSONFileContent(file);
 
-							if(accountData.prikey)
+							if(wallet.prikey)
 							{
 								return true;
 							}
 
 							try
 							{
-								Account.import(accountData.encryptedPrivateKey, val);
+								Account.import(wallet.encryptedPrivateKey, val);
 
 								return true;
 							}
@@ -199,9 +199,9 @@
 			};
 		},
 		computed: {
-			account()
+			wallet()
 			{
-				return this.$store.getters['account/getActiveAccount'];
+				return this.$store.getters['wallets/getActiveWallet'];
 			}
 		},
 		methods: {
@@ -218,16 +218,12 @@
 					reader.readAsText(file);
 				});
 
-				const accountData = JSON.parse(await fileContents);
+				const wallet = JSON.parse(await fileContents);
 
 				// Fix type formats
-				accountData.prikey = accountData.prikey === 'null' ? null : accountData.prikey;
+				wallet.prikey = wallet.prikey === 'null' ? null : wallet.prikey;
 
-				return accountData;
-			},
-			deleteAccount()
-			{
-				this.$store.dispatch('account/logOut');
+				return wallet;
 			},
 			onReset()
 			{
@@ -237,23 +233,23 @@
 			},
 			async onSubmit()
 			{
-				let accountData = {};
+				let wallet = {};
 
 				if(this.importMethod === 'file')
 				{
 					const [file] = this.$refs.file.$refs.input.files;
 
-					accountData = await this.readJSONFileContent(file);
+					wallet = await this.readJSONFileContent(file);
 				}
 				else if(this.importMethod === 'privateKey')
 				{
-					accountData = { prikey: this.privateKey };
+					wallet = { prikey: this.privateKey };
 				}
 
-				const res = await this.$store.dispatch('account/importAccount', {
+				const res = await this.$store.dispatch('wallets/importWallet', {
 					name: this.name,
 					walletPassword: this.password,
-					accountData
+					wallet
 				});
 
 				if(!res.success)
@@ -265,7 +261,7 @@
 				}
 
 				success(this.$t('views.import.form.submit.success'));
-				this.$router.push({ name: 'account.wallet.user', params: { account: this.name } });
+				this.$router.push({ name: 'account.wallet.user', params: { wallet: this.name } });
 			}
 		}
 	};

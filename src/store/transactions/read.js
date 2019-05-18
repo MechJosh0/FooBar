@@ -36,11 +36,11 @@ const actions = {
 };
 
 const getters = {
-	getTransactions: (state, commit, rootGetters) => (account) =>
+	getTransactions: (state, commit, rootGetters) => (wallet) =>
 	{
 		const release = rootGetters['app/getRelease'];
 
-		return state.accounts[release][account].transactions;
+		return state.wallets[release][wallet].transactions;
 	}
 };
 

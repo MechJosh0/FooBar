@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import app from '@/store/app';
-import account from '@/store/account';
+import wallets from '@/store/wallets';
 import i18n from '@/store/i18n';
 import transactions from '@/store/transactions';
 import blocks from '@/store/blocks';
 
 const modules = {
 	app,
-	account,
+	wallets,
 	i18n,
 	transactions,
 	blocks

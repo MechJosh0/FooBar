@@ -1,18 +1,18 @@
 <template>
-	<Transactions :account="account" />
+	<Transactions :wallet="wallet" />
 </template>
 
 <script>
-	import Transactions from '@/standalone/components/account/transactions/Transactions';
+	import Transactions from '@/standalone/components/wallet/transactions/Transactions';
 
 	export default {
 		components: {
 			Transactions
 		},
 		computed: {
-			account()
+			wallet()
 			{
-				return this.$store.getters['account/getActiveAccount'];
+				return this.$store.getters['wallets/getActiveWallet'];
 			}
 		}
 	};

@@ -172,9 +172,9 @@
 			};
 		},
 		computed: {
-			account()
+			wallet()
 			{
-				return this.$store.getters['account/getActiveAccount'];
+				return this.$store.getters['wallets/getActiveWallet'];
 			},
 			isMainNet()
 			{
@@ -194,12 +194,12 @@
 		{
 			try
 			{
-				this.utxos = await Utxo.getUtxos(this.account.address, this.transactionConfig.api);
+				this.utxos = await Utxo.getUtxos(this.wallet.address, this.transactionConfig.api);
 
 				this.tx = TransferTransaction
 					.fromUtxos(this.utxos)
 					.config(this.transactionConfig)
-					.change(this.account.address);
+					.change(this.wallet.address);
 			}
 			catch(e)
 			{
@@ -262,7 +262,7 @@
 			{
 				this.tx.sign(this.$store.getters['account/decryptedActiveAccountPrivateKey']);
 				this.$store.dispatch('transactions/write/sendTransaction', { transaction: this.transaction, tx: this.tx });
-				this.$router.push({ name: 'account.wallet.transactions', params: { account: this.account.name } });
+				this.$router.push({ name: 'account.wallet.transactions', params: { wallet: this.wallet.name } });
 			}
 		}
 	};

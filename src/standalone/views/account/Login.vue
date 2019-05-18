@@ -54,9 +54,9 @@
 			};
 		},
 		computed: {
-			accounts()
+			wallets()
 			{
-				return this.$store.getters['account/getAccounts'];
+				return this.$store.getters['wallets/getWallets'];
 			}
 		},
 		methods: {
@@ -72,14 +72,14 @@
 				{
 					success(this.$t('views.login.form.submit.success'));
 
-					if(Object.keys(this.accounts).length)
+					if(Object.keys(this.wallets).length)
 					{
 						this.$router.push({ name: 'index' });
 
 						return;
 					}
 
-					this.$router.push({ name: 'account.create' });
+					this.$router.push({ name: 'account.wallet.create' });
 				}
 				else
 				{

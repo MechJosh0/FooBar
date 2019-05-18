@@ -48,12 +48,12 @@
 			{
 				if(!this.to) return null;
 
-				const account = this.$store.getters['account/getActiveAccount'] || {};
+				const wallet = this.$store.getters['wallets/getActiveWallet'] || {};
 
 				return {
 					name: this.to,
 					params: {
-						account: account.name
+						wallet: wallet.name
 					}
 				};
 			}

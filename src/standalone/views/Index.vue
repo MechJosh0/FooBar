@@ -2,7 +2,7 @@
 	<div class="q-pa-md">
 		<q-table
 			:title="$t('views.index.table.label')"
-			:data="accounts"
+			:data="wallets"
 			:columns="columns"
 			rowKey="address"
 		/>
@@ -45,15 +45,15 @@
 			{
 				return this.$store.getters['app/account/password'];
 			},
-			accounts()
+			wallets()
 			{
-				const accounts = this.$store.getters['account/getAccounts'];
+				const wallets = this.$store.getters['wallets/getWallets'];
 
-				return Object.keys(accounts).map((address) =>
+				return Object.keys(wallets).map((address) =>
 				{
 					return {
 						address,
-						name: accounts[address].name
+						name: wallets[address].name
 					};
 				});
 			}

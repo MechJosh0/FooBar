@@ -1,7 +1,7 @@
 import Duration from 'luxon/src/duration';
 import DateTime from 'luxon/src/datetime';
 import { date } from 'quasar';
-import transactionMixin from '@/standalone/components/account/transactions/transaction.mixin';
+import transactionMixin from '@/standalone/components/wallet/transactions/transaction.mixin';
 
 export default {
 	mixins: [transactionMixin],

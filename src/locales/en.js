@@ -3,13 +3,13 @@ export default {
 		title: 'FooBar',
 		navigation: {
 			home: 'Home',
-			account: 'Account',
+			wallet: 'Wallet',
 			transactions: 'Transactions',
 			transfer: 'Transfer',
 			backup: 'Back Up',
 			export: 'Export',
 			import: 'Import',
-			newAccount: 'New Account',
+			newWallet: 'New Wallet',
 			fullScreen: 'Full Screen',
 			settings: 'Settings',
 			logout: 'Logout',
@@ -125,7 +125,7 @@ export default {
 			},
 			keystore: {
 				title: 'Keystore File',
-				information: 'Your keystore file contains your private key encrypted with your account password for {appName}. Keystore is the preferred method for common usage for importing and exporting your account.',
+				information: 'Your keystore file contains your private key encrypted with your account password for {appName}. Keystore is the preferred method for common usage for importing and exporting your wallet.',
 				download: 'Download'
 			}
 		},
@@ -157,7 +157,7 @@ export default {
 		},
 		index: {
 			table: {
-				label: 'Accounts',
+				label: 'Wallets',
 				columns: {
 					address: 'Address',
 					name: 'Name',
@@ -213,7 +213,7 @@ export default {
 						}
 					},
 					file: {
-						label: 'Account Keystore',
+						label: 'Wallet Keystore',
 						errors: {
 							required: 'You must provide a keystore to import',
 							fileType: 'The file type must be a .keystore or .txt',
@@ -229,10 +229,10 @@ export default {
 						}
 					},
 					name: {
-						label: 'Account Name',
+						label: 'Wallet Name',
 						errors: {
-							required: 'Please enter a readable name for your account',
-							exists: 'You already have an account under this name'
+							required: 'Please enter a readable name for your new wallet',
+							exists: 'You already have a wallet with this name'
 						}
 					}
 				},
@@ -243,7 +243,7 @@ export default {
 				submit: {
 					somethingWentWrong: 'Something went wrong, please try again.',
 					invalidPassword: 'Invalid password for the provided encrypted private key.',
-					success: 'NULS account imported.'
+					success: 'NULS wallet imported.'
 				}
 			}
 		},
@@ -256,7 +256,7 @@ export default {
 				},
 				submit: {
 					somethingWentWrong: 'Something went wrong, please try again.',
-					success: 'NULS account created.'
+					success: 'NULS wallet created.'
 				},
 				fields: {
 					password: {
@@ -267,17 +267,19 @@ export default {
 						}
 					},
 					name: {
-						hint: 'A readable name to assign your account',
-						label: 'Account Name',
+						hint: 'A readable name to assign your wallet',
+						label: 'Wallet Name',
 						errors: {
-							required: 'Please enter a readable name for your account',
-							exists: 'You already have an account under this name'
+							required: 'Please enter a readable name for your wallet',
+							exists: 'You already have a wallet with this name'
 						}
 					}
 				}
 			}
 		},
 		transfer: {
+			beta: 'Sending transactions is currently disabled on main net during testing phase. Please change the app settings to switch to testnet.',
+			serverError: 'There was an error connecting to the server which handles transactions. Please try again, switch servers in your settings, or try again later.',
 			form: {
 				buttons: {
 					submit: 'Send'
@@ -334,7 +336,7 @@ export default {
 				million: 'M',
 				thousand: 'K'
 			},
-			accountInformation: 'You have {totalTransactions} transactions, this is expected to take less than {expectedTime} to run a full export of all transactions.',
+			walletInformation: 'You have {totalTransactions} transactions, this is expected to take less than {expectedTime} to run a full export of all transactions.',
 			beginDownload: 'Run Export',
 			exportingProgress: '{num}%',
 			exportingProgressTooltip: 'Pages {pageX} out of {pageY} proccessed',

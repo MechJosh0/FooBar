@@ -65,11 +65,11 @@
 		computed: {
 			privateKey()
 			{
-				return this.$store.getters['account/decryptedActiveAccountPrivateKey'];
+				return this.$store.getters['wallets/decryptedActiveWalletPrivateKey'];
 			},
-			account()
+			wallet()
 			{
-				return this.$store.getters['account/getActiveAccount'];
+				return this.$store.getters['wallets/getActiveWallet'];
 			}
 		},
 		watch: {
@@ -114,7 +114,7 @@
 			},
 			triggerDownload()
 			{
-				this.download(`${this.account.address}.keystore`, this.account);
+				this.download(`${this.wallet.address}.keystore`, this.wallet);
 			},
 			togglePrivateKeyView()
 			{

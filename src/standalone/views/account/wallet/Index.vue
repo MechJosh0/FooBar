@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<b>{{ account.address }}</b>
+		<b>{{ wallet.address }}</b>
 		<router-view />
 	</div>
 </template>
@@ -8,9 +8,9 @@
 <script>
 	export default {
 		computed: {
-			account()
+			wallet()
 			{
-				return this.$store.getters['account/getActiveAccount'] || {};
+				return this.$store.getters['wallets/getActiveWallet'] || {};
 			}
 		}
 	};

@@ -80,7 +80,7 @@
 			{
 				this.$store.dispatch('app/account/register', this.password);
 				success(this.$t('views.register.form.submit.success'));
-				this.$router.push({ name: 'account.create' });
+				this.$router.push({ name: 'account.wallet.create' });
 			}
 		}
 	};

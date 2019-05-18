@@ -2,18 +2,18 @@
 	<div class="q-gutter-y-md">
 		<q-tabs
 			v-if="isLoggedIn"
-			v-model="activeAccount"
+			v-model="activeWallet"
 			shrink
 		>
 			<q-route-tab
-				v-for="a in accounts"
+				v-for="a in wallets"
 				:key="a.address"
 				:name="a.address"
 				:label="a.name"
 				:to="{
 					name: routePath,
 					params: {
-						account: a.name
+						wallet: a.name
 					}
 				}"
 			/>
@@ -37,21 +37,21 @@
 			{
 				return this.$store.getters['app/account/isLoggedIn'];
 			},
-			activeAccount: {
+			activeWallet: {
 				get()
 				{
-					const activeAccount = this.$store.getters['account/getActiveAccount'] || {};
+					const activeWallet = this.$store.getters['wallets/getActiveWallet'] || {};
 
-					return activeAccount.address;
+					return activeWallet.address;
 				},
 				set()
 				{
 					// Do nothing
 				}
 			},
-			accounts()
+			wallets()
 			{
-				return this.$store.getters['account/getAccounts'];
+				return this.$store.getters['wallets/getWallets'];
 			}
 		}
 	};

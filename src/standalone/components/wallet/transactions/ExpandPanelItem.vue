@@ -28,7 +28,7 @@
 </template>
 
 <script>
-	import rowMixin from '@/standalone/components/account/transactions/row.mixin';
+	import rowMixin from '@/standalone/components/wallet/transactions/row.mixin';
 
 	export default {
 		mixins: [rowMixin],
