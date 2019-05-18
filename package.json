@@ -12,6 +12,8 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "@quasar/extras": "^1.0.0",
+    "@sentry/browser": "^5.2.1",
+    "@sentry/integrations": "^5.2.0",
     "axios": "^0.18.0",
     "bip39": "^3.0.1",
     "luxon": "^1.12.1",

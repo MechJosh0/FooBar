@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import PortalVue from 'portal-vue';
+import * as Sentry from '@sentry/browser';
+import * as Integrations from '@sentry/integrations';
 import App from '@/standalone/App';
 import store from '@/store';
 import router from '@/standalone/router';
@@ -7,6 +9,19 @@ import i18n from '@/plugins/i18n';
 import '@/plugins/quasar';
 
 Vue.use(PortalVue);
+
+if(process.env.VUE_APP_SENTRY_API_KEY)
+{
+	Sentry.init({
+		dsn: process.env.VUE_APP_SENTRY_API_KEY,
+		integrations: [
+			new Integrations.Vue({
+				Vue,
+				attachProps: true
+			})
+		]
+	});
+}
 
 const main = () =>
 {
