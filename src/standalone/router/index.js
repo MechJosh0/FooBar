@@ -70,7 +70,7 @@ const walletArea = () =>
 const routeConfig = [
 	{
 		name: 'index',
-		path: '/',
+		path: '/:account?',
 		component: loadComponent('/Index')
 	},
 	{
