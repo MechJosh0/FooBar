@@ -34,6 +34,11 @@
 				:label="$t('header.navigation.export')"
 				to="account.wallet.export"
 			/>
+			<Item
+				icon="fas fa-trash-alt"
+				:label="$t('header.navigation.delete')"
+				to="account.wallet.delete"
+			/>
 		</template>
 	</q-list>
 </template>

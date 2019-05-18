@@ -14,7 +14,8 @@ export default {
 			settings: 'Settings',
 			logout: 'Logout',
 			login: 'Login',
-			register: 'Register'
+			register: 'Register',
+			delete: 'Delete'
 		}
 	},
 	dates: {
