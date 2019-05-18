@@ -10,7 +10,7 @@
 		computed: {
 			account()
 			{
-				return this.$store.getters['account/getActiveAccount'];
+				return this.$store.getters['account/getActiveAccount'] || {};
 			}
 		}
 	};
