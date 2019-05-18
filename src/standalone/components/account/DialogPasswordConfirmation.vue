@@ -99,7 +99,7 @@
 			},
 			open(newVal)
 			{
-				// this.password = '';
+				this.password = '';
 
 				if(this.open !== this.dialogIsOpen)
 				{
