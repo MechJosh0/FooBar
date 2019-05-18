@@ -154,9 +154,17 @@
 						}
 					],
 					password: [
-						(val) => // Required
+						async (val) => // Required
 						{
 							if(val && val.length > 0) return true;
+
+							const [file] = this.$refs.file.$refs.input.files;
+							const accountData = await this.readJSONFileContent(file);
+
+							if(accountData.prikey)
+							{
+								return true;
+							}
 
 							return this.$t('views.import.form.fields.password.errors.required');
 						},
