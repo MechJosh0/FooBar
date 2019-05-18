@@ -58,6 +58,19 @@ export default {
 		}
 	},
 	views: {
+		delete: {
+			cancel: 'Cancel',
+			title: 'Delete Wallet',
+			request: 'You are requesting to delete the address {address} from your account. Doing so will mean losing access to the address unless you import it back into your account.',
+			backupWarning: 'Please ensure you have <b>backed up the address</b> if you wish to use this wallet in the future. There is not an undo action for performing the delete action.',
+			openConfirmWindow: 'I have Backed up my address',
+			dialog: {
+				information: `Please confirm by entering your password that you understand that there is not an undo for this action.
+				To get your wallet back you must have backed it up first and then import it back into your account,
+				please ensure you have backed up your wallet before performing this action!`,
+				submit: 'I understand'
+			}
+		},
 		register: {
 			form: {
 				fields: {
@@ -108,13 +121,7 @@ export default {
 				title: 'Private Key',
 				information: 'Your private key is your absolute plain text password to your address. This should be only used if you have lost access to your keystore file.',
 				download: 'View private key',
-				copied: 'Copied!',
-				dialog: {
-					title: 'Confirm your password',
-					input: 'Password',
-					cancel: 'Cancel',
-					submit: 'Submit'
-				}
+				copied: 'Copied!'
 			},
 			keystore: {
 				title: 'Keystore File',
