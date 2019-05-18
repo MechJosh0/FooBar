@@ -1,7 +1,7 @@
 <template>
 	<CenteredCard>
 		<q-form
-			v-if="!isMainNet"
+			v-if="!isMainNet && !errorConnectingToServer"
 			@submit="onSubmit"
 			@reset="onReset"
 		>
@@ -84,14 +84,29 @@
 			</q-list>
 			<div class="float-right">
 				<q-btn
+					v-if="errorConnectingToServer === false"
 					:label="$t('views.transfer.form.buttons.submit')"
 					type="submit"
 					color="secondary"
 				/>
+				<q-btn
+					v-else
+					type="disabled"
+					color="secondary"
+				>
+					<q-spinner
+						color="primary"
+					/>
+				</q-btn>
 			</div>
 		</q-form>
+		<div v-else-if="errorConnectingToServer">
+			<q-banner inlineActions class="text-white bg-red">
+				{{ $t('views.transfer.serverError') }}
+			</q-banner>
+		</div>
 		<div v-else>
-			Sending transactions is currently disabled on main net during testing phase. Please change the app settings to switch to testnet.
+			{{ $t('views.transfer.beta') }}
 		</div>
 	</CenteredCard>
 </template>
@@ -160,6 +175,7 @@
 						}
 					]
 				},
+				errorConnectingToServer: null,
 				utxos: null,
 				tx: null,
 				transactionHash: null,
@@ -200,10 +216,13 @@
 					.fromUtxos(this.utxos)
 					.config(this.transactionConfig)
 					.change(this.wallet.address);
+
+				this.errorConnectingToServer = false;
 			}
 			catch(e)
 			{
 				console.error(e.message);
+				this.errorConnectingToServer = true;
 			}
 		},
 		methods: {
@@ -241,26 +260,33 @@
 			},
 			onSubmit()
 			{
-				this.transaction.recipients.forEach((recipient) =>
+				try
 				{
-					this.tx.to(recipient, nulsToNa(this.transaction.amount));
-				});
+					this.transaction.recipients.forEach((recipient) =>
+					{
+						this.tx.to(recipient, nulsToNa(this.transaction.amount));
+					});
 
-				if(this.transaction.remark)
-				{
-					this.tx.remark(this.transaction.remark);
+					if(this.transaction.remark)
+					{
+						this.tx.remark(this.transaction.remark);
+					}
+
+					if(!this.transaction.autoFee)
+					{
+						this.tx.fee(nulsToNa(this.transaction.fee));
+					}
+
+					this.broadcast();
 				}
-
-				if(!this.transaction.autoFee)
+				catch(e)
 				{
-					this.tx.fee(nulsToNa(this.transaction.fee));
+					console.error(e.message);
 				}
-
-				this.broadcast();
 			},
 			async broadcast()
 			{
-				this.tx.sign(this.$store.getters['account/decryptedActiveAccountPrivateKey']);
+				this.tx.sign(this.$store.getters['wallets/decryptedActiveWalletPrivateKey']);
 				this.$store.dispatch('transactions/write/sendTransaction', { transaction: this.transaction, tx: this.tx });
 				this.$router.push({ name: 'account.wallet.transactions', params: { wallet: this.wallet.name } });
 			}
