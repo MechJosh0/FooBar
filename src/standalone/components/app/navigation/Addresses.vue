@@ -26,7 +26,12 @@
 		computed: {
 			routePath()
 			{
-				return this.$route.name || 'account.wallet.user';
+				if(this.$route.name && this.$route.name.startsWith('account.wallet'))
+				{
+					return this.$route.name;
+				}
+
+				return 'account.wallet.user';
 			},
 			isLoggedIn()
 			{
