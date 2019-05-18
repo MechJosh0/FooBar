@@ -147,6 +147,11 @@ const routeConfig = [
 						name: 'account.wallet.export',
 						path: 'export',
 						component: loadComponent('/account/loggedIn/Export')
+					},
+					{
+						name: 'account.wallet.delete',
+						path: 'delete',
+						component: loadComponent('/account/loggedIn/Delete')
 					}
 				]
 			}
