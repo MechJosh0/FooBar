@@ -35,71 +35,27 @@
 			:label="$t('views.backup.keystore.download')"
 			@click="triggerDownload"
 		/>
-		<!-- Dialog window -->
-		<q-dialog v-model="passwordDialogIsOpen" persistent>
-			<q-card style="min-width: 400px">
-				<q-form
-					@submit="onSubmit"
-					@reset="onReset"
-				>
-					<q-card-section>
-						<div class="text-h6">
-							{{ $t('views.backup.privateKey.dialog.title') }}
-						</div>
-					</q-card-section>
-
-					<q-card-section>
-						<q-input
-							v-model="password"
-							type="password"
-							:label="$t('views.backup.privateKey.dialog.input')"
-							dense
-							autofocus
-							lazyRules
-							:rules="validation.password"
-						/>
-					</q-card-section>
-
-					<q-card-actions align="right" class="text-primary">
-						<q-btn
-							v-close-popup
-							flat
-							:label="$t('views.backup.privateKey.dialog.cancel')"
-						/>
-						<q-btn
-							:label="$t('views.backup.privateKey.dialog.submit')"
-							type="submit"
-							color="secondary"
-						/>
-					</q-card-actions>
-				</q-form>
-			</q-card>
-		</q-dialog>
+		<DialogPasswordConfirmation
+			v-model="passwordHasBeenConfirmed"
+			:dialogIsOpen="dialogIsOpen"
+			:persistent="false"
+			@closed="dialogIsOpen = false"
+		/>
 	</div>
 </template>
 
 <script>
+	import DialogPasswordConfirmation from '@/standalone/components/account/DialogPasswordConfirmation';
+
 	export default {
+		components: {
+			DialogPasswordConfirmation
+		},
 		data()
 		{
 			return {
-				validation: {
-					password: [
-						(val) => // Required
-						{
-							if(val && val.length > 0) return true;
-
-							return this.$t('views.login.form.fields.password.errors.required');
-						},
-						(val) => // Validate
-						{
-							if(this.$store.getters['app/account/isValidPassword'](val)) return true;
-
-							return this.$t('views.login.form.fields.password.errors.incorrect');
-						}
-					]
-				},
-				passwordDialogIsOpen: false,
+				dialogIsOpen: false,
+				passwordHasBeenConfirmed: false,
 				password: '',
 				viewPrivateKey: false,
 				copiedPrivateKey: false,
@@ -116,28 +72,29 @@
 				return this.$store.getters['account/getActiveAccount'];
 			}
 		},
+		watch: {
+			passwordHasBeenConfirmed()
+			{
+				this.onSubmit();
+			}
+		},
 		methods: {
 			viewPrivateKeyRequest()
 			{
 				if(!this.privateKeyViewable)
 				{
-					this.passwordDialogIsOpen = true;
+					this.dialogIsOpen = true;
 				}
 				else
 				{
 					this.viewPrivateKey = !this.viewPrivateKey;
 				}
 			},
-			onReset()
-			{
-				this.password = '';
-			},
 			onSubmit()
 			{
-				if(this.$store.getters['app/account/isValidPassword'](this.password))
+				if(this.passwordHasBeenConfirmed)
 				{
 					this.privateKeyViewable = true;
-					this.passwordDialogIsOpen = false;
 					this.viewPrivateKey = true;
 				}
 			},
