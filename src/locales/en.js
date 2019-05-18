@@ -32,6 +32,31 @@ export default {
 			lessThanAMinute: 'less than a minute'
 		}
 	},
+	dialog: {
+		passwordConfirmation: {
+			title: 'Confirm your password',
+			input: 'Password',
+			cancel: 'Cancel',
+			submit: 'Submit',
+			form: {
+				fields: {
+					password: {
+						label: 'Password',
+						errors: {
+							required: 'You must enter a password',
+							incorrect: 'The password is incorrect'
+						}
+					}
+				},
+				buttons: {
+					submit: 'Submit'
+				},
+				submit: {
+					error: 'The password is incorrect'
+				}
+			}
+		}
+	},
 	views: {
 		register: {
 			form: {
