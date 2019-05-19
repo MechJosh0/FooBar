@@ -1,74 +1,92 @@
 {
-  "name": "nuls-chrome-extension",
-  "version": "0.1.0",
-  "private": true,
-  "description": "Interative NULS blockchain Chrome extension",
-  "author": "Josh Welham / MechJosh0",
-  "scripts": {
-	"dev": "npm run serve",
-	"serve": "vue-cli-service build --mode development --watch",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "@babel/polyfill": "^7.4.4",
-    "@quasar/extras": "^1.0.0",
-    "@sentry/browser": "^5.2.1",
-    "@sentry/integrations": "^5.2.0",
-    "axios": "^0.18.0",
-    "bip39": "^3.0.1",
-    "luxon": "^1.12.1",
-    "nuls-js": "^1.1.0",
-    "portal-vue": "^2.1.4",
-    "quasar": "^1.0.0-beta.1",
-    "vue": "^2.6.6",
-    "vue-i18n": "^8.0.0",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
-  },
-  "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.8.1",
-    "@vue/cli-plugin-babel": "^3.5.0",
-    "@vue/cli-plugin-eslint": "^3.5.1",
-    "@vue/cli-service": "^3.5.0",
-    "@vue/eslint-config-standard": "^4.0.0",
-    "babel-eslint": "^10.0.1",
-    "babel-plugin-transform-imports": "1.5.0",
-    "eslint": "^5.8.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.2",
-    "vue-cli-plugin-browser-extension": "^0.15.0",
-    "vue-cli-plugin-i18n": "^0.5.2",
-    "vue-cli-plugin-quasar": "^1.0.0-beta.1",
-    "vue-template-compiler": "^2.5.21"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "browser": true,
-      "node": true,
-      "webextensions": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended",
-      "@vue/standard"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+	"name": "nuls-chrome-extension",
+	"version": "0.1.0",
+	"description": "Interative NULS blockchain Chrome extension",
+	"author": "Josh Welham / MechJosh0",
+	"main": "src/standalone/main.js",
+	"homepage": "https://github.com/MechJosh0/FooBar#readme",
+	"scripts": {
+		"dev": "npm run serve",
+		"serve": "vue-cli-service build --mode development --watch",
+		"build": "vue-cli-service build",
+		"lint": "vue-cli-service lint"
+	},
+	"bugs": {
+		"url": "https://github.com/MechJosh0/FooBar/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/MechJosh0/FooBar.git"
+	},
+	"license": "MIT",
+	"keywords": [
+		"nuls",
+		"blockchain",
+		"chrome",
+		"extension",
+		"wallet",
+		"vue",
+		"vuejs"
+	],
+	"dependencies": {
+		"@babel/polyfill": "^7.4.4",
+		"@quasar/extras": "^1.0.0",
+		"@sentry/browser": "^5.2.1",
+		"@sentry/integrations": "^5.2.0",
+		"axios": "^0.18.0",
+		"bip39": "^3.0.1",
+		"luxon": "^1.12.1",
+		"nuls-js": "^1.1.0",
+		"portal-vue": "^2.1.4",
+		"quasar": "^1.0.0-beta.1",
+		"vue": "^2.6.6",
+		"vue-i18n": "^8.0.0",
+		"vue-router": "^3.0.1",
+		"vuex": "^3.0.1"
+	},
+	"devDependencies": {
+		"@fortawesome/fontawesome-free": "^5.8.1",
+		"@vue/cli-plugin-babel": "^3.5.0",
+		"@vue/cli-plugin-eslint": "^3.5.1",
+		"@vue/cli-service": "^3.5.0",
+		"@vue/eslint-config-standard": "^4.0.0",
+		"babel-eslint": "^10.0.1",
+		"babel-plugin-transform-imports": "1.5.0",
+		"eslint": "^5.8.0",
+		"eslint-config-airbnb-base": "^13.1.0",
+		"eslint-plugin-vue": "^5.0.0",
+		"stylus": "^0.54.5",
+		"stylus-loader": "^3.0.2",
+		"vue-cli-plugin-browser-extension": "^0.15.0",
+		"vue-cli-plugin-i18n": "^0.5.2",
+		"vue-cli-plugin-quasar": "^1.0.0-beta.1",
+		"vue-template-compiler": "^2.5.21"
+	},
+	"eslintConfig": {
+		"root": true,
+		"env": {
+			"browser": true,
+			"node": true,
+			"webextensions": true
+		},
+		"extends": [
+			"plugin:vue/essential",
+			"eslint:recommended",
+			"@vue/standard"
+		],
+		"rules": {},
+		"parserOptions": {
+			"parser": "babel-eslint"
+		}
+	},
+	"postcss": {
+		"plugins": {
+			"autoprefixer": {}
+		}
+	},
+	"browserslist": [
+		"> 1%",
+		"last 2 versions",
+		"not ie <= 8"
+	]
 }
